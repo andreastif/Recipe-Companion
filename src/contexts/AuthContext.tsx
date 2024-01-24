@@ -11,17 +11,19 @@ import {
 } from "firebase/auth";
 
 
-
 export interface AuthProviderProps {
     children: ReactNode;
 }
 
 
 export interface AuthContextType {
-    login(email: string, password: string): Promise<UserCredential>
-    createUser(email: string, password: string): Promise<UserCredential>
-    logout(): Promise<void>
     user: User | null
+
+    login(email: string, password: string): Promise<UserCredential>
+
+    createUser(email: string, password: string): Promise<UserCredential>
+
+    logout(): Promise<void>
 }
 
 // Create context
@@ -59,13 +61,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         }
     }, []);
 
-
     const contextValues: AuthContextType = {
         login,
         createUser,
         logout,
         user
-    };
+    }
 
     return (
         <AuthContext.Provider value={contextValues}>{children}</AuthContext.Provider>
