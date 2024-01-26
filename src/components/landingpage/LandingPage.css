@@ -1,0 +1,17 @@
+.landing {
+    text-align: center;
+    background-color: #2b3035;
+    min-height: 100vh;
+    color: white;
+    padding-top: 50px;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+
+.App-link {
+    color: #61dafb;
+}
