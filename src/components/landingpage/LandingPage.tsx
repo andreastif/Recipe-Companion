@@ -1,19 +1,11 @@
 import "./LandingPage.css"
-import logo from "../../img/recipe_bro.png"
 
 function LandingPage() {
     return (
         <div className="landing">
-                <img src={logo} alt="Recipe Bro Logo" className="recipe-img w-25 img-fluid rounded-circle shadow" />
-                <p className="mt-4">Welcome to Recipe Bro!</p>
-                <a
-                    className="App-link"
-                    href="https://www.recipebro.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Discover Recipes
-                </a>
+            <h1 className="mt-4 mb-4">Meet Recipe Bro</h1>
+            <p>Your AI-powered kitchen companion! Just enter your ingredients, and it crafts personalized recipes with easy-to-follow steps.</p>
+            <p>Elevate your meals effortlessly with Recipe Bro, simplifying your culinary journey with innovative and delicious results</p>
         </div>
     );
 }
