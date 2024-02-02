@@ -2,11 +2,12 @@ import {Navigate} from "react-router-dom";
 import {useAuth} from "../hooks/useAuth.tsx";
 import {AuthProviderProps} from "./AuthContext.tsx";
 import React from "react";
-import {Triangle} from "react-loader-spinner";
 
 const ProtectedRoute: React.FC<AuthProviderProps> = ({ children }) => {
-    const { user, loading } = useAuth(); // Current Logged in User
+    const { user } = useAuth(); // Current Logged in User
 
+
+/*
     // If still pending, don't render anything or show a loader
     if (loading) {
         return (
@@ -19,8 +20,10 @@ const ProtectedRoute: React.FC<AuthProviderProps> = ({ children }) => {
                     <div>Loading...</div>
                 </div>
             </div>
+
         )
     }
+ */
 
     // After the delay, check user authentication
     if (!user) {
