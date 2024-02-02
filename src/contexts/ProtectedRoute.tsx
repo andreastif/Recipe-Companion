@@ -25,7 +25,7 @@ const ProtectedRoute: React.FC<AuthProviderProps> = ({ children }) => {
                         height={100}
                         width={100}
                         color="#FFF"/>
-                    <div>Authenticating...</div>
+                    <div>Loading...</div>
                 </div>
             </div>
         )
