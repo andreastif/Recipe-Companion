@@ -1,4 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+
 body {
     background-color: #2b3035 !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: min(20px) !important;
+}
+
+div {
     color: white !important;
+}
+
+.format-input-screens {
+    width: 90%;
+    max-width: 450px;
 }
