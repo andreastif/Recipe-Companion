@@ -15,3 +15,12 @@ div {
     width: 90%;
     max-width: 450px;
 }
+
+.loader {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}

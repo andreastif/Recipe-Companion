@@ -108,7 +108,7 @@ function Login() {
                         </div>
                         <div className="mt-4 d-flex gap-4">
                             <button type="submit" className="btn btn-secondary">Login</button>
-                            <button type="submit" className="btn btn-secondary">Reset Password</button>
+                            <button type="button" className="btn btn-secondary">Reset Password</button>
                         </div>
                     </form>
                     {hasError && (
