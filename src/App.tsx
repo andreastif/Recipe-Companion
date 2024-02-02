@@ -11,8 +11,7 @@ import Login from "./components/login/Login.tsx";
 function App() {
 
   return (
-    <div className="page-container">
-        <div className="content-wrap">
+    <div>
           <AuthProvider>
             <Routes>
               <Route path="/" element={<LandingPage />} />
@@ -30,7 +29,6 @@ function App() {
             </Routes>
           </AuthProvider>
         </div>
-    </div>
   )
 }
 

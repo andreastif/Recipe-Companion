@@ -71,7 +71,7 @@ function Login() {
 
     return (
         <>
-            <div>
+            <div className="container">
                 <div>
                     <h1 className="text-2xl font-semibold py-2">Login</h1>
                     <p>
