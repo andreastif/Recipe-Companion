@@ -106,7 +106,10 @@ function Login() {
                                    onChange={handleFormControlChange}
                             />
                         </div>
-                        <button type="submit" className="mt-4 btn btn-secondary">Login</button>
+                        <div className="mt-4 d-flex gap-4">
+                            <button type="submit" className="btn btn-secondary">Login</button>
+                            <button type="submit" className="btn btn-secondary">Reset Password</button>
+                        </div>
                     </form>
                     {hasError && (
                         <div className="text-danger fw-semibold my-4">
