@@ -1,7 +1,15 @@
 .landing {
-    text-align: center;
-    background-color: #2b3035;
-    min-height: 100vh;
-    color: white;
-    padding: 50px;
+  text-align: center;
+  background-color: #2b3035;
+  min-height: 100vh;
+  color: white;
+  padding: 50px;
+}
+
+/* New styles for mobile and tablets */
+@media screen and (max-width: 768px) {
+  /* Adjust the styles as needed for mobile and tablets */
+  .landing {
+    font-size: 1.1rem !important;
+  }
 }
