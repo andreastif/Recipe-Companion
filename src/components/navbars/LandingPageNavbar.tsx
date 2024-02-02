@@ -1,5 +1,5 @@
 import "./LandingPageNavbar.css";
-import logo from "../../img/recipe-bro.png";
+import logo from "../../img/test-icon.png";
 import {Link} from "react-router-dom";
 import {useAuth} from "../../hooks/useAuth.tsx";
 
@@ -10,13 +10,14 @@ function LandingPageNavbar() {
         <>
             <div className="bg-img">
                 <div className="container">
-                    <div className="topnav rounded p-4">
+                    <div className="top-nav rounded p-4">
                         <div>
                             <img
-                                className="img-fluid"
+                                className="me-3 img-fluid"
                                 width={100}
                                 height={100}
                                 src={logo}
+                                alt="logo"
                             />
                         </div>
                         { !user ? <div>

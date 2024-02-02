@@ -1,7 +1,6 @@
 .bg-img {
 	/* The image used */
 	background-image: url("../../img/recipe.png");
-
 	min-height: 700px;
 
 	/* Center and scale the image nicely */
@@ -21,7 +20,7 @@
 }
 
 /* The navbar */
-.topnav {
+.top-nav {
 	overflow: hidden;
 	background-color: transparent;
 	display: flex;
@@ -29,7 +28,7 @@
 }
 
 /* LandingPageNavbar links */
-.topnav a {
+.top-nav a {
 	float: left;
 	color: #f2f2f2;
 	text-align: center;
@@ -38,21 +37,26 @@
 	font-size: 17px;
 }
 
-.topnav a:hover {
+.top-nav a:hover {
 	background-color: #ddd;
+	border-radius: 15px;
 	color: black;
 }
 
 /* New styles for mobile and tablets */
 @media screen and (max-width: 768px) {
 	/* Adjust the styles as needed for mobile and tablets */
-	.topnav {
+	.top-nav {
 		display: flex;
 		align-content: center;
 		justify-content: center;
 	}
 
-	.topnav img {
+	.top-nav span {
+		font-size: 1.2rem !important;
+	}
+
+	.top-nav img {
 		display: none;
 	}
 }
