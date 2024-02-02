@@ -24,6 +24,8 @@ export interface AuthContextType {
     createUser(email: string, password: string): Promise<UserCredential>
 
     logout(): Promise<void>
+
+    loading: boolean
 }
 
 // Create context
@@ -32,6 +34,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     // STATES
     const [user, setUser] = useState<User | null>(null)
+    const [loading, setLoading] = useState(false);
 
 
     // Login
@@ -53,7 +56,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         // Set up a listener for changes in the authentication state
         const unsub = onAuthStateChanged(auth, (currentUser) => {
             console.log(currentUser)
+            setLoading(true)
             setUser(currentUser);
+            setLoading(false)
         })
 
         return () => {
@@ -65,7 +70,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         login,
         createUser,
         logout,
-        user
+        user,
+        loading
     }
 
     return (
