@@ -18,22 +18,10 @@ function App() {
                     <Route path="/" element={<LandingPage/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/register" element={<Register/>}/>
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <ProtectedRoute>
-                                <Dashboard/>
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/profile"
-                        element={
-                            <ProtectedRoute>
-                                <Profile/>
-                            </ProtectedRoute>
-                        }
-                    />
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/dashboard" element={<Dashboard/>} />
+                        <Route path="/profile" element={<Profile/>}/>
+                    </Route>
                     <Route path="*" element={<ErrorPage/>}/>
                 </Routes>
             </AuthProvider>
