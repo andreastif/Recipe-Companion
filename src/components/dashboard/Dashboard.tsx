@@ -31,8 +31,8 @@ function Dashboard() {
                                     centered
                                 >
                                     <Tab value="one" label="My Recipes"/>
-                                    <Tab value="two" label="Create Recipe"/>
-                                    <Tab value="three" label="Other"/>
+                                    <Tab value="two" label="Inspiration"/>
+                                    {/*<Tab value="three" label="Other"/>*/}
                                 </Tabs>
                             </Box>
                         </div>
