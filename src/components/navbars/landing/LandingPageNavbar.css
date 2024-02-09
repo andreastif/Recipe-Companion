@@ -38,9 +38,10 @@
 }
 
 .top-nav a:hover {
-	background-color: #ddd;
-	border-radius: 15px;
-	color: black;
+	/*background-color: #ddd;*/
+	/*border-radius: 15px;*/
+	color: rgba(255, 255, 255, 0.75);
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out
 }
 
 /* New styles for mobile and tablets */
