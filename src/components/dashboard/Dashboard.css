@@ -1,0 +1,22 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+}
+
+.content-wrap {
+    flex: 1;
+}
+
+/* New styles for mobile and tablets */
+@media screen and (max-width: 768px) {
+    /* Adjust the styles as needed for mobile and tablets */
+    .dashboard {
+        font-size: 1.0rem !important;
+    }
+}
+
+/*Removes underline indicator*/
+.MuiTabs-indicator {
+    background-color: #2b3035 !important;
+}
