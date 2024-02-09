@@ -26,7 +26,11 @@ function LoggedInNav() {
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Profile</a>
+                                <NavLink
+                                    to="/profile"
+                                    className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                                    Profile
+                                </NavLink>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Pricing</a>

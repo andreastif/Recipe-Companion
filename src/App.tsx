@@ -7,6 +7,7 @@ import Dashboard from "./components/dashboard/Dashboard.tsx";
 import ProtectedRoute from "./contexts/ProtectedRoute.tsx";
 import LandingPage from "./components/landingpage/LandingPage.tsx";
 import Login from "./components/login/Login.tsx";
+import Profile from "./components/profile/Profile.tsx";
 
 function App() {
 
@@ -22,6 +23,14 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <Dashboard/>
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={
+                            <ProtectedRoute>
+                                <Profile/>
                             </ProtectedRoute>
                         }
                     />
