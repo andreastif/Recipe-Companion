@@ -1,5 +1,5 @@
 import "./LandingPage.css"
-import LandingPageNavbar from "../navbars/LandingPageNavbar.tsx";
+import LandingPageNavbar from "../navbars/landing/LandingPageNavbar.tsx";
 
 function LandingPage() {
     return (

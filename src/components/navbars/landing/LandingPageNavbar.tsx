@@ -1,7 +1,7 @@
 import "./LandingPageNavbar.css";
-import logo from "../../img/test-icon.png";
+import logo from "../../../img/test-icon.png";
 import {Link} from "react-router-dom";
-import {useAuth} from "../../hooks/useAuth.tsx";
+import {useAuth} from "../../../hooks/useAuth.tsx";
 
 function LandingPageNavbar() {
     const {user} = useAuth();
