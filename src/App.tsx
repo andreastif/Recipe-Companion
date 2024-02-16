@@ -8,7 +8,7 @@ import ProtectedRoute from "./contexts/ProtectedRoute.tsx";
 import LandingPage from "./components/landingpage/LandingPage.tsx";
 import Login from "./components/login/Login.tsx";
 import Profile from "./components/profile/Profile.tsx";
-import {QueryClient, QueryClientProvider} from 'react-query';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
 const queryClient = new QueryClient();
 
