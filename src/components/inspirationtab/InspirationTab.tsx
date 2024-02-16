@@ -50,66 +50,67 @@ const InspirationTab = () => {
 
 }
 
+
+
 const itemData = [
     {
         id: 1,
-        img: 'https://images.unsplash.com/photo-1549388604-817d15aa0110',
+        img: 'https://www.themealdb.com/images/media/meals/yxsurp1511304301.jpg',
         title: 'Bed',
     },
     {
         id: 2,
-        img: 'https://images.unsplash.com/photo-1525097487452-6278ff080c31',
+        img: 'https://www.themealdb.com/images/media/meals/wsqqsw1515364068.jpg',
         title: 'Books',
     },
     {
         id: 3,
-        img: 'https://images.unsplash.com/photo-1523413651479-597eb2da0ad6',
+        img: 'https://www.themealdb.com/images/media/meals/oe8rg51699014028.jpg',
         title: 'Sink',
     },
     {
         id: 4,
-        img: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
+        img: 'https://www.themealdb.com/images/media/meals/tqrrsq1511723764.jpg',
         title: 'Kitchen',
     },
     {
         id: 5,
-        img: 'https://images.unsplash.com/photo-1588436706487-9d55d73a39e3',
+        img: 'https://www.themealdb.com/images/media/meals/quuxsx1511476154.jpg',
         title: 'Blinds',
     },
     {
         id: 6,
-        img: 'https://images.unsplash.com/photo-1574180045827-681f8a1a9622',
+        img: 'https://www.themealdb.com/images/media/meals/178z5o1585514569.jpg',
         title: 'Chairs',
     },
     {
         id: 7,
-        img: 'https://images.unsplash.com/photo-1530731141654-5993c3016c77',
+        img: 'https://www.themealdb.com/images/media/meals/qtqvys1468573168.jpg',
         title: 'Laptop',
     },
     {
-
         id: 8,
-        img: 'https://images.unsplash.com/photo-1481277542470-605612bd2d61',
+        img: 'https://www.themealdb.com/images/media/meals/hx335q1619789561.jpg',
         title: 'Doors',
     },
     {
         id: 9,
-        img: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7',
+        img: 'https://www.themealdb.com/images/media/meals/xxrxux1503070723.jpg',
         title: 'Coffee',
     },
     {
         id: 10,
-        img: 'https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee',
+        img: 'https://www.themealdb.com/images/media/meals/vrspxv1511722107.jpg',
         title: 'Storage',
     },
     {
         id: 11,
-        img: 'https://images.unsplash.com/photo-1597262975002-c5c3b14bbd62',
+        img: 'https://www.themealdb.com/images/media/meals/uyqrrv1511553350.jpg',
         title: 'Candle',
     },
     {
         id: 12,
-        img: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4',
+        img: 'https://www.themealdb.com/images/media/meals/qysyss1511558054.jpg',
         title: 'Coffee table',
     },
 
