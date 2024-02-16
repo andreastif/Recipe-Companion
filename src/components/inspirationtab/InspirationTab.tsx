@@ -5,19 +5,58 @@ import ImageListItem from '@mui/material/ImageListItem';
 import useMediaQuery from '@mui/material/useMediaQuery'; // MediaQuery hook for dynamic rendering
 import IconButton from '@mui/material/IconButton'; // Import IconButton
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import {useState} from "react"; // Import an icon for the button
+import {useEffect, useState} from "react";
+import {fetchSampleBeefMeals} from "../api/mealDbApi.ts";
+import {AxiosResponse} from "axios"; // Import an icon for the button
 
 interface Favorites {
-    [key: number]: boolean;
+    [key: string]: boolean;
+}
+
+export type Meal = {
+    id: string,
+    name: string,
+    imgUrl: string
 }
 
 const InspirationTab = () => {
+    useEffect(() => {
+        handleFetchInsp()
+    }, [])
 
     //Mediaqueries for mobile
     const isMobile = useMediaQuery('(max-width:768px)');
 
     const [favorites, setFavorites] = useState<Favorites>({});
-    const handleAddFavorite = (id: number) => {
+    const [mealList, setMealList] = useState<Meal[]>([])
+
+    const handleFetchInsp = async () => {
+        try {
+            const resp = await fetchSampleBeefMeals()
+            const meals: Meal[] = mapToMeal(resp);
+            setMealList(meals);
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const mapToMeal = (response: AxiosResponse<any, any>) => {
+        const mappedMeals: Meal[] = [];
+        const dataArray = response.data['meals'];
+
+        dataArray.map((mealResp: { [x: string]: any; }) => {
+            const newMeal: Meal = {
+                id: mealResp['idMeal'],
+                name: mealResp['strMeal'],
+                imgUrl: mealResp['strMealThumb'],
+            }
+            mappedMeals.push(newMeal);
+        })
+
+        return mappedMeals;
+    }
+
+    const handleAddFavorite = (id: string) => {
         setFavorites(prevFavorites => ({
             ...prevFavorites,
             [id]: !prevFavorites[id]
@@ -27,18 +66,23 @@ const InspirationTab = () => {
 
     return (
         <div style={{margin: "10px", justifyContent: "center", display: "flex"}}>
-            <Box sx={{width: isMobile ? "100%" : "95%", height: "90%", paddingTop: isMobile ? "5px" : "40px", paddingBottom: isMobile ? "0px" : "20px"}}>
+            <Box sx={{
+                width: isMobile ? "100%" : "95%",
+                height: "90%",
+                paddingTop: isMobile ? "5px" : "40px",
+                paddingBottom: isMobile ? "0px" : "20px"
+            }}>
                 <ImageList variant="masonry" cols={isMobile ? 2 : 4} gap={6}>
-                    {itemData.map((item) => (
+                    {mealList.map((item) => (
                         // could probably make a component out of these things:
                         <ImageListItem key={item.id}>
-                            <IconButton onClick={ () => handleAddFavorite(item.id)} style={{ position: 'absolute', top: 0, left: 0, color: 'white', zIndex: 1 }}>
-                                <StarBorderIcon color={favorites[item.id] ? "warning" : "inherit"} />
+                            <IconButton onClick={() => handleAddFavorite(item.id)}
+                                        style={{position: 'absolute', top: 0, left: 0, color: 'white', zIndex: 1}}>
+                                <StarBorderIcon color={favorites[item.id] ? "warning" : "inherit"}/>
                             </IconButton>
                             <img
-                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                src={`${item.img}?w=248&fit=crop&auto=format`}
-                                alt={item.title}
+                                src={`${item.imgUrl}`}
+                                alt={item.name}
                                 loading="lazy"
                             />
                         </ImageListItem>
@@ -47,76 +91,7 @@ const InspirationTab = () => {
             </Box>
         </div>
     );
-
 }
-
-
-
-const itemData = [
-    {
-        id: 1,
-        img: 'https://www.themealdb.com/images/media/meals/yxsurp1511304301.jpg',
-        title: 'Bed',
-    },
-    {
-        id: 2,
-        img: 'https://www.themealdb.com/images/media/meals/wsqqsw1515364068.jpg',
-        title: 'Books',
-    },
-    {
-        id: 3,
-        img: 'https://www.themealdb.com/images/media/meals/oe8rg51699014028.jpg',
-        title: 'Sink',
-    },
-    {
-        id: 4,
-        img: 'https://www.themealdb.com/images/media/meals/tqrrsq1511723764.jpg',
-        title: 'Kitchen',
-    },
-    {
-        id: 5,
-        img: 'https://www.themealdb.com/images/media/meals/quuxsx1511476154.jpg',
-        title: 'Blinds',
-    },
-    {
-        id: 6,
-        img: 'https://www.themealdb.com/images/media/meals/178z5o1585514569.jpg',
-        title: 'Chairs',
-    },
-    {
-        id: 7,
-        img: 'https://www.themealdb.com/images/media/meals/qtqvys1468573168.jpg',
-        title: 'Laptop',
-    },
-    {
-        id: 8,
-        img: 'https://www.themealdb.com/images/media/meals/hx335q1619789561.jpg',
-        title: 'Doors',
-    },
-    {
-        id: 9,
-        img: 'https://www.themealdb.com/images/media/meals/xxrxux1503070723.jpg',
-        title: 'Coffee',
-    },
-    {
-        id: 10,
-        img: 'https://www.themealdb.com/images/media/meals/vrspxv1511722107.jpg',
-        title: 'Storage',
-    },
-    {
-        id: 11,
-        img: 'https://www.themealdb.com/images/media/meals/uyqrrv1511553350.jpg',
-        title: 'Candle',
-    },
-    {
-        id: 12,
-        img: 'https://www.themealdb.com/images/media/meals/qysyss1511558054.jpg',
-        title: 'Coffee table',
-    },
-
-
-
-];
 
 
 export default InspirationTab;
