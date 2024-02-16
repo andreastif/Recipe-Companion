@@ -8,22 +8,27 @@ import ProtectedRoute from "./contexts/ProtectedRoute.tsx";
 import LandingPage from "./components/landingpage/LandingPage.tsx";
 import Login from "./components/login/Login.tsx";
 import Profile from "./components/profile/Profile.tsx";
+import {QueryClient, QueryClientProvider} from 'react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
 
     return (
         <>
             <AuthProvider>
-                <Routes>
-                    <Route path="/" element={<LandingPage/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route element={<ProtectedRoute />}>
-                        <Route path="/dashboard" element={<Dashboard/>} />
-                        <Route path="/profile" element={<Profile/>}/>
-                    </Route>
-                    <Route path="*" element={<ErrorPage/>}/>
-                </Routes>
+                <QueryClientProvider client={queryClient}>
+                    <Routes>
+                        <Route path="/" element={<LandingPage/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/register" element={<Register/>}/>
+                        <Route element={<ProtectedRoute/>}>
+                            <Route path="/dashboard" element={<Dashboard/>}/>
+                            <Route path="/profile" element={<Profile/>}/>
+                        </Route>
+                        <Route path="*" element={<ErrorPage/>}/>
+                    </Routes>
+                </QueryClientProvider>
             </AuthProvider>
         </>
     )

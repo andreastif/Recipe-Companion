@@ -7,8 +7,8 @@ import IconButton from '@mui/material/IconButton'; // Import IconButton
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import {useEffect, useState} from "react";
 import {fetchSampleBeefMeals} from "../api/mealDbApi.ts";
-import {AxiosResponse} from "axios"; // Import an icon for the button
 import CircularProgress from '@mui/material/CircularProgress';
+import {useQuery} from "react-query";
 
 interface Favorites {
     [key: string]: boolean;
@@ -21,51 +21,42 @@ export type Meal = {
 }
 
 const InspirationTab = () => {
-    useEffect(() => {
-        handleFetchInsp()
-    }, [])
-
-    //Mediaqueries for mobile
+    //media queries for mobile
     const isMobile = useMediaQuery('(max-width:768px)');
-    const [loading, setLoading] = useState(false);
     const [favorites, setFavorites] = useState<Favorites>({});
-    const [mealList, setMealList] = useState<Meal[]>([])
+    const [mealList, setMealList] = useState<Meal[]>([]);
+    //for calling usequery onmount
+    const [isMounted, setIsMounted] = useState(false);
 
-    const handleFetchInsp = async () => {
-        try {
-            setLoading(true)
-            const resp = await fetchSampleBeefMeals()
-            const meals: Meal[] = mapToMeal(resp);
-            setMealList(meals);
-        } catch (err) {
-            console.log(err)
-        } finally {
-            setLoading(false)
-        }
-    }
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
-    const mapToMeal = (response: AxiosResponse<any, any>) => {
-        const mappedMeals: Meal[] = [];
-        const dataArray = response.data['meals'];
+    const fetchFood = async () => {
+        const response = await fetchSampleBeefMeals();
+        return response.data['meals']; // Directly return the meals array from the response
+    };
 
-        dataArray.map((meal: { [x: string]: any; }) => {
-            const newMeal: Meal = {
+    const {isLoading} = useQuery("food", fetchFood, {
+        enabled: isMounted,
+        refetchOnWindowFocus: false,
+        onSuccess: (data) => {
+            // Map the data in the onSuccess callback and set mealList
+            const mappedMeals = data.map((meal: { [x: string]: any; }) => ({
                 id: meal['idMeal'],
                 name: meal['strMeal'],
                 imgUrl: meal['strMealThumb'],
-            }
-            mappedMeals.push(newMeal);
-        })
-
-        return mappedMeals;
-    }
+            }));
+            setMealList(mappedMeals); // Set the mapped meals to mealList
+        },
+    });
 
     const handleAddFavorite = (id: string) => {
         setFavorites(prevFavorites => ({
             ...prevFavorites,
             [id]: !prevFavorites[id]
         }));
-    }
+    };
 
     function handleOpenModal(mealId: string) {
         console.log(mealId);
@@ -73,7 +64,7 @@ const InspirationTab = () => {
 
     return (
         <div>
-            {loading &&
+            {isLoading &&
                 <div className="text-center mt-5">
                     <CircularProgress size={80} />
                 </div>
