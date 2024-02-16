@@ -7,6 +7,7 @@ import LoggedInNav from "../navbars/loggedin/LoggedInNav.tsx";
 import {SyntheticEvent, useState} from "react";
 import RecipeTab from "../recipetab/RecipeTab.tsx";
 import InspirationTab from "../inspirationtab/InspirationTab.tsx";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 enum TabType {
     Recipe,
@@ -14,6 +15,8 @@ enum TabType {
 }
 
 function Dashboard() {
+    const isMobile = useMediaQuery('(max-width:768px)');
+
     const [currentTab, setCurrentTab] = useState(TabType.Recipe);
 
     const handleChange = (_event: SyntheticEvent, newValue: TabType) => {
@@ -43,8 +46,8 @@ function Dashboard() {
                                     variant="fullWidth"
                                     centered
                                 >
-                                    <Tab value={TabType.Recipe} label="My Recipes"/>
-                                    <Tab value={TabType.Inspiration} label="Inspiration"/>
+                                    <Tab value={TabType.Recipe} label="My Recipes" sx={{fontSize: isMobile ? "1rem" : "1.1rem"}}/>
+                                    <Tab value={TabType.Inspiration} label="Inspiration" sx={{fontSize: isMobile ? "1rem" : "1.1rem"}}/>
                                     {/*<Tab value="three" label="Other"/>*/}
                                 </Tabs>
                             </Box>

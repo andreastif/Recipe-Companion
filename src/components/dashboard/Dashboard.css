@@ -20,3 +20,7 @@
 .MuiTabs-indicator {
     background-color: #2b3035 !important;
 }
+
+.box-shadow {
+    box-shadow: rgba(255, 255, 255, 0.24) 0 3px 8px;
+}

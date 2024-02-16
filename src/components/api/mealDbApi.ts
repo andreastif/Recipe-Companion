@@ -7,11 +7,12 @@ export const mealDbClient = axios.create({
 });
 
 
-export const fetchSampleBeefMeals = async () => {
+export const fetchSampleSeafoodMeals = async () => {
     try {
-        return await mealDbClient.get("api/json/v1/1/filter.php?c=beef");
+        return await mealDbClient.get("api/json/v1/1/filter.php?c=Seafood");
     } catch (err) {
         const axiosError = err as AxiosError;
         throw new Error(axiosError.message);
     }
 }
+
