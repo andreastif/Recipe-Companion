@@ -48,11 +48,11 @@ const InspirationTab = () => {
         const mappedMeals: Meal[] = [];
         const dataArray = response.data['meals'];
 
-        dataArray.map((mealResp: { [x: string]: any; }) => {
+        dataArray.map((meal: { [x: string]: any; }) => {
             const newMeal: Meal = {
-                id: mealResp['idMeal'],
-                name: mealResp['strMeal'],
-                imgUrl: mealResp['strMealThumb'],
+                id: meal['idMeal'],
+                name: meal['strMeal'],
+                imgUrl: meal['strMealThumb'],
             }
             mappedMeals.push(newMeal);
         })
@@ -65,7 +65,6 @@ const InspirationTab = () => {
             ...prevFavorites,
             [id]: !prevFavorites[id]
         }));
-
     }
 
     function handleOpenModal(mealId: string) {
