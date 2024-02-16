@@ -8,6 +8,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import {useEffect, useState} from "react";
 import {fetchSampleBeefMeals} from "../api/mealDbApi.ts";
 import {AxiosResponse} from "axios"; // Import an icon for the button
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface Favorites {
     [key: string]: boolean;
@@ -26,17 +27,20 @@ const InspirationTab = () => {
 
     //Mediaqueries for mobile
     const isMobile = useMediaQuery('(max-width:768px)');
-
+    const [loading, setLoading] = useState(false);
     const [favorites, setFavorites] = useState<Favorites>({});
     const [mealList, setMealList] = useState<Meal[]>([])
 
     const handleFetchInsp = async () => {
         try {
+            setLoading(true)
             const resp = await fetchSampleBeefMeals()
             const meals: Meal[] = mapToMeal(resp);
             setMealList(meals);
         } catch (err) {
             console.log(err)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -64,7 +68,17 @@ const InspirationTab = () => {
 
     }
 
+    function handleOpenModal(mealId: string) {
+        console.log(mealId);
+    }
+
     return (
+        <div>
+            {loading &&
+                <div className="text-center mt-5">
+                    <CircularProgress size={80} />
+                </div>
+            }
         <div style={{margin: "10px", justifyContent: "center", display: "flex"}}>
             <Box sx={{
                 width: isMobile ? "100%" : "95%",
@@ -75,7 +89,7 @@ const InspirationTab = () => {
                 <ImageList variant="masonry" cols={isMobile ? 2 : 4} gap={6}>
                     {mealList.map((item) => (
                         // could probably make a component out of these things:
-                        <ImageListItem key={item.id}>
+                        <ImageListItem key={item.id} onClick={() => handleOpenModal(item.id)}>
                             <IconButton onClick={() => handleAddFavorite(item.id)}
                                         style={{position: 'absolute', top: 0, left: 0, color: 'white', zIndex: 1}}>
                                 <StarBorderIcon color={favorites[item.id] ? "warning" : "inherit"}/>
@@ -89,6 +103,7 @@ const InspirationTab = () => {
                     ))}
                 </ImageList>
             </Box>
+        </div>
         </div>
     );
 }
