@@ -7,7 +7,8 @@ import {
     signOut,
     onAuthStateChanged,
     UserCredential,
-    User
+    User,
+    sendPasswordResetEmail
 } from "firebase/auth";
 import LoadingSpinner from "../components/spinner/LoadingSpinner.tsx";
 
@@ -25,6 +26,8 @@ export interface AuthContextType {
     createUser(email: string, password: string): Promise<UserCredential>
 
     logout(): Promise<void>
+
+    resetPassword(email: string): Promise<void>
 }
 
 // Create context
@@ -50,6 +53,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         return signOut(auth);
     }
 
+    // Reset password
+    const resetPassword = (email: string) => {
+        return sendPasswordResetEmail(auth, email);
+    }
+
     useEffect(() => {
         // Set up a listener for changes in the authentication state
         const unsub = onAuthStateChanged(auth, (currentUser) => {
@@ -68,6 +76,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         createUser,
         logout,
         user,
+        resetPassword,
     }
 
     /*

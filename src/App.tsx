@@ -8,6 +8,7 @@ import LandingPage from "./components/landingpage/LandingPage.tsx";
 import Login from "./components/login/Login.tsx";
 import Profile from "./components/profile/Profile.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import ForgotPassword from "./components/forgotPassword/ForgotPassword.tsx";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<LandingPage/>}/>
                         <Route path="/login" element={<Login/>}/>
+                        <Route path="/lostpw" element={<ForgotPassword/>}/>
                         {/* <Route path="/register" element={<Register/>}/> */}
                         <Route element={<ProtectedRoute/>}>
                             <Route path="/dashboard" element={<Dashboard/>}/>

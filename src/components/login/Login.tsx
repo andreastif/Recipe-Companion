@@ -20,7 +20,6 @@ function Login() {
         email: "",
         password: "",
     })
-
     // Auth
     const {login} = useAuth();
 
@@ -41,20 +40,16 @@ function Login() {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         const credentials = {
             email: form.email,
             password: form.password,
         }
-
         await handleLogin(credentials);
-
         // Reset form
         setForm({
             email: "",
             password: ""
         });
-
     }
 
     const handleFormControlChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -67,57 +62,64 @@ function Login() {
         })
     };
 
-
-
     return (
 
-            <div className="d-flex justify-content-center align-content-center">
-                <div className="format-input-screens">
-                    <div className="mt-5 mb-4">
-                        <h1 className="text-2xl font-semibold py-2">Login</h1>
-                        <p className="h6">
-                            Don't have an account?{" "}
-                            <Link
-                                className="link-info link-opacity-75-hover"
-                                to="/register">
-                                Register
-                            </Link>
-                        </p>
-                    </div>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                            <input type="email"
-                                   className="form-control"
-                                   id="exampleInputEmail1"
-                                   aria-describedby="emailHelp"
-                                   name="email"
-                                   value={form.email}
-                                   onChange={handleFormControlChange}
-                            />
-                            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                            <input type="password"
-                                   className="form-control" id="exampleInputPassword1"
-                                   name="password"
-                                   value={form.password}
-                                   onChange={handleFormControlChange}
-                            />
-                        </div>
-                        <div className="mt-4 d-flex gap-4">
-                            <button type="submit" className="btn btn-secondary">Login</button>
-                            <button type="button" className="btn btn-secondary">Reset Password</button>
-                        </div>
-                    </form>
-                    {hasError && (
-                        <div className="text-danger fw-semibold my-4">
-                            Wrong credentials 😒
-                        </div>
-                    )}
+        <div className="d-flex justify-content-center align-content-center">
+            <div className="format-input-screens">
+                <div className="mt-5 mb-4">
+                    <h1 className="text-2xl font-semibold py-2">Login</h1>
+                    <p className="h6">
+                        Don't have an account?{" "}
+                        <Link
+                            className="link-info link-opacity-75-hover"
+                            to="/register">
+                            Register
+                        </Link>
+                    </p>
                 </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                        <input type="email"
+                               className="form-control"
+                               id="exampleInputEmail1"
+                               aria-describedby="emailHelp"
+                               name="email"
+                               value={form.email}
+                               onChange={handleFormControlChange}
+                        />
+                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                        <input type="password"
+                               className="form-control" id="exampleInputPassword1"
+                               name="password"
+                               value={form.password}
+                               onChange={handleFormControlChange}
+                        />
+                    </div>
+                    <div className="mt-4 d-flex gap-4">
+                        <div>
+                            <p id="forgotPassword">
+                                Forgot your {" "}
+                                <Link
+                                    className="link-info link-opacity-75-hover"
+                                    to="/lostpw">
+                                    password?
+                                </Link>
+                            </p>
+                            <button type="submit" className="btn btn-secondary">Login</button>
+                        </div>
+                    </div>
+                </form>
+                {hasError && (
+                    <div className="text-danger fw-semibold my-4">
+                        Wrong credentials 😒
+                    </div>
+                )}
             </div>
+        </div>
 
     );
 }
