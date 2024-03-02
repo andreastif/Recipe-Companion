@@ -1,0 +1,9 @@
+.error-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.error-box-shadow {
+    box-shadow: rgba(255, 255, 255, 0.24) 0 1px 6px;
+}

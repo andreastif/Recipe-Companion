@@ -2,28 +2,28 @@ import {RecipeJson} from "../cards/RecipeCard.tsx";
 
 export const recipeData1: RecipeJson = {
     id: 1,
-    title: "Alex magiska köttbullar",
-    summary: "Lägg ner kött i en bulle och rör runt, smaka av med salt och socker, därefter servera med ett glas ketchup i mjölk",
+    title: "Meatballs",
+    summary: "A meatball is ground meat rolled into a ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
     imageUrl: "https://picsum.photos/140"
 }
 
 export const recipeData2: RecipeJson = {
     id: 2,
-    title: "Alex magiska köttbullar",
-    summary: "Lägg ner kött i en bulle och rör runt, smaka av med salt och socker, därefter servera med ett glas ketchup i mjölk",
+    title: "Meatballs",
+    summary: "A meatball is ground meat rolled into a ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
     imageUrl: "https://picsum.photos/140"
 }
 
 export const recipeData3: RecipeJson = {
     id: 3,
-    title: "Alex magiska köttbullar",
-    summary: "Lägg ner kött i en bulle och rör runt, smaka av med salt och socker, därefter servera med ett glas ketchup i mjölk",
+    title: "Meatballs",
+    summary: "A meatball is ground meat rolled into a ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
     imageUrl: "https://picsum.photos/140"
 }
 
 export const recipeData4: RecipeJson = {
     id: 4,
-    title: "Alex magiska köttbullar",
-    summary: "Lägg ner kött i en bulle och rör runt, smaka av med salt och socker, därefter servera med ett glas ketchup i mjölk",
+    title: "Meatballs",
+    summary: "A meatball is ground meat rolled into a ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
     imageUrl: "https://picsum.photos/140"
 }

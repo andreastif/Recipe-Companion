@@ -39,10 +39,13 @@ const ForgotPassword = () => {
     return (
         <div className="d-flex justify-content-center align-content-center">
             <div className="format-input-screens">
-
+                <div className="mt-5">
+                    <p className="h2">Reset Password</p>
+                    {isNotReset && <p className="h6 mt-3">Enter your email to reset your password</p>}
+                </div>
                 {isNotReset ?
                     <form onSubmit={handleSubmit}>
-                        <div className="my-5">
+                        <div className="my-3">
                             <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                             <input type="email"
                                    className="form-control"
@@ -53,7 +56,7 @@ const ForgotPassword = () => {
                                    onChange={handleEmailChange}
                             />
                         </div>
-                        <div className="mt-4 d-flex gap-4">
+                        <div className="d-flex gap-4">
                             <button type="submit" className="btn btn-secondary">Reset</button>
                         </div>
                     </form> :
