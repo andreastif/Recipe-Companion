@@ -9,8 +9,8 @@ function Profile() {
         <>
             <LoggedInNav/>
             <div className="container">
-                <p>Tjena <strong>{user?.email}</strong></p>
-                {user?.emailVerified ? <p>Du har <strong>verifierat</strong> din email</p> :
+                <p>Hej <strong>{user?.email}</strong></p>
+                {user?.emailVerified ? <p>Du har <strong>verifierat</strong> din email.</p> :
                     <p> Din email är <strong>inte verifierad</strong></p>}
             </div>
         </>
