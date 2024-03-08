@@ -88,7 +88,7 @@ const RecipeGenerator = () => {
                                         styles={ReactSelectFormStyles}
                                         placeholder={"Language"}
                                         value={recipeForm.language}
-                                        defaultValue={{value: "SWEDISH", label: "Swedish"}}
+                                        defaultValue={{value: "ENGLISH", label: "English"}}
                                     />
                                 </div>
                                 <input

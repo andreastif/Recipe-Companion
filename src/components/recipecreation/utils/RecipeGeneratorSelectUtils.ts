@@ -10,8 +10,8 @@ type language = {
 }
 
 export const languageOptions: language[] = [
-    { value: "SWEDISH", label: "Swedish" },
     { value: "ENGLISH", label: "English" },
+    { value: "SWEDISH", label: "Swedish" },
 ]
 
 export const measurementOptions: measurementOption[] = [

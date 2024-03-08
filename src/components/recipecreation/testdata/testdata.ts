@@ -3,7 +3,7 @@ import {Recipe} from "../../../contexts/AuthContext.tsx";
 const exampleRecipe: Recipe = {
 
         title: "Citrus Mexican Chicken",
-        description: "THIS IS AN AI GENERATED TEST RECIPE INJECTED FROM THE CONTEXT -> This recipe features a zesty, citrus-infused Mexican chicken that is both flavorful and affordable. The chicken is marinated in a lemon and lime zest mixture, then pan-seared to perfection. It's a simple dish with a refreshing twist, perfect for a weeknight dinner. Serve with a side of rice or tortillas for a complete meal.",
+        description: "This recipe features a zesty, citrus-infused Mexican chicken that is both flavorful and affordable. The chicken is marinated in a lemon and lime zest mixture, then pan-seared to perfection. It's a simple dish with a refreshing twist, perfect for a weeknight dinner. Serve with a side of rice or tortillas for a complete meal.",
         ingredients: [
         "1 lemon (for zest and 30ml juice)",
         "1 lime (for zest and 30ml juice)",
@@ -35,7 +35,22 @@ export const exampleRecipe2: Recipe = {
         " Sprid ut klickar av örtsmöret över potatisen, salta och peppra, och blanda väl. ",
         " Låt potatisen gräddas i mitten av ugnen i ca 40 minuter."
     ]
+}
 
+export const descriptionRecipe: Recipe = {
+    title: "How do i use Recipe Companion?",
+    description: "Well, that is as easy as following a recipe!",
+    ingredients: [
+        "A list of ingredients.",
+        "The measurement of your choice.",
+        "Your preferred language.",
+    ],
+    steps: [
+        " Pick your measurement of choice for your recipe.",
+        " Pick your language of choice for your recipe.",
+        " Type in your ingredients",
+        " Press Create Recipe!",
+    ]
 }
 
 export default exampleRecipe

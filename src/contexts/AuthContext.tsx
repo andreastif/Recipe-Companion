@@ -11,7 +11,7 @@ import {
     sendPasswordResetEmail
 } from "firebase/auth";
 import LoadingSpinner from "../components/spinner/LoadingSpinner.tsx";
-import exampleRecipe from "../components/recipecreation/testdata/testdata.ts";
+import {descriptionRecipe} from "../components/recipecreation/testdata/testdata.ts";
 
 
 export interface AuthProviderProps {
@@ -50,7 +50,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     // STATES
     const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true);
-    const [recipe, setRecipe] = useState<Recipe | null | undefined>(exampleRecipe)
+    const [recipe, setRecipe] = useState<Recipe | null | undefined>(descriptionRecipe)
 
 
     // Login
