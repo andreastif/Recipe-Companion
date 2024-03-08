@@ -1,17 +1,25 @@
 import LoggedInNav from "../navbars/loggedin/LoggedInNav.tsx";
 import './RecipeGenerator.css'
-import {ChangeEvent, FormEvent, useState} from "react";
+import {FormEvent, useState} from "react";
 import axios from "axios";
 import {useAuth} from "../../hooks/useAuth.tsx";
+import Select from "react-select";
+import {languageOptions, measurementOptions, RecipeForm} from "./utils/RecipeGeneratorSelectUtils.ts";
+import {ReactSelectFormStyles} from "./utils/ReactSelectFormStyles.ts";
+import {RecipeData} from "./utils/RecipeGeneratoUtils.ts";
 
 
 const RecipeGenerator = () => {
-    const [ingredients, setIngredients] = useState<string>("");
-    const {recipe, setRecipe , isRecipeFetched, setIsRecipeFetched} = useAuth();
+    const {recipe, setRecipe} = useAuth();
+    const [recipeForm, setRecipeForm] = useState<RecipeForm>({
+        measurement: undefined,
+        language: undefined,
+        ingredients: ""
+    })
 
-    const createRecipe = async (ingredients: string) => {
+    const createRecipe = async (data: RecipeData) => {
         try {
-            return await axios.post("api", ingredients);
+            return await axios.post("api", data);
         } catch (e) {
             console.warn(e)
         }
@@ -19,60 +27,93 @@ const RecipeGenerator = () => {
 
     const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         try {
-            const response = await createRecipe(ingredients);
+            const response = await createRecipe({
+                ingredients: recipeForm.ingredients as string,
+                language: recipeForm.language?.value as string,
+                measurement: recipeForm.measurement?.value as string
+            });
             setRecipe(response?.data)
-            setIsRecipeFetched(true)
         } catch (e) {
             console.warn(e);
         }
     }
 
-    const handleSetIngredients = (event: ChangeEvent<HTMLInputElement>) => {
-        setIngredients(event.target.value);
+    const handleSetRecipeForm = (input: any, identifier: string) => {
+        if (input && 'target' in input && input.target instanceof HTMLInputElement) {
+            setRecipeForm((prevState) => ({
+                ...prevState,
+                [identifier]: input.target.value,
+            }));
+        } else {
+            setRecipeForm((prevState) => ({
+                ...prevState,
+                [identifier]: input,
+            }));
+        }
+        console.log(recipeForm)
     }
     return (
         <>
             <LoggedInNav/>
             <div className="recipe-container">
                 <div className="format-recipe-screen">
-                    <div>            {/*create form */}
+                    <div>
                         <form className="recipe-form-input-group" onSubmit={handleOnSubmit}>
+
+                            <div className="select-group">
+                                <Select
+                                    className="select-input"
+                                    options={measurementOptions}
+                                    onChange={(option) => handleSetRecipeForm(option, "measurement")}
+                                    styles={ReactSelectFormStyles}
+                                    placeholder={"Measurement"}
+                                    value={recipeForm.measurement}
+                                />
+                                <Select
+                                    className="select-input"
+                                    options={languageOptions}
+                                    onChange={(option) => handleSetRecipeForm(option, "language")}
+                                    styles={ReactSelectFormStyles}
+                                    placeholder={"Language"}
+                                    value={recipeForm.language}
+                                />
+                            </div>
                             <input
-                                type="text"
                                 className="ingredients-input"
-                                value={ingredients}
-                                onChange={handleSetIngredients}
+                                value={recipeForm.ingredients}
+                                onChange={(input) => handleSetRecipeForm(input, "ingredients")}
                                 placeholder="Enter your ingredients">
                             </input>
-                            <button className="btn btn-secondary">Create Recipe</button>
+                            <button disabled={true} className="btn btn-secondary">Create Recipe</button>
                         </form>
                     </div>
-                    {isRecipeFetched &&
+                    {recipe &&
                         <div className="my-4 recipe-box-shadow recipe-grouping">
-                            <h2>{recipe?.title}</h2>
-                            <div className="my-4">
-                                <h4>DESCRIPTION</h4>
-                                <div className="font-formatting">
+                            <div className="title-container">
+                                <h2 id="title-header">{recipe?.title}</h2>
+                            </div>
+                            <div className="mb-4 mt-3">
+                                <h4 className="py-1">Description</h4>
+                                <div className="font-formatting" id="description-container">
                                     {recipe?.description}
                                 </div>
                             </div>
                             <div className="my-4">
-                                <h4>INGREDIENTS</h4>
+                                <h4 className="py-1">Ingredients</h4>
                                 <div className="font-formatting">
                                     <ul>
-                                        {recipe?.ingredients.map((ingredient) => {
-                                            return <li>{ingredient}</li>
+                                        {recipe?.ingredients.map((ingredient, index) => {
+                                            return <li key={index} className="py-1">{ingredient}</li>
                                         })}</ul>
                                 </div>
                             </div>
                             <div className="my-4">
                                 <div className="font-formatting">
-                                    <h4>STEPS</h4>
+                                    <h4 className="py-1">Steps</h4>
                                     <ol>
-                                        {recipe?.steps.map((step) => {
-                                            return <li>{step}</li>
+                                        {recipe?.steps.map((step, index) => {
+                                            return <li key={index} className="py-1">{step}</li>
                                         })}</ol>
                                 </div>
                             </div>

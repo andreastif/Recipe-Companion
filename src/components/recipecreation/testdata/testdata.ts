@@ -1,0 +1,22 @@
+import {Recipe} from "../../../contexts/AuthContext.tsx";
+
+const exampleRecipe: Recipe = {
+
+        title: "Citrus Mexican Chicken",
+        description: "THIS IS AN AI GENERATED TEST RECIPE INJECTED FROM THE CONTEXT -> This recipe features a zesty, citrus-infused Mexican chicken that is both flavorful and affordable. The chicken is marinated in a lemon and lime zest mixture, then pan-seared to perfection. It's a simple dish with a refreshing twist, perfect for a weeknight dinner. Serve with a side of rice or tortillas for a complete meal.",
+        ingredients: [
+        "1 lemon (for zest and 30ml juice)",
+        "1 lime (for zest and 30ml juice)",
+        "15ml olive oil",
+        "500g chicken breast"
+    ],
+        steps: [
+        " Zest the lemon and lime, then juice both to get approximately 30ml of lemon juice and 30ml of lime juice.",
+        " In a bowl, combine the lemon zest, lime zest, lemon juice, lime juice, and 15ml of olive oil to create a marinade.",
+        "Add 500g of chicken breast to the marinade, ensuring each piece is well-coated, and let it sit for at least 30 minutes in the refrigerator.",
+        "  Heat a pan over medium-high heat and cook the marinated chicken for 5-7 minutes on each side, or until fully cooked and golden brown."
+    ]
+
+}
+
+export default exampleRecipe
