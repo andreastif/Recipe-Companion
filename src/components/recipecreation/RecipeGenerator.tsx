@@ -6,14 +6,14 @@ import {useAuth} from "../../hooks/useAuth.tsx";
 import Select from "react-select";
 import {languageOptions, measurementOptions, RecipeForm} from "./utils/RecipeGeneratorSelectUtils.ts";
 import {ReactSelectFormStyles} from "./utils/ReactSelectFormStyles.ts";
-import {RecipeData} from "./utils/RecipeGeneratoUtils.ts";
+import {RecipeData} from "./utils/RecipeGeneratorUtils.ts";
 
 
 const RecipeGenerator = () => {
     const {recipe, setRecipe} = useAuth();
     const [recipeForm, setRecipeForm] = useState<RecipeForm>({
-        measurement: undefined,
-        language: undefined,
+        measurement: {value: "METRIC", label: "Metric"},
+        language: {value: "SWEDISH", label: "Swedish"},
         ingredients: ""
     })
 

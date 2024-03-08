@@ -19,4 +19,23 @@ const exampleRecipe: Recipe = {
 
 }
 
+export const exampleRecipe2: Recipe = {
+    title: "Ugnsrostad Potatis med Örtsmör",
+    description: "Denna måltid kommer att kittla smaklökarna med en dekadent blanding av örter och smör.",
+    ingredients: [
+        "600 gram potatis",
+        "200 gram smör",
+        "Timjan och rosmarin",
+        "Salt och peppar",
+    ],
+    steps: [
+        " Förvärm ugnen på 175 grader.",
+        " Skala, tvätta och skär potatisen i klyftor och lägg på en plåt. ",
+        " Blanda smör och örter väl tills örterna har fördelat sig fint i smöret.",
+        " Sprid ut klickar av örtsmöret över potatisen, salta och peppra, och blanda väl. ",
+        " Låt potatisen gräddas i mitten av ugnen i ca 40 minuter."
+    ]
+
+}
+
 export default exampleRecipe
