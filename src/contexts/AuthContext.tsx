@@ -17,6 +17,13 @@ export interface AuthProviderProps {
     children: ReactNode;
 }
 
+export type Recipe = {
+    title: string,
+    description: string,
+    ingredients: string[],
+    steps: string[]
+}
+
 
 export interface AuthContextType {
     user: User | null
@@ -28,6 +35,14 @@ export interface AuthContextType {
     logout(): Promise<void>
 
     resetPassword(email: string): Promise<void>
+
+    recipe: Recipe | null | undefined
+
+    setRecipe: React.Dispatch<React.SetStateAction<Recipe | null | undefined>>
+
+    isRecipeFetched: boolean
+
+    setIsRecipeFetched: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 // Create context
@@ -37,6 +52,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     // STATES
     const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true);
+    const [recipe, setRecipe] = useState<Recipe | null>()
+    const [isRecipeFetched, setIsRecipeFetched] = useState(false)
+
 
     // Login
     const login = (email: string, password: string) => {
@@ -77,6 +95,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         logout,
         user,
         resetPassword,
+        recipe,
+        setRecipe,
+        isRecipeFetched,
+        setIsRecipeFetched
     }
 
     /*
