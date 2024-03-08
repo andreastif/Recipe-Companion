@@ -69,6 +69,7 @@ const RecipeGenerator = () => {
                                     styles={ReactSelectFormStyles}
                                     placeholder={"Measurement"}
                                     value={recipeForm.measurement}
+                                    defaultValue={{value: "METRIC", label: "Metric"}}
                                 />
                                 <Select
                                     className="select-input"
@@ -77,6 +78,7 @@ const RecipeGenerator = () => {
                                     styles={ReactSelectFormStyles}
                                     placeholder={"Language"}
                                     value={recipeForm.language}
+                                    defaultValue={{value: "SWEDISH", label: "Swedish"}}
                                 />
                             </div>
                             <input
@@ -85,7 +87,10 @@ const RecipeGenerator = () => {
                                 onChange={(input) => handleSetRecipeForm(input, "ingredients")}
                                 placeholder="Enter your ingredients">
                             </input>
-                            <button disabled={true} className="btn btn-secondary">Create Recipe</button>
+                            <button
+                                // disabled={true}
+                                className="btn btn-secondary"
+                            >Create Recipe</button>
                         </form>
                     </div>
                     {recipe &&
