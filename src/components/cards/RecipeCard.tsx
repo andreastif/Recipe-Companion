@@ -1,5 +1,6 @@
 import './RecipeCard.css'
 import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
+import exampleRecipe from "../recipecreation/testdata/testdata.ts";
 
 
 export type RecipeTypeProps = {
@@ -17,9 +18,9 @@ export interface RecipeJson {
 }
 
 const RecipeCard = (props: RecipeTypeProps) => {
+
     return (
-        <Card sx={{maxWidth: props.maxWidth, bgcolor: props.bgColor, border: props.border}}>
-            <CardActionArea>
+        <Card sx={{ maxWidth: props.maxWidth, bgcolor: props.bgColor, border: props.border, margin: 'auto' }}>            <CardActionArea>
                 <CardMedia
                     component="img"
                     height="140"
@@ -27,16 +28,16 @@ const RecipeCard = (props: RecipeTypeProps) => {
                     alt="lorem picsum"
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div"
-                                className="text-white text-center">
-                        {props.data.title}
+                    <Typography gutterBottom variant="h5" component="div" className="text-white text-center">
+                        {exampleRecipe.title}
                     </Typography>
                     <Typography variant="body2" color="white">
-                        {props.data.summary}
+                        {exampleRecipe.description.slice(0, 100) + " ..."}
                     </Typography>
                 </CardContent>
             </CardActionArea>
         </Card>
+
     )
 }
 

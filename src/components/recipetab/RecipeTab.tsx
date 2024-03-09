@@ -8,14 +8,20 @@ const RecipeTab = () => {
 
     return (
         // tabs in recipetab, add more content if needed
-        <div className="p-5 row">
+        <div className="p-5 d-flex flex-wrap justify-content-center">
             {recipeDataList.map(recipe => (
-                <div key={recipe.id} className="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-5">
-                    <RecipeCard maxWidth={345} bgColor={'#2b3035'} border={'1px solid white'}
-                                data={recipe}/>
+                <div
+                    key={recipe.id}
+                    className="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-5 d-flex"
+                >
+                    <RecipeCard
+                        maxWidth={240}
+                        bgColor={'#2b3035'}
+                        border={'1px solid white'}
+                        data={recipe}
+                    />
                 </div>
             ))}
-
         </div>
     )
 }

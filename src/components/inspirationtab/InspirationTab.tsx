@@ -11,6 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {useQuery} from '@tanstack/react-query'
 import Modal from '@mui/material/Modal';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
+import {useNavigate} from "react-router-dom";
 
 interface Favorites {
     [key: string]: boolean;
@@ -31,6 +32,8 @@ const InspirationTab = () => {
     //for calling usequery onmount
     const [isMounted, setIsMounted] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const fetchFoodSamples = async () => {
         const response = await fetchSampleSeafoodMeals();
@@ -125,9 +128,9 @@ const InspirationTab = () => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={modalStyle}>
-                        <div>
-                            <div className="text-center mt-5">
-                                <strong className="fs-5">{currentMeal?.name}</strong>
+                        <div >
+                            <div className="text-center mt-5 meal-name-container">
+                                <span className="fs-5">{currentMeal?.name}</span>
                                 <hr/>
                             </div>
                             <div className="d-flex justify-content-center align-content-center my-4">
@@ -146,9 +149,9 @@ const InspirationTab = () => {
                             </div>
                             <div className="d-flex justify-content-center align-content-center">
                                 <div className="border rounded box-shadow my-2">
-                                    <IconButton style={{color: 'white'}}>
+                                    <IconButton style={{color: 'white'}} onClick={() => {navigate("/create")}}>
                                         <SmartToyIcon color="inherit" fontSize="large"/>
-                                        <span className="ps-2 fs-5">Generate Recipe</span>
+                                        <span className="ps-2 button-text-container">Generate Recipe</span>
                                     </IconButton>
                                 </div>
                             </div>

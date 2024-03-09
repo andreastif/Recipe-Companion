@@ -44,6 +44,13 @@
 	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out
 }
 
+.landing-nav-span {
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 20px !important;
+
+}
+
 /* New styles for mobile and tablets */
 @media screen and (max-width: 768px) {
 	/* Adjust the styles as needed for mobile and tablets */
@@ -54,7 +61,13 @@
 	}
 
 	.top-nav span {
-		font-size: 1.2rem !important;
+		font-size: 18px !important;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+	}
+
+	.top-nav a {
+		padding: 14px 8px;
 	}
 
 	.top-nav img {

@@ -46,8 +46,17 @@ function Dashboard() {
                                     variant="fullWidth"
                                     centered
                                 >
-                                    <Tab value={TabType.Recipe} label="My Recipes" sx={{fontSize: isMobile ? "1rem" : "1.1rem"}}/>
-                                    <Tab value={TabType.Inspiration} label="Inspiration" sx={{fontSize: isMobile ? "1rem" : "1.1rem"}}/>
+                                    <Tab value={TabType.Recipe} label="My Recipes" sx={{
+                                        fontSize: isMobile ? "16px" : "16px",
+                                        letterSpacing: "1px",
+                                        textTransform: "uppercase",
+                                        fontWeight: "normal"
+                                    }}/>
+                                    <Tab value={TabType.Inspiration} label="Inspiration" sx={{
+                                        fontSize: isMobile ? "16px" : "16px",
+                                        letterSpacing: "1px",
+                                        textTransform: "uppercase",
+                                        fontWeight: "normal"}}/>
                                     {/*<Tab value="three" label="Other"/>*/}
                                 </Tabs>
                             </Box>

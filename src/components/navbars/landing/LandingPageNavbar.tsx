@@ -22,14 +22,16 @@ function LandingPageNavbar() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <CustomBox >
+                <CustomBox>
                     <Typography id="modal-modal-title" variant="h6" component="h2" sx={{}}>
                         Work In Progress!
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2}}>
-                        This website is a work in progress which means that design choices, features and other tidbits might not be in the final version of this website.
+                    <Typography id="modal-modal-description" sx={{mt: 2}}>
+                        This website is a work in progress which means that design choices, features and other tidbits
+                        might not be in the final version of this website.
                     </Typography>
-                    <Button onClick={() => setModelOpen(false)} sx={{paddingLeft: 0, marginLeft: -1, marginTop: 3, color: "darkorange"}}>Close</Button>
+                    <Button onClick={() => setModelOpen(false)}
+                            sx={{paddingLeft: 0, marginLeft: -1, marginTop: 3, color: "darkorange"}}>Close</Button>
                 </CustomBox>
             </Modal>
             <div className="bg-img">
@@ -44,11 +46,19 @@ function LandingPageNavbar() {
                                 alt="logo"
                             />
                         </div>
-                        {!user ? <div>
-                            <Link to={"/login"}><span className="h4">Login</span></Link>
-                            <Link to={"/register"}><span className="h4">Register</span></Link>
-                        </div> : <Link to={"/dashboard"}><span className="h4">Dashboard</span></Link>}
-                        <Link to={"/about"}><span className="h4">About</span></Link>
+                        {!user ?
+                            <div>
+                                <Link to={"/login"}><span className="h4 landing-nav-span">Login</span></Link>
+                                <Link to={"/register"}><span className="h4 landing-nav-span">Register</span></Link>
+                            </div> :
+
+                                <Link to={"/dashboard"}>
+                                    <span className="h4 landing-nav-span">Dashboard</span>
+                                </Link>
+                            }
+
+                            <Link to={"/about"}><span className="h4 landing-nav-span">About</span></Link>
+
                     </div>
                 </div>
             </div>

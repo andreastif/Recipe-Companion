@@ -21,7 +21,7 @@ const exampleRecipe: Recipe = {
 
 export const exampleRecipe2: Recipe = {
     title: "Ugnsrostad Potatis med Örtsmör",
-    description: "Denna måltid kommer att kittla smaklökarna med en dekadent blanding av örter och smör.",
+    description: "Denna måltid kommer att kittla smaklökarna med en dekadent blandning av örter och smör.",
     ingredients: [
         "600 gram potatis",
         "200 gram smör",
@@ -42,7 +42,7 @@ export const descriptionRecipe: Recipe = {
     description: "Well, that is as easy as following a recipe!",
     ingredients: [
         "A list of ingredients.",
-        "The measurement of your choice.",
+        "The measurement type of your choice (kilos or pounds, etc).",
         "Your preferred language.",
     ],
     steps: [
