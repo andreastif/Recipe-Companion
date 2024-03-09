@@ -14,7 +14,7 @@ const RecipeGenerator = () => {
     const {recipe, setRecipe} = useAuth();
     const [recipeForm, setRecipeForm] = useState<RecipeForm>({
         measurement: {value: "METRIC", label: "Metric"},
-        language: {value: "SWEDISH", label: "Swedish"},
+        language: { value: "ENGLISH", label: "English" },
         ingredients: ""
     })
     const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +62,9 @@ const RecipeGenerator = () => {
     useEffect(() => {
 
     }, [isLoading])
+
+    //todo: LÄGG TIL SELECT FÖR ANTAL PERSONER & förrätt huvudrätt efterrätt
+
     return (
         <>
             <LoggedInNav/>
@@ -88,7 +91,7 @@ const RecipeGenerator = () => {
                                         styles={ReactSelectFormStyles}
                                         placeholder={"Language"}
                                         value={recipeForm.language}
-                                        defaultValue={{value: "ENGLISH", label: "English"}}
+                                        defaultValue={{ value: "ENGLISH", label: "English" }}
                                     />
                                 </div>
                                 <input
