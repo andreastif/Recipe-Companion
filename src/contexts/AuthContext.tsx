@@ -41,6 +41,10 @@ export interface AuthContextType {
 
     setRecipe: React.Dispatch<React.SetStateAction<Recipe | null | undefined>>
 
+    workInProgressOpen: boolean
+
+    setWorkInProgressOpen: React.Dispatch<React.SetStateAction<boolean>>
+
 }
 
 // Create context
@@ -51,6 +55,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true);
     const [recipe, setRecipe] = useState<Recipe | null | undefined>(descriptionRecipe)
+    const [workInProgressOpen, setWorkInProgressOpen] = useState<boolean>(true);
 
 
     // Login
@@ -94,6 +99,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         resetPassword,
         recipe,
         setRecipe,
+        workInProgressOpen,
+        setWorkInProgressOpen
     }
 
     /*

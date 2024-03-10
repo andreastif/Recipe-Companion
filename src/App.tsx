@@ -10,6 +10,7 @@ import Profile from "./components/profile/Profile.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ForgotPassword from "./components/forgotPassword/ForgotPassword.tsx";
 import RecipeGenerator from "./components/recipecreation/RecipeGenerator.tsx";
+import Register from "./components/register/Register.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/lostpw" element={<ForgotPassword />} />
-            {/* <Route path="/register" element={<Register/>}/> */}
+            <Route path="/register" element={<Register/>}/>
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />

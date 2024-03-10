@@ -3,22 +3,21 @@ import logo from "../../../img/test-icon.png";
 import {Link} from "react-router-dom";
 import {useAuth} from "../../../hooks/useAuth.tsx";
 import Modal from "@mui/material/Modal";
-import {useState} from "react";
 import {Typography} from "@mui/material";
 import {CustomBox} from "./CustomStyling.ts";
 import Button from '@mui/material/Button';
 
 
 function LandingPageNavbar() {
-    const {user} = useAuth();
-    const [modelOpen, setModelOpen] = useState(true);
+    const {user, workInProgressOpen, setWorkInProgressOpen} = useAuth();
+
 
 
     return (
         <>
             <Modal
-                open={modelOpen}
-                onClose={() => setModelOpen(false)}
+                open={workInProgressOpen}
+                onClose={() => setWorkInProgressOpen(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
@@ -30,7 +29,7 @@ function LandingPageNavbar() {
                         This website is a work in progress which means that design choices, features and other tidbits
                         might not be in the final version of this website.
                     </Typography>
-                    <Button onClick={() => setModelOpen(false)}
+                    <Button onClick={() => setWorkInProgressOpen(false)}
                             sx={{paddingLeft: 0, marginLeft: -1, marginTop: 3, color: "darkorange"}}>Close</Button>
                 </CustomBox>
             </Modal>
