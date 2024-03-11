@@ -11,7 +11,6 @@ import {
     sendPasswordResetEmail
 } from "firebase/auth";
 import LoadingSpinner from "../components/spinner/LoadingSpinner.tsx";
-import {descriptionRecipe} from "../components/recipecreation/testdata/testdata.ts";
 
 
 export interface AuthProviderProps {
@@ -45,6 +44,10 @@ export interface AuthContextType {
 
     setWorkInProgressOpen: React.Dispatch<React.SetStateAction<boolean>>
 
+    fromInspiration: boolean
+
+    setFromInspiration: React.Dispatch<React.SetStateAction<boolean>>
+
 }
 
 // Create context
@@ -54,8 +57,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     // STATES
     const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true);
-    const [recipe, setRecipe] = useState<Recipe | null | undefined>(descriptionRecipe)
+    const [recipe, setRecipe] = useState<Recipe | null | undefined>()
     const [workInProgressOpen, setWorkInProgressOpen] = useState<boolean>(true);
+    const [fromInspiration, setFromInspiration] = useState<boolean>(false);
 
 
     // Login
@@ -100,7 +104,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         recipe,
         setRecipe,
         workInProgressOpen,
-        setWorkInProgressOpen
+        setWorkInProgressOpen,
+        fromInspiration,
+        setFromInspiration
     }
 
     /*

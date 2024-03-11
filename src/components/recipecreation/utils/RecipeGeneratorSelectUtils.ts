@@ -6,13 +6,16 @@ export const languageOptions: OptionTypeForSelectElement[] = [
     {value: "SWEDISH", label: "Swedish"},
 ]
 
-export const measurementOptions: OptionTypeForSelectElement[] = [
-    {value: "METRIC", label: "Metric"},
-    {value: "IMPERIAL", label: "Imperial"},
+export const numberOfServings: OptionTypeForSelectElement[] = [
+    {value: "2", label: "2 servings"},
+    {value: "4", label: "4 servings"},
+    {value: "6", label: "6 servings"},
+    {value: "8", label: "8 servings"},
+    {value: "10", label: "10 servings"},
 ]
 
 export type RecipeForm = {
-    measurement: OptionTypeForSelectElement | undefined;
+    servings: OptionTypeForSelectElement | undefined;
     ingredients: string | undefined;
     language: OptionTypeForSelectElement | undefined;
 }

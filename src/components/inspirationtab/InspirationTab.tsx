@@ -12,6 +12,7 @@ import {useQuery} from '@tanstack/react-query'
 import Modal from '@mui/material/Modal';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../hooks/useAuth.tsx";
 
 interface Favorites {
     [key: string]: boolean;
@@ -34,6 +35,7 @@ const InspirationTab = () => {
     const [modalOpen, setModalOpen] = useState(false);
 
     const navigate = useNavigate();
+    const {setFromInspiration} = useAuth()
 
     const fetchFoodSamples = async () => {
         const response = await fetchSampleSeafoodMeals();
@@ -128,7 +130,7 @@ const InspirationTab = () => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={modalStyle}>
-                        <div >
+                        <div>
                             <div className="text-center mt-5 meal-name-container">
                                 <span className="fs-5">{currentMeal?.name}</span>
                                 <hr/>
@@ -149,7 +151,12 @@ const InspirationTab = () => {
                             </div>
                             <div className="d-flex justify-content-center align-content-center">
                                 <div className="border rounded box-shadow my-2">
-                                    <IconButton style={{color: 'white'}} onClick={() => {navigate("/create")}}>
+                                    <IconButton style={{color: 'white'}} onClick={() => {
+                                        navigate("/create", {
+                                            state: {meal: currentMeal?.name}
+                                        })
+                                        setFromInspiration(true)
+                                    }}>
                                         <SmartToyIcon color="inherit" fontSize="large"/>
                                         <span className="ps-2 button-text-container">Generate Recipe</span>
                                     </IconButton>
