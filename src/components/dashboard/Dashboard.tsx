@@ -8,6 +8,7 @@ import {SyntheticEvent, useState} from "react";
 import RecipeTab from "../recipetab/RecipeTab.tsx";
 import InspirationTab from "../inspirationtab/InspirationTab.tsx";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {Link} from "react-router-dom";
 
 enum TabType {
     Recipe,
@@ -31,7 +32,11 @@ function Dashboard() {
     return (
         <>
             <LoggedInNav/>
-            <div className="page-container dashboard my-5 ">
+            <div className="text-center my-4 recipe-cta">
+                <p>Feeling hungry?</p>
+                <Link to={"/create"} className="recipe-link">Create</Link> new recipe
+            </div>
+            <div className="page-container dashboard mb-5">
                 <div className="content-wrap d-flex justify-content-center align-content-center">
                     <div className="border rounded border-secondary-subtle shadow" style={{"width": "95%"}}>
                         <div className="border-bottom border-secondary-subtle shadow">

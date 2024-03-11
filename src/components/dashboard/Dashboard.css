@@ -24,3 +24,14 @@
 .box-shadow {
     box-shadow: rgba(255, 255, 255, 0.24) 0 3px 8px;
 }
+
+.recipe-link {
+    color: rgb(255, 165, 0);
+    text-underline-offset: 5px;
+}
+
+.recipe-cta {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 16px;
+}

@@ -63,7 +63,7 @@ const RecipeGenerator = () => {
 
     }, [isLoading])
 
-    //todo: LÄGG TIL SELECT FÖR ANTAL PERSONER & förrätt huvudrätt efterrätt
+    //todo: LÄGG TIL SELECT FÖR ANTAL PERSONER & förrätt huvudrätt efterrätt, ta bort measurement
 
     return (
         <>
