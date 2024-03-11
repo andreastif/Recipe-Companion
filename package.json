@@ -27,7 +27,8 @@
     "react-dom": "^17.0.0 || ^18.0.0",
     "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^6.21.3",
-    "react-select": "^5.8.0"
+    "react-select": "^5.8.0",
+    "sweetalert2": "^11.10.6"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.20.1",

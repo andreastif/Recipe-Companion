@@ -11,6 +11,7 @@ import LoadingSpinner from "../spinner/LoadingSpinner.tsx";
 import {useLocation} from 'react-router-dom';
 import {postRecipeToMongoDb, RecipeItemMongo} from "../api/recipeApi.ts";
 import {User} from "firebase/auth";
+import {sweetAlertError, sweetAlertSuccess} from "../../utils/alerts.ts";
 
 
 const RecipeGenerator = () => {
@@ -20,7 +21,8 @@ const RecipeGenerator = () => {
         language: {value: "ENGLISH", label: "English"},
         ingredients: ""
     })
-    const [isLoading, setIsLoading] = useState(false);
+    const [isPageLoading, setIsPageLoading] = useState(false);
+    const [isRecipeSavedLoading, setIsRecipeSavedLoading] = useState(false);
     const location = useLocation();
     const {user} = useAuth();
     const createRecipe = async (data: RecipeData) => {
@@ -33,7 +35,7 @@ const RecipeGenerator = () => {
 
     const handleOnSubmitToRcApi = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setIsLoading(true)
+        setIsPageLoading(true)
         try {
             const response = await createRecipe({
                 ingredients: recipeForm.ingredients as string,
@@ -41,10 +43,10 @@ const RecipeGenerator = () => {
                 servings: recipeForm.servings?.value as string
             });
             setRecipe(response?.data)
-            setIsLoading(false)
+            setIsPageLoading(false)
         } catch (e) {
             console.warn(e);
-            setIsLoading(false)
+            setIsPageLoading(false)
         }
     }
 
@@ -72,33 +74,33 @@ const RecipeGenerator = () => {
                 email: user.email
             }
 
-
-            console.log(recipe.title)
-
             await handleSaveRecipeToDb(user, toBeSavedRecipe)
         }
     }
 
     const handleSaveRecipeToDb = async (user: User, toBeSavedRecipe: RecipeItemMongo) => {
+        setIsRecipeSavedLoading(true)
         try {
             await postRecipeToMongoDb(user, toBeSavedRecipe)
+            sweetAlertSuccess("New Recipe Saved!", "Enjoy your meal")
         } catch (e) {
+            sweetAlertError("Could not save recipe", "Try again later")
             console.warn(e)
         } finally {
-            console.log("complete")
+            setIsRecipeSavedLoading(false)
         }
     }
 
     useEffect(() => {
 
-    }, [isLoading])
+    }, [isPageLoading])
 
     useEffect(() => {
 
         if (fromInspiration) {
             const mealName = location.state.meal;
 
-            setIsLoading(true)
+            setIsPageLoading(true)
             createRecipe({
                 ingredients: mealName,
                 language: "English",
@@ -112,7 +114,7 @@ const RecipeGenerator = () => {
                     console.warn(e)
                 })
                 .finally(() => {
-                    setIsLoading(false)
+                    setIsPageLoading(false)
                     setFromInspiration(false)
                 })
         }
@@ -122,7 +124,7 @@ const RecipeGenerator = () => {
     return (
         <>
             <LoggedInNav/>
-            {isLoading ? <LoadingSpinner/> :
+            {isPageLoading ? <LoadingSpinner/> :
                 <div className="recipe-container">
                     <div className="format-recipe-screen">
                         <div>
@@ -192,12 +194,22 @@ const RecipeGenerator = () => {
                                                 })}</ol>
                                         </div>
                                     </div>
-                                    <button
-                                        className="btn btn-secondary"
-                                        style={{width: "100%", textTransform: "uppercase", letterSpacing: "2px"}}
-                                        onClick={handleOnClickSaveRecipe}
-                                    >Save Recipe
-                                    </button>
+
+                                    {isRecipeSavedLoading ?
+                                        <button className="btn btn-secondary"
+                                                style={{width: "100%", textTransform: "uppercase", letterSpacing: "2px"}}
+                                                type="button" disabled>
+                                            <span className="spinner-grow spinner-grow-sm me-2" role="status"
+                                                  aria-hidden="true"></span>
+                                            <span className="sr-only">Loading...</span>
+                                        </button> :
+                                        <button
+                                            className="btn btn-secondary"
+                                            style={{width: "100%", textTransform: "uppercase", letterSpacing: "2px"}}
+                                            onClick={handleOnClickSaveRecipe}
+                                        >Save Recipe
+                                        </button>
+                                    }
                                 </div>
 
                             </>

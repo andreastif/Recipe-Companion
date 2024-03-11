@@ -87,7 +87,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         const unsub = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
             setLoading(false)
-            console.log(currentUser)
+            // console.log(currentUser)
         })
 
         return () => {
