@@ -9,6 +9,8 @@ import {ReactSelectFormStyles} from "./utils/ReactSelectFormStyles.ts";
 import {RecipeData} from "./utils/RecipeGeneratorUtils.ts";
 import LoadingSpinner from "../spinner/LoadingSpinner.tsx";
 import {useLocation} from 'react-router-dom';
+import {postRecipeToMongoDb, RecipeItemMongo} from "../api/recipeApi.ts";
+import {User} from "firebase/auth";
 
 
 const RecipeGenerator = () => {
@@ -20,6 +22,7 @@ const RecipeGenerator = () => {
     })
     const [isLoading, setIsLoading] = useState(false);
     const location = useLocation();
+    const {user} = useAuth();
     const createRecipe = async (data: RecipeData) => {
         try {
             return await axios.post("api", data);
@@ -28,7 +31,7 @@ const RecipeGenerator = () => {
         }
     };
 
-    const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleOnSubmitToRcApi = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsLoading(true)
         try {
@@ -59,6 +62,33 @@ const RecipeGenerator = () => {
         }
     }
 
+    const handleOnClickSaveRecipe = async () => {
+        if (recipe && user && user.email) {
+            const toBeSavedRecipe: RecipeItemMongo = {
+                title: recipe.title,
+                description: recipe.description,
+                ingredients: recipe.ingredients,
+                steps: recipe.steps,
+                email: user.email
+            }
+
+
+            console.log(recipe.title)
+
+            await handleSaveRecipeToDb(user, toBeSavedRecipe)
+        }
+    }
+
+    const handleSaveRecipeToDb = async (user: User, toBeSavedRecipe: RecipeItemMongo) => {
+        try {
+            await postRecipeToMongoDb(user, toBeSavedRecipe)
+        } catch (e) {
+            console.warn(e)
+        } finally {
+            console.log("complete")
+        }
+    }
+
     useEffect(() => {
 
     }, [isLoading])
@@ -76,6 +106,7 @@ const RecipeGenerator = () => {
             })
                 .then(response => {
                     setRecipe(response?.data)
+
                 })
                 .catch(e => {
                     console.warn(e)
@@ -95,7 +126,7 @@ const RecipeGenerator = () => {
                 <div className="recipe-container">
                     <div className="format-recipe-screen">
                         <div>
-                            <form className="recipe-form-input-group" onSubmit={handleOnSubmit}>
+                            <form className="recipe-form-input-group" onSubmit={handleOnSubmitToRcApi}>
 
                                 <div className="select-group">
                                     <Select
@@ -164,6 +195,7 @@ const RecipeGenerator = () => {
                                     <button
                                         className="btn btn-secondary"
                                         style={{width: "100%", textTransform: "uppercase", letterSpacing: "2px"}}
+                                        onClick={handleOnClickSaveRecipe}
                                     >Save Recipe
                                     </button>
                                 </div>

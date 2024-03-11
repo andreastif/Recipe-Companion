@@ -14,7 +14,7 @@ export type RecipeItemMongo = {
 
 // Create a common instance of axios for all meal db requests
 export const mongoAPIClient = axios.create({
-    baseURL: "https://alsome.codes/recipes/",
+    baseURL: "https://alsome.codes/",
 });
 
 const handleRefreshTokenForUser = async (user: User) => {
@@ -24,7 +24,22 @@ const handleRefreshTokenForUser = async (user: User) => {
 export const fetchUserRecipes = async (user: User) => {
     try {
         const token = await handleRefreshTokenForUser(user);
-        return await mongoAPIClient.get("user", {
+        return await mongoAPIClient.get("recipes/user", {
+            headers: {
+                // Use the token in the Authorization header
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } catch (err) {
+        const axiosError = err as AxiosError;
+        throw new Error(axiosError.message);
+    }
+}
+
+export const postRecipeToMongoDb = async (user: User, recipe: RecipeItemMongo) => {
+    try {
+        const token = await handleRefreshTokenForUser(user);
+        return await mongoAPIClient.post("recipes", recipe, {
             headers: {
                 // Use the token in the Authorization header
                 Authorization: `Bearer ${token}`

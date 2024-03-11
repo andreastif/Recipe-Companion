@@ -26,7 +26,7 @@ const RecipeCard = (props: RecipeTypeProps) => {
                 <CardMedia
                     component="img"
                     height="140"
-                    src={"https://www.themealdb.com/images/media/meals/a15wsa1614349126.jpg"}
+                    src={"src/assets/bowl-ramen-gpt.png"}
                     alt="lorem picsum"
                 />
                 <CardContent>
