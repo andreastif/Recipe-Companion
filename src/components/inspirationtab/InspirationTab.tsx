@@ -81,7 +81,7 @@ const InspirationTab = () => {
     }
 
 
-    const modalStyle = {
+     const modalStyle = {
         position: 'absolute',
         top: '50%',
         left: '50%',

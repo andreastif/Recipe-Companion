@@ -4,24 +4,22 @@ import {RecipeItemMongo} from "../api/recipeApi.ts";
 
 
 export type RecipeTypeProps = {
+    minWidth: number,
     maxWidth: number,
+    minHeight: number,
+    maxHeight: number,
     bgColor: string,
     border: string,
     data: RecipeItemMongo
+    onClick: () => void;
 }
-/*
-export interface RecipeJson {
-    id: number,
-    title: string,
-    summary: string,
-    imageUrl: string,
-}
- */
 
 const RecipeCard = (props: RecipeTypeProps) => {
 
     return (
-        <Card sx={{ maxWidth: props.maxWidth, bgcolor: props.bgColor, border: props.border, margin: 'auto' }}>
+        <Card
+            sx={{minHeight: props.minHeight, maxHeight: props.maxHeight, maxWidth: props.maxWidth, minWidth: props.minWidth, bgcolor: props.bgColor, border: props.border, margin: 'auto'}}
+            onClick={props.onClick}>
             <CardActionArea>
                 <CardMedia
                     component="img"
@@ -34,8 +32,9 @@ const RecipeCard = (props: RecipeTypeProps) => {
                         {props.data.title}
                     </Typography>
                     <Typography variant="body2" color="white">
-                        {props.data.description.slice(0, 100) + " ..."}
+                        {props.data.description.slice(0, 80) + " ..."}
                     </Typography>
+
                 </CardContent>
             </CardActionArea>
         </Card>
