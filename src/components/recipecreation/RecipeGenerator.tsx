@@ -154,7 +154,7 @@ const RecipeGenerator = () => {
                                     className="ingredients-input"
                                     value={recipeForm.ingredients}
                                     onChange={(input) => handleSetRecipeForm(input, "ingredients")}
-                                    placeholder="Enter a recipe idea and/or some ingredients!">
+                                    placeholder="Enter a recipe and/or some ingredients!">
                                 </input>
                                 <button
                                     // disabled={true}
