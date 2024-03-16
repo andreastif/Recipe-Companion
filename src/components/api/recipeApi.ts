@@ -1,6 +1,7 @@
 import axios, {AxiosError} from "axios";
 import {User} from "firebase/auth";
 import {ObjectId} from "mongodb";
+import {RecipeData} from "../recipecreation/utils/RecipeGeneratorUtils.ts";
 
 
 export type RecipeItemMongo = {
@@ -45,6 +46,32 @@ export const postRecipeToMongoDb = async (user: User, recipe: RecipeItemMongo) =
                 Authorization: `Bearer ${token}`
             }
         });
+    } catch (err) {
+        const axiosError = err as AxiosError;
+        throw new Error(axiosError.message);
+    }
+}
+
+export const createRecipeGpt4 = async (user: User, recipe: RecipeData) => {
+    try {
+        const token = await handleRefreshTokenForUser(user);
+        return await axios.post("api/auth/create", recipe, {
+            headers: {
+                // Use the token in the Authorization header
+                Authorization: `Bearer ${token}`
+            }
+        })
+
+    } catch (err) {
+        const axiosError = err as AxiosError;
+        throw new Error(axiosError.message);
+    }
+}
+
+
+export const createRecipeGpt3_5 = async (recipe: RecipeData) => {
+    try {
+        return await axios.post("api/create", recipe);
     } catch (err) {
         const axiosError = err as AxiosError;
         throw new Error(axiosError.message);

@@ -1,20 +1,18 @@
-import LoggedInNav from "../navbars/loggedin/LoggedInNav.tsx";
 import './RecipeGenerator.css'
 import {FormEvent, useEffect, useState} from "react";
-import axios from "axios";
 import {useAuth} from "../../hooks/useAuth.tsx";
 import Select from "react-select";
 import {languageOptions, numberOfServings, RecipeForm} from "./utils/RecipeGeneratorSelectUtils.ts";
 import {ReactSelectFormStyles} from "./utils/ReactSelectFormStyles.ts";
-import {RecipeData} from "./utils/RecipeGeneratorUtils.ts";
 import LoadingSpinner from "../spinner/LoadingSpinner.tsx";
 import {useLocation} from 'react-router-dom';
-import {postRecipeToMongoDb, RecipeItemMongo} from "../api/recipeApi.ts";
+import {createRecipeGpt3_5, createRecipeGpt4, postRecipeToMongoDb, RecipeItemMongo} from "../api/recipeApi.ts";
 import {User} from "firebase/auth";
 import {sweetAlertError, sweetAlertSuccess} from "../../utils/alerts.ts";
+import {ChatGptModel} from "../../utils/modelEnum.ts";
 
 
-const RecipeGenerator = () => {
+const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsDisabled: boolean }) => {
     const {recipe, setRecipe, fromInspiration, setFromInspiration} = useAuth();
     const [recipeForm, setRecipeForm] = useState<RecipeForm>({
         servings: {value: "4", label: "4 servings"},
@@ -25,30 +23,7 @@ const RecipeGenerator = () => {
     const [isRecipeSavedLoading, setIsRecipeSavedLoading] = useState(false);
     const location = useLocation();
     const {user} = useAuth();
-    const createRecipe = async (data: RecipeData) => {
-        try {
-            return await axios.post("api", data);
-        } catch (e) {
-            console.warn(e)
-        }
-    };
 
-    const handleOnSubmitToRcApi = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setIsPageLoading(true)
-        try {
-            const response = await createRecipe({
-                ingredients: recipeForm.ingredients as string,
-                language: recipeForm.language?.value as string,
-                servings: recipeForm.servings?.value as string
-            });
-            setRecipe(response?.data)
-            setIsPageLoading(false)
-        } catch (e) {
-            console.warn(e);
-            setIsPageLoading(false)
-        }
-    }
 
     const handleSetRecipeForm = (input: any, identifier: string) => {
         if (input && 'target' in input && input.target instanceof HTMLInputElement) {
@@ -91,24 +66,52 @@ const RecipeGenerator = () => {
         }
     }
 
-    useEffect(() => {
+    const handleOnSubmitToRcApi = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setIsPageLoading(true)
+        try {
 
+            if (model === ChatGptModel.GPT4) {
+                const response = await createRecipeGpt4(user!, {
+                    ingredients: recipeForm.ingredients,
+                    language: recipeForm.language.value,
+                    servings: recipeForm.servings.value
+                });
+                setRecipe(response?.data)
+            } else {
+                const response = await createRecipeGpt3_5( {
+                    ingredients: recipeForm.ingredients,
+                    language: recipeForm.language.value,
+                    servings: recipeForm.servings.value
+                });
+                setRecipe(response?.data)
+            }
+
+        } catch (e) {
+            console.warn(e);
+
+        } finally {
+            setIsPageLoading(false)
+        }
+    }
+
+    // run once, on mount
+    useEffect(() => {
+        //don't add anything here
     }, [isPageLoading])
 
+    //if coming from inspiration page
     useEffect(() => {
-
         if (fromInspiration) {
             const mealName = location.state.meal;
-
             setIsPageLoading(true)
-            createRecipe({
+            createRecipeGpt4(user!, {
                 ingredients: mealName,
                 language: "English",
                 servings: "4 servings"
             })
                 .then(response => {
                     setRecipe(response?.data)
-
                 })
                 .catch(e => {
                     console.warn(e)
@@ -118,12 +121,11 @@ const RecipeGenerator = () => {
                     setFromInspiration(false)
                 })
         }
-    }, [location.state, fromInspiration, setFromInspiration, setRecipe]);
+    }, [location.state, fromInspiration, setFromInspiration, setRecipe, user]);
 
 
     return (
         <>
-            <LoggedInNav/>
             {isPageLoading ? <LoadingSpinner/> :
                 <div className="recipe-container">
                     <div className="format-recipe-screen">
@@ -195,21 +197,29 @@ const RecipeGenerator = () => {
                                         </div>
                                     </div>
 
+
                                     {isRecipeSavedLoading ?
                                         <button className="btn btn-secondary"
-                                                style={{width: "100%", textTransform: "uppercase", letterSpacing: "2px"}}
+                                                style={{
+                                                    width: "100%",
+                                                    textTransform: "uppercase",
+                                                    letterSpacing: "2px"
+                                                }}
                                                 type="button" disabled>
                                             <span className="spinner-grow spinner-grow-sm me-2" role="status"
                                                   aria-hidden="true"></span>
                                             <span className="sr-only">Loading...</span>
                                         </button> :
+
                                         <button
                                             className="btn btn-secondary"
                                             style={{width: "100%", textTransform: "uppercase", letterSpacing: "2px"}}
                                             onClick={handleOnClickSaveRecipe}
+                                            hidden={saveIsDisabled}
                                         >Save Recipe
                                         </button>
                                     }
+
                                 </div>
 
                             </>

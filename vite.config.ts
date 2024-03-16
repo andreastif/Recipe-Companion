@@ -35,7 +35,7 @@ export default ({mode}) => {
                     // For example, rewrite '/api/test' to '/test' before the request is sent.
                     rewrite: (path) => path.replace(/^\/api/, '/api/v1/'),
                     headers: {
-                        'Authorization': `Basic ${encodedCredentials}`,
+                        'RC-R-API': `${encodedCredentials}`,
                     },
                 },
                 // You can add more proxy rules here

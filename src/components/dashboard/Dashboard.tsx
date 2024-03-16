@@ -2,8 +2,6 @@ import "./Dashboard.css"
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-
-import LoggedInNav from "../navbars/loggedin/LoggedInNav.tsx";
 import {SyntheticEvent, useState} from "react";
 import RecipeTab from "../recipetab/RecipeTab.tsx";
 import InspirationTab from "../inspirationtab/InspirationTab.tsx";
@@ -31,7 +29,6 @@ function Dashboard() {
 
     return (
         <>
-            <LoggedInNav/>
             <div className="text-center my-4 recipe-cta">
                 <p>Feeling hungry?</p>
                 <Link to={"/create"} className="recipe-link">Create</Link> new recipe

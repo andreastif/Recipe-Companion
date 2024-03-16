@@ -81,6 +81,7 @@ const InspirationTab = () => {
     }
 
 
+    //todo: put into own file
      const modalStyle = {
         position: 'absolute',
         top: '50%',

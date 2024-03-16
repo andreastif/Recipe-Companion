@@ -1,8 +1,9 @@
 .landing {
   text-align: center;
-  min-height: 100vh;
   color: white;
-  padding: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+
 }
 
 /* New styles for mobile and tablets */

@@ -15,7 +15,7 @@ export const numberOfServings: OptionTypeForSelectElement[] = [
 ]
 
 export type RecipeForm = {
-    servings: OptionTypeForSelectElement | undefined;
-    ingredients: string | undefined;
-    language: OptionTypeForSelectElement | undefined;
+    servings: OptionTypeForSelectElement;
+    ingredients: string;
+    language: OptionTypeForSelectElement;
 }
