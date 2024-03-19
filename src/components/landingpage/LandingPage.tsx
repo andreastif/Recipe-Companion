@@ -34,7 +34,7 @@ function LandingPage() {
                     textTransform: "uppercase",
                     fontSize: "18px",
                     letterSpacing: "1px",
-                }}> Register now to save your recipes and get even better results!
+                }}> Register to save your recipes and get better results
                 </div>
             </div>
 

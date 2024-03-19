@@ -2,6 +2,7 @@ import axios, {AxiosError} from "axios";
 import {User} from "firebase/auth";
 import {ObjectId} from "mongodb";
 import {RecipeData} from "../recipecreation/utils/RecipeGeneratorUtils.ts";
+import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
 
 
 export type RecipeItemMongo = {
@@ -41,6 +42,22 @@ export const postRecipeToMongoDb = async (user: User, recipe: RecipeItemMongo) =
     try {
         const token = await handleRefreshTokenForUser(user);
         return await mongoAPIClient.post("recipes", recipe, {
+            headers: {
+                // Use the token in the Authorization header
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } catch (err) {
+        const axiosError = err as AxiosError;
+        throw new Error(axiosError.message);
+    }
+}
+
+export const removeRecipeFromMongoDb = async (user: User, recipe: RecipeItemMongo) => {
+    try {
+        const token = await handleRefreshTokenForUser(user);
+        const stringId = getStringMongoObjectId(recipe._id)
+        return await mongoAPIClient.delete(`recipes/${stringId}`, {
             headers: {
                 // Use the token in the Authorization header
                 Authorization: `Bearer ${token}`

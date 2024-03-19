@@ -1,12 +1,14 @@
 import './RecipeTab.css'
 import RecipeCard from "../cards/RecipeCard.tsx";
-import {fetchUserRecipes, RecipeItemMongo} from "../api/recipeApi.ts";
-import {useEffect, useState} from "react";
+import {fetchUserRecipes, RecipeItemMongo, removeRecipeFromMongoDb} from "../api/recipeApi.ts";
+import {FormEvent, useEffect, useState} from "react";
 import {useAuth} from "../../hooks/useAuth.tsx";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {Typography} from "@mui/material";
+import {modalRecipeRemoveStyle, modalRecipeStyle} from "./additionalModalStyling.ts";
+
 
 
 const RecipeTab = () => {
@@ -14,36 +16,31 @@ const RecipeTab = () => {
     const [apiError, setApiError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const isMobile = useMediaQuery('(max-width:768px)');
-    const [modalOpen, setModalOpen] = useState(false);
+    const [recipeModalOpen, setRecipeModalOpen] = useState(false);
+    const [recipeModalVerify, setRecipeModalVerify] = useState(false);
+    const [recipeMarkedForRemoval, setRecipeMarkedForRemoval] = useState<RecipeItemMongo>();
     const [selectedRecipeIndex, setSelectedRecipeIndex] = useState<number | null>(null);
-
-
-
     const {user} = useAuth();
+    const selectedRecipe = selectedRecipeIndex !== null ? recipes[selectedRecipeIndex] : null;
 
     //QUICKFIXES SOM MÅSTE LÖSAS:
     //todo: useQuery for fetching data
-    //todo: cleanup modal imports and exports from util instead
-    //todo: sätt egna css klasser, använd en recipegenerator.tsx klasserna...
 
-    const modalStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: isMobile ? '90%' : '40%',
-        bgcolor: '#2b3035',
-        border: '1px solid #FFF',
-        borderRadius: '5px',
-        boxShadow: 24,
-        p: 4,
-        overflowY: 'auto', // Enables vertical scrolling
-        maxHeight: '90vh', // Prevents the modal from being taller than the viewport
-    }
+    //todo: endpoints :
+    // #[put("/recipes/{id}")]
+    // token, hela objektet förutom ID (som tas av path Variable)
+    // ObjectId
+    // #[get("/recipes/{id}")]
 
-    const handleOpenModal = (index: number) => {
+
+    const handleRecipeModalOpen = (index: number) => {
         setSelectedRecipeIndex(index);
-        setModalOpen(true);
+        setRecipeModalOpen(true);
+    };
+
+    const handleSetRecipeModalVerify = (recipeItemMongo: RecipeItemMongo) => {
+        setRecipeMarkedForRemoval(recipeItemMongo);
+        setRecipeModalVerify(true)
     };
 
     const handleFetchUserRecipes = async () => {
@@ -51,9 +48,9 @@ const RecipeTab = () => {
         setIsLoading(true);
         try {
             if (user) {
-               const response = await fetchUserRecipes(user);
-               const userRecipes = response.data as RecipeItemMongo[];
-               setRecipes(userRecipes)
+                const response = await fetchUserRecipes(user);
+                const userRecipes = response.data as RecipeItemMongo[];
+                setRecipes(userRecipes)
             }
         } catch (e) {
             setApiError(true);
@@ -67,8 +64,30 @@ const RecipeTab = () => {
         handleFetchUserRecipes()
     }, [user]);
 
-    const selectedRecipe = selectedRecipeIndex !== null ? recipes[selectedRecipeIndex] : null;
 
+    const handleSubmitRemoveRecipe = async (event: FormEvent<HTMLButtonElement>) => {
+        event.preventDefault()
+        try {
+            const deleteResponse = await removeRecipeFromMongoDb(user!, recipeMarkedForRemoval!)
+            if (deleteResponse.status === 200) {
+                //recipe successfully deleted
+                const updatedRecipes = recipes.filter(recipe => recipe._id !== recipeMarkedForRemoval?._id)
+                //reset states
+                setRecipes(updatedRecipes)
+                setRecipeModalVerify(false)
+                setRecipeModalOpen(false)
+                setRecipeMarkedForRemoval(undefined);
+                setSelectedRecipeIndex(null);
+                handleFetchUserRecipes()
+            } else {
+                console.log("Failed to delete the recipe. Please try again.");
+            }
+        } catch (e) {
+            console.log("catch")
+        } finally {
+            console.log("finally")
+        }
+    }
 
     return (
         // tabs in recipetab, add more content if needed
@@ -97,30 +116,32 @@ const RecipeTab = () => {
                         bgColor={'#2b3035'}
                         border={'1px solid white'}
                         data={recipe}
-                        onClick={() => handleOpenModal(index)} // Pass the index here
+                        onClick={() => handleRecipeModalOpen(index)} // Pass the index here
                     />
                 </div>
             ))}
+
+            {/* RECIPE MODAL */}
             <Modal
-                open={modalOpen}
-                onClose={() => setModalOpen(false)}
+                open={recipeModalOpen}
+                onClose={() => setRecipeModalOpen(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={modalStyle}>
+                <Box sx={modalRecipeStyle(isMobile)}>
                     {/* Check if selectedRecipe is not null before trying to access its properties */}
                     {selectedRecipe && (
                         <div>
                             <div className="text-center mt-5 recipe-title-container">
                                 {/* Display the name of the selected recipe */}
                                 <span className="fs-5">{selectedRecipe.title}</span>
-                                <hr />
+                                <hr/>
                             </div>
 
                             <div className="d-flex justify-content-center align-content-center my-4">
                                 {/* Place any other recipe details you want to display here. */}
                                 {/* For example, showing the recipe's description or ingredients */}
-                                <Typography variant="inherit" color="white">
+                                <Typography component="div" variant="inherit" color="white">
                                     <div className="">
                                         <div className="mb-4 mt-3">
                                             <h4 className="py-1">Description</h4>
@@ -152,7 +173,13 @@ const RecipeTab = () => {
                             <button
                                 className="btn btn-secondary"
                                 style={{textTransform: "uppercase", letterSpacing: "2px"}}
-                                onClick={ () => setModalOpen(false)}
+                                onClick={() => handleSetRecipeModalVerify(selectedRecipe)}
+                            >Remove
+                            </button>
+                            <button
+                                className="btn btn-secondary mx-4"
+                                style={{textTransform: "uppercase", letterSpacing: "2px"}}
+                                onClick={() => setRecipeModalOpen(false)}
                             >Close
                             </button>
                         </div>
@@ -160,6 +187,39 @@ const RecipeTab = () => {
                 </Box>
             </Modal>
 
+            {/* REMOVE RECIPE MODAL */}
+            <Modal
+                open={recipeModalVerify}
+                onClose={() => setRecipeModalVerify(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description">
+                <Box sx={modalRecipeRemoveStyle(isMobile)}>
+
+                    <div>
+                        <div style={{textTransform: "uppercase", fontSize: "20px"}}>Are you sure you want to <span
+                            style={{color: "red"}}>remove</span> <span
+                            style={{fontStyle: "italic"}}>{recipeMarkedForRemoval?.title}</span> from your
+                            recipes?
+                        </div>
+                        <p className="my-3" style={{textTransform: "uppercase", fontSize: "16px"}}>This action cannot be
+                            undone</p>
+                        <div className="recipe-remove-container">
+                            <button
+                                className="btn btn-secondary"
+                                style={{textTransform: "uppercase", letterSpacing: "2px"}}
+                                onClick={(event) => handleSubmitRemoveRecipe(event)}
+                            >I am sure
+                            </button>
+                            <button
+                                className="btn btn-secondary"
+                                style={{textTransform: "uppercase", letterSpacing: "2px"}}
+                                onClick={() => setRecipeModalVerify(false)}
+                            >Cancel
+                            </button>
+                        </div>
+                    </div>
+                </Box>
+            </Modal>
 
         </div>
     )
