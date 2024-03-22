@@ -6,7 +6,13 @@ import {languageOptions, numberOfServings, RecipeForm} from "./utils/RecipeGener
 import {ReactSelectFormStyles} from "./utils/ReactSelectFormStyles.ts";
 import LoadingSpinner from "../spinner/LoadingSpinner.tsx";
 import {useLocation} from 'react-router-dom';
-import {createRecipeGpt3_5, createRecipeGpt4, postRecipeToMongoDb, RecipeItemMongo} from "../api/recipeApi.ts";
+import {
+    createRecipeGpt3_5,
+    createRecipeGpt4,
+    postRecipeToMongoDb,
+    RecipeItemMongo,
+    RecipeItemsMongoDto
+} from "../api/recipeApi.ts";
 import {User} from "firebase/auth";
 import {sweetAlertError, sweetAlertSuccess} from "../../utils/alerts.ts";
 import {ChatGptModel} from "../../utils/modelEnum.ts";
@@ -54,7 +60,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
         }
     }
 
-    const handleSaveRecipeToDb = async (user: User, toBeSavedRecipe: RecipeItemMongo) => {
+    const handleSaveRecipeToDb = async (user: User, toBeSavedRecipe: RecipeItemsMongoDto) => {
         setIsRecipeSavedLoading(true)
         try {
             await postRecipeToMongoDb(user, toBeSavedRecipe)

@@ -192,7 +192,6 @@ const RecipeTab = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description">
                 <Box sx={modalRecipeRemoveStyle(isMobile)}>
-
                     <div>
                         <div style={{textTransform: "uppercase", fontSize: "18px"}}>Are you sure you want to <span
                             style={{color: "red"}}>remove</span>

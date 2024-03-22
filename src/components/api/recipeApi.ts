@@ -17,6 +17,16 @@ export type RecipeItemMongo = {
     updated?: string
 }
 
+export type RecipeItemsMongoDto = {
+    _id?: ObjectId; // Made optional with '?' since it's not needed when creating
+    title: string,
+    description: string,
+    ingredients: string[],
+    steps: string[],
+    tags: string[],
+    email: string,
+}
+
 // Create a common instance of axios for all meal db requests
 export const mongoAPIClient = axios.create({
     baseURL: "https://alsome.codes/",
@@ -57,7 +67,7 @@ export const fetchAllRecipesInDBPagination = async (user: User, page: number, am
 }
 
 
-export const postRecipeToMongoDb = async (user: User, recipe: RecipeItemMongo) => {
+export const postRecipeToMongoDb = async (user: User, recipe: RecipeItemsMongoDto) => {
     try {
         const token = await handleRefreshTokenForUser(user);
         return await mongoAPIClient.post("recipes", recipe, {
