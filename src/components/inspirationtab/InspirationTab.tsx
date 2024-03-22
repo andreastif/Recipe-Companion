@@ -21,12 +21,17 @@ interface Favorites {
     [key: string]: boolean;
 }
 
+interface RecipeItemMongoWithHeight {
+    recipe: RecipeItemMongo;
+    height: number;
+}
+
 const InspirationTab = () => {
     //media queries for mobile
     const isMobile = useMediaQuery('(max-width:768px)');
     const [favorites, setFavorites] = useState<Favorites>({});
     const [currentRecipe, setCurrentRecipe] = useState<RecipeItemMongo>();
-    const [recipeList, setRecipeList] = useState<RecipeItemMongo[]>([]);
+    const [recipeList, setRecipeList] = useState<RecipeItemMongoWithHeight[]>([]);
     //for calling usequery onmount
     const [isMounted, setIsMounted] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
@@ -50,10 +55,17 @@ const InspirationTab = () => {
         setIsMounted(true);
     }, []);
 
-    //updating setMeal based on status and data
+    //updating based on status and data
     useEffect(() => {
         if (status === 'success' && data) {
-            setRecipeList(data);
+            const recipeWithRandomHeight: RecipeItemMongoWithHeight[] = data.map((recipe) => {
+                const formattedRecipe: RecipeItemMongoWithHeight = {
+                    recipe,
+                    height: getRandomHeight()
+                }
+                return formattedRecipe;
+            })
+            setRecipeList(recipeWithRandomHeight);
         }
     }, [status, data]);
 
@@ -65,11 +77,16 @@ const InspirationTab = () => {
     };
 
     function handleOpenModal(mealId: string) {
-        const currentRecipe = recipeList.find(recipe => getStringMongoObjectId(recipe._id) === mealId)
-        setCurrentRecipe(currentRecipe)
+        const currentRecipe = recipeList.find(recipe => getStringMongoObjectId(recipe.recipe._id) === mealId)
+        setCurrentRecipe(currentRecipe?.recipe)
         setModalOpen(true)
         console.log(currentRecipe);
     }
+
+    const getRandomHeight = () => {
+        const heights = [150, 200, 250, 300, 350, 400];
+        return heights[Math.floor(Math.random() * heights.length)];
+    };
 
 
     return (
@@ -83,13 +100,29 @@ const InspirationTab = () => {
                 <Box sx={inspoContainer(isMobile)}>
                     <ImageList variant="masonry" cols={isMobile ? 2 : 4} gap={10}>
                         {recipeList.map((item) => (
-                            // could probably make a component out of these things:
-                            <ImageListItem key={getStringMongoObjectId(item._id)} onClick={() => handleOpenModal(getStringMongoObjectId(item._id))}>
+                            <ImageListItem key={getStringMongoObjectId(item.recipe._id)} onClick={() => handleOpenModal(getStringMongoObjectId(item.recipe._id))}>
                                 <img
                                     src={recipePlaceholder}
-                                    alt="example placeholder"
+                                    alt={item.recipe.title}
                                     loading="lazy"
+                                    style={{ height: `${item.height}px`, width: "100%", objectFit: 'cover' }}
                                 />
+                                {/* Overlay Text
+                                position: 'absolute' removes the div from the normal document flow and positions it
+                                relative to its nearest positioned ancestor (the ImageListItem with position: 'relative').
+                                */}
+                                <div style={{
+                                    position: 'absolute',
+                                    bottom: '0',
+                                    left: '0',
+                                    width: '100%',
+                                    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay
+                                    padding: '10px',
+                                    boxSizing: 'border-box',
+                                    textAlign: 'center',
+                                }}>
+                                    <span style={{textTransform: "uppercase", letterSpacing: "1px"}}>{item.recipe.title}</span>
+                                </div>
                             </ImageListItem>
                         ))}
                     </ImageList>
