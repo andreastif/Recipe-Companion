@@ -15,6 +15,11 @@ const exampleRecipe: Recipe = {
         " In a bowl, combine the lemon zest, lime zest, lemon juice, lime juice, and 15ml of olive oil to create a marinade.",
         "Add 500g of chicken breast to the marinade, ensuring each piece is well-coated, and let it sit for at least 30 minutes in the refrigerator.",
         "  Heat a pan over medium-high heat and cook the marinated chicken for 5-7 minutes on each side, or until fully cooked and golden brown."
+    ],
+    tags: [
+        "Chicken",
+        "Mexican",
+        "Citrus"
     ]
 
 }
@@ -34,6 +39,10 @@ export const exampleRecipe2: Recipe = {
         " Blanda smör och örter väl tills örterna har fördelat sig fint i smöret.",
         " Sprid ut klickar av örtsmöret över potatisen, salta och peppra, och blanda väl. ",
         " Låt potatisen gräddas i mitten av ugnen i ca 40 minuter."
+    ],
+    tags: [
+        "Potatis",
+        "Örter"
     ]
 }
 
@@ -50,6 +59,10 @@ export const descriptionRecipe: Recipe = {
         " Pick your language of choice for your recipe.",
         " Type in your ingredients",
         " Press Create Recipe!",
+    ],
+    tags: [
+        "Easy",
+        "How"
     ]
 }
 

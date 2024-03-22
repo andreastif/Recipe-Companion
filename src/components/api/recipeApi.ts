@@ -13,8 +13,8 @@ export type RecipeItemMongo = {
     steps: string[],
     tags: string[],
     email: string,
-    created: string,
-    updated: string
+    created?: string,
+    updated?: string
 }
 
 // Create a common instance of axios for all meal db requests
