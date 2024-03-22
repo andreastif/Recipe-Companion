@@ -5,7 +5,7 @@ export const modalRecipeStyle = (isMobile: boolean) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: isMobile ? '90%' : '40%',
+        width: isMobile ? '90%' : '50%',
         bgcolor: '#2b3035',
         border: '1px solid #FFF',
         borderRadius: '5px',

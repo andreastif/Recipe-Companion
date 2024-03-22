@@ -128,7 +128,6 @@ const RecipeTab = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={modalRecipeStyle(isMobile)}>
-                    {/* Check if selectedRecipe is not null before trying to access its properties */}
                     {selectedRecipe && (
                         <div>
                             <div className="text-center mt-5 recipe-title-container">
@@ -137,10 +136,10 @@ const RecipeTab = () => {
                                 <hr/>
                             </div>
 
-                            <div className="d-flex justify-content-center align-content-center my-4">
+                            <div className="d-flex my-4">
                                 {/* Place any other recipe details you want to display here. */}
                                 {/* For example, showing the recipe's description or ingredients */}
-                                <Typography component="div" variant="inherit" color="white">
+                                <Typography className="typo-left-aligned-text" component="div" variant="inherit" color="white">
                                     <div className="">
                                         <div className="mb-4 mt-3">
                                             <h4 className="py-1">Description</h4>
@@ -200,11 +199,11 @@ const RecipeTab = () => {
                             <div
                                 className="my-3"
                                 style={{letterSpacing: "1px", fontSize: "14px"}}>
-                                <span style={{fontWeight: "bold", color: "#FFA77A"}}>{recipeMarkedForRemoval?.title}</span>
+                                <span style={{fontWeight: "bold", color: "#FFA77A"}}>{recipeMarkedForRemoval?.title}</span> {" "}?
                             </div>
-                            from your recipes?
+
                         </div>
-                        <p className="my-3" style={{textTransform: "uppercase", fontSize: "14px"}}>This action cannot be
+                        <p className="my-3" style={{textTransform: "uppercase", fontSize: "14px"}}>This action <span style={{textDecoration: "underline"}}>cannot</span> be
                             undone</p>
                         <div className="recipe-remove-container">
                             <button
