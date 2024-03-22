@@ -106,7 +106,7 @@ const RecipeTab = () => {
             }
 
             {recipes.map((recipe, index) => (
-                <div key={index} className="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-5 d-flex">
+                <div key={index} className="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-5">
                     <RecipeCard
                         maxWidth={240}
                         minWidth={240}
