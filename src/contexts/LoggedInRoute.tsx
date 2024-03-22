@@ -1,7 +1,7 @@
 import {Navigate, Outlet} from "react-router-dom";
 import {useAuth} from "../hooks/useAuth.tsx";
 
-const ProtectedRoute = () => {
+const LoggedInRoute = () => {
     const { user } = useAuth(); // Current Logged in User
 
 
@@ -9,10 +9,9 @@ const ProtectedRoute = () => {
     if (!user) {
         return <Navigate to={"/login"}/>;
     } else {
-
         return <Outlet />; //replaces old 'children'
     }
 
 };
 
-export default ProtectedRoute;
+export default LoggedInRoute;
