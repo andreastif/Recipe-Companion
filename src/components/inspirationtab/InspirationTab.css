@@ -10,3 +10,9 @@
     letter-spacing: 1.5px !important;
     font-size: 18px !important;
 }
+
+.inspo-container {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+}

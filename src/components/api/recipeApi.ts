@@ -12,7 +12,9 @@ export type RecipeItemMongo = {
     ingredients: string[],
     steps: string[],
     tags: string[],
-    email: string
+    email: string,
+    created: string,
+    updated: string
 }
 
 // Create a common instance of axios for all meal db requests
@@ -38,6 +40,22 @@ export const fetchUserRecipes = async (user: User) => {
         throw new Error(axiosError.message);
     }
 }
+
+export const fetchAllRecipesInDBPagination = async (user: User, page: number, amountPage: number) => {
+    try {
+        const token = await handleRefreshTokenForUser(user);
+        return await mongoAPIClient.get(`recipes?page=${page}&per_page=${amountPage}`, {
+            headers: {
+                // Use the token in the Authorization header
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } catch (err) {
+        const axiosError = err as AxiosError;
+        throw new Error(axiosError.message);
+    }
+}
+
 
 export const postRecipeToMongoDb = async (user: User, recipe: RecipeItemMongo) => {
     try {
