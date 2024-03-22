@@ -46,6 +46,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
                 description: recipe.description,
                 ingredients: recipe.ingredients,
                 steps: recipe.steps,
+                tags: recipe.tags,
                 email: user.email
             }
 
@@ -70,19 +71,18 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
         event.preventDefault();
         setIsPageLoading(true)
         try {
-
             if (model === ChatGptModel.GPT4) {
                 const response = await createRecipeGpt4(user!, {
                     ingredients: recipeForm.ingredients,
                     language: recipeForm.language.value,
-                    servings: recipeForm.servings.value
+                    servings: recipeForm.servings.value,
                 });
                 setRecipe(response?.data)
             } else {
                 const response = await createRecipeGpt3_5( {
                     ingredients: recipeForm.ingredients,
                     language: recipeForm.language.value,
-                    servings: recipeForm.servings.value
+                    servings: recipeForm.servings.value,
                 });
                 setRecipe(response?.data)
             }

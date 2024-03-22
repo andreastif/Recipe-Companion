@@ -22,7 +22,7 @@ export const modalRecipeRemoveStyle = (isMobile: boolean) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: isMobile ? '70%' : '30%',
+        width: isMobile ? '90%' : '15%',
         bgcolor: '#2b3035',
         border: '1px solid #FFF',
         borderRadius: '5px',

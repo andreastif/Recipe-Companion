@@ -10,7 +10,6 @@ import {Typography} from "@mui/material";
 import {modalRecipeRemoveStyle, modalRecipeStyle} from "./additionalModalStyling.ts";
 
 
-
 const RecipeTab = () => {
     const [recipes, setRecipes] = useState<RecipeItemMongo[]>([]);
     const [apiError, setApiError] = useState(false);
@@ -177,7 +176,7 @@ const RecipeTab = () => {
                             >Remove
                             </button>
                             <button
-                                className="btn btn-secondary mx-4"
+                                className="btn btn-secondary ms-4"
                                 style={{textTransform: "uppercase", letterSpacing: "2px"}}
                                 onClick={() => setRecipeModalOpen(false)}
                             >Close
@@ -196,12 +195,16 @@ const RecipeTab = () => {
                 <Box sx={modalRecipeRemoveStyle(isMobile)}>
 
                     <div>
-                        <div style={{textTransform: "uppercase", fontSize: "20px"}}>Are you sure you want to <span
-                            style={{color: "red"}}>remove</span> <span
-                            style={{fontStyle: "italic"}}>{recipeMarkedForRemoval?.title}</span> from your
-                            recipes?
+                        <div style={{textTransform: "uppercase", fontSize: "18px"}}>Are you sure you want to <span
+                            style={{color: "red"}}>remove</span>
+                            <div
+                                className="my-3"
+                                style={{letterSpacing: "1px", fontSize: "14px"}}>
+                                <span style={{fontWeight: "bold", color: "#FFA77A"}}>{recipeMarkedForRemoval?.title}</span>
+                            </div>
+                            from your recipes?
                         </div>
-                        <p className="my-3" style={{textTransform: "uppercase", fontSize: "16px"}}>This action cannot be
+                        <p className="my-3" style={{textTransform: "uppercase", fontSize: "14px"}}>This action cannot be
                             undone</p>
                         <div className="recipe-remove-container">
                             <button

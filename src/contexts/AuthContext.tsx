@@ -21,7 +21,8 @@ export type Recipe = {
     title: string,
     description: string,
     ingredients: string[],
-    steps: string[]
+    steps: string[],
+    tags: string[]
 }
 
 
