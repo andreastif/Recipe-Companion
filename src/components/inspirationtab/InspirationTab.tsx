@@ -16,6 +16,7 @@ import {fetchAllRecipesInDBPagination, RecipeItemMongo} from "../api/recipeApi.t
 import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
 import {inspoContainer, modalBoxStyle} from "./muiStyles.ts";
 import recipePlaceholder from "../../assets/recipe-placeholder.png"
+import {getRandomHeight} from "../recipecreation/utils/util.ts";
 
 interface Favorites {
     [key: string]: boolean;
@@ -83,11 +84,6 @@ const InspirationTab = () => {
         console.log(currentRecipe);
     }
 
-    const getRandomHeight = () => {
-        const heights = [150, 200, 250, 300, 350, 400];
-        return heights[Math.floor(Math.random() * heights.length)];
-    };
-
 
     return (
         <div>
@@ -100,28 +96,23 @@ const InspirationTab = () => {
                 <Box sx={inspoContainer(isMobile)}>
                     <ImageList variant="masonry" cols={isMobile ? 2 : 4} gap={10}>
                         {recipeList.map((item) => (
-                            <ImageListItem key={getStringMongoObjectId(item.recipe._id)} onClick={() => handleOpenModal(getStringMongoObjectId(item.recipe._id))}>
+                            <ImageListItem key={getStringMongoObjectId(item.recipe._id)}
+                                           onClick={() => handleOpenModal(getStringMongoObjectId(item.recipe._id))}>
                                 <img
                                     src={recipePlaceholder}
                                     alt={item.recipe.title}
                                     loading="lazy"
-                                    style={{ height: `${item.height}px`, width: "100%", objectFit: 'cover' }}
+                                    style={{height: `${item.height}px`, width: "100%", objectFit: 'cover'}}
                                 />
                                 {/* Overlay Text
                                 position: 'absolute' removes the div from the normal document flow and positions it
                                 relative to its nearest positioned ancestor (the ImageListItem with position: 'relative').
                                 */}
-                                <div style={{
-                                    position: 'absolute',
-                                    bottom: '0',
-                                    left: '0',
-                                    width: '100%',
-                                    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay
-                                    padding: '10px',
-                                    boxSizing: 'border-box',
-                                    textAlign: 'center',
-                                }}>
-                                    <span style={{textTransform: "uppercase", letterSpacing: "1px"}}>{item.recipe.title}</span>
+                                <div className="overlay-text">
+                                    <span style={{
+                                        textTransform: "uppercase",
+                                        letterSpacing: "1px"
+                                    }}>{item.recipe.title}</span>
                                 </div>
                             </ImageListItem>
                         ))}
@@ -142,10 +133,12 @@ const InspirationTab = () => {
                                 <hr/>
                             </div>
                             <div className="d-flex justify-content-center align-content-center my-4">
-                                <IconButton onClick={() => handleAddFavorite(getStringMongoObjectId(currentRecipe?._id) ?? "")}
-                                            style={{position: 'absolute', top: 5, left: 5, color: 'white', zIndex: 1}}>
-                                    <StarIcon color={favorites[getStringMongoObjectId(currentRecipe?._id) ?? ""] ? "warning" : "inherit"}
-                                              fontSize="large"/>
+                                <IconButton
+                                    onClick={() => handleAddFavorite(getStringMongoObjectId(currentRecipe?._id) ?? "")}
+                                    style={{position: 'absolute', top: 5, left: 5, color: 'white', zIndex: 1}}>
+                                    <StarIcon
+                                        color={favorites[getStringMongoObjectId(currentRecipe?._id) ?? ""] ? "warning" : "inherit"}
+                                        fontSize="large"/>
                                 </IconButton>
                                 <img
                                     src={recipePlaceholder}

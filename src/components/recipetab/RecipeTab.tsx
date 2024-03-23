@@ -1,5 +1,4 @@
 import './RecipeTab.css'
-import RecipeCard from "../cards/RecipeCard.tsx";
 import {fetchUserRecipes, RecipeItemMongo, removeRecipeFromMongoDb} from "../api/recipeApi.ts";
 import {FormEvent, useEffect, useState} from "react";
 import {useAuth} from "../../hooks/useAuth.tsx";
@@ -8,6 +7,11 @@ import Modal from "@mui/material/Modal";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {Typography} from "@mui/material";
 import {modalRecipeRemoveStyle, modalRecipeStyle} from "./additionalModalStyling.ts";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
+import recipePlaceholder from "../../assets/recipe-placeholder.png";
+import {getRandomHeight} from "../recipecreation/utils/util.ts";
 
 
 const RecipeTab = () => {
@@ -69,9 +73,7 @@ const RecipeTab = () => {
         try {
             const deleteResponse = await removeRecipeFromMongoDb(user!, recipeMarkedForRemoval!)
             if (deleteResponse.status === 200) {
-                //recipe successfully deleted
                 const updatedRecipes = recipes.filter(recipe => recipe._id !== recipeMarkedForRemoval?._id)
-                //reset states
                 setRecipes(updatedRecipes)
                 setRecipeModalVerify(false)
                 setRecipeModalOpen(false)
@@ -89,8 +91,7 @@ const RecipeTab = () => {
     }
 
     return (
-        // tabs in recipetab, add more content if needed
-        <div className="p-5 d-flex flex-wrap justify-content-center">
+        <div className="p-5">
             {isLoading ? <div className="spinner-border text-warning" role="status"></div> :
                 <div>
                     {apiError && <div className="text-center no-recipe-styling">
@@ -105,20 +106,25 @@ const RecipeTab = () => {
                 </div>
             }
 
-            {recipes.map((recipe, index) => (
-                <div key={index} className="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-5">
-                    <RecipeCard
-                        maxWidth={240}
-                        minWidth={240}
-                        minHeight={300}
-                        maxHeight={300}
-                        bgColor={'#2b3035'}
-                        border={'1px solid white'}
-                        data={recipe}
-                        onClick={() => handleRecipeModalOpen(index)} // Pass the index here
-                    />
-                </div>
-            ))}
+            <ImageList variant="masonry" cols={isMobile ? 2 : 4} gap={10}>
+                {recipes.map((item, index) => (
+                    <ImageListItem key={getStringMongoObjectId(item._id)} onClick={() => handleRecipeModalOpen(index)}>
+                        <img
+                            src={recipePlaceholder}
+                            alt={item.title}
+                            loading="lazy"
+                            style={{ height: `${getRandomHeight()}px`, width: "100%", objectFit: 'cover' }}
+                        />
+                        {/* Overlay Text
+                                position: 'absolute' removes the div from the normal document flow and positions it
+                                relative to its nearest positioned ancestor (the ImageListItem with position: 'relative').
+                                */}
+                        <div className="overlay-text">
+                            <span style={{textTransform: "uppercase", letterSpacing: "1px"}}>{item.title}</span>
+                        </div>
+                    </ImageListItem>
+                ))}
+            </ImageList>
 
             {/* RECIPE MODAL */}
             <Modal

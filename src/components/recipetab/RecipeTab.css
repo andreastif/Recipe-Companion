@@ -8,3 +8,14 @@
     display: flex;
     justify-content: space-between;
 }
+
+.overlay-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
