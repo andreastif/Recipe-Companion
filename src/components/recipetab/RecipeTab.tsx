@@ -12,6 +12,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
 import recipePlaceholder from "../../assets/recipe-placeholder.png";
 import {getRandomHeight} from "../recipecreation/utils/util.ts";
+import {inspoContainer} from "../inspirationtab/muiStyles.ts";
 
 
 const RecipeTab = () => {
@@ -91,7 +92,7 @@ const RecipeTab = () => {
     }
 
     return (
-        <div className="p-5">
+        <div className="recipe-container">
             {isLoading ? <div className="spinner-border text-warning" role="status"></div> :
                 <div>
                     {apiError && <div className="text-center no-recipe-styling">
@@ -106,25 +107,28 @@ const RecipeTab = () => {
                 </div>
             }
 
-            <ImageList variant="masonry" cols={isMobile ? 2 : 4} gap={10}>
-                {recipes.map((item, index) => (
-                    <ImageListItem key={getStringMongoObjectId(item._id)} onClick={() => handleRecipeModalOpen(index)}>
-                        <img
-                            src={recipePlaceholder}
-                            alt={item.title}
-                            loading="lazy"
-                            style={{ height: `${getRandomHeight()}px`, width: "100%", objectFit: 'cover' }}
-                        />
-                        {/* Overlay Text
+            <Box sx={inspoContainer(isMobile)}>
+                <ImageList variant="masonry" cols={isMobile ? 2 : 4} gap={10}>
+                    {recipes.map((item, index) => (
+                        <ImageListItem key={getStringMongoObjectId(item._id)}
+                                       onClick={() => handleRecipeModalOpen(index)}>
+                            <img
+                                src={recipePlaceholder}
+                                alt={item.title}
+                                loading="lazy"
+                                style={{height: `${getRandomHeight()}px`, width: "100%", objectFit: 'cover'}}
+                            />
+                            {/* Overlay Text
                                 position: 'absolute' removes the div from the normal document flow and positions it
                                 relative to its nearest positioned ancestor (the ImageListItem with position: 'relative').
                                 */}
-                        <div className="overlay-text">
-                            <span style={{textTransform: "uppercase", letterSpacing: "1px"}}>{item.title}</span>
-                        </div>
-                    </ImageListItem>
-                ))}
-            </ImageList>
+                            <div className="overlay-text">
+                                <span style={{textTransform: "uppercase", letterSpacing: "1px"}}>{item.title}</span>
+                            </div>
+                        </ImageListItem>
+                    ))}
+                </ImageList>
+            </Box>
 
             {/* RECIPE MODAL */}
             <Modal
@@ -145,7 +149,8 @@ const RecipeTab = () => {
                             <div className="d-flex my-4">
                                 {/* Place any other recipe details you want to display here. */}
                                 {/* For example, showing the recipe's description or ingredients */}
-                                <Typography className="typo-left-aligned-text" component="div" variant="inherit" color="white">
+                                <Typography className="typo-left-aligned-text" component="div" variant="inherit"
+                                            color="white">
                                     <div className="">
                                         <div className="mb-4 mt-3">
                                             <h4 className="py-1">Description</h4>
@@ -204,11 +209,15 @@ const RecipeTab = () => {
                             <div
                                 className="my-3"
                                 style={{letterSpacing: "1px", fontSize: "14px"}}>
-                                <span style={{fontWeight: "bold", color: "#FFA77A"}}>{recipeMarkedForRemoval?.title}</span> {" "}?
+                                <span style={{
+                                    fontWeight: "bold",
+                                    color: "#FFA77A"
+                                }}>{recipeMarkedForRemoval?.title}</span> {" "}?
                             </div>
 
                         </div>
-                        <p className="my-3" style={{textTransform: "uppercase", fontSize: "14px"}}>This action <span style={{textDecoration: "underline"}}>cannot</span> be
+                        <p className="my-3" style={{textTransform: "uppercase", fontSize: "14px"}}>This action <span
+                            style={{textDecoration: "underline"}}>cannot</span> be
                             undone</p>
                         <div className="recipe-remove-container">
                             <button
