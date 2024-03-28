@@ -202,7 +202,7 @@ const RecipeTab = () => {
                 style={{ textTransform: "uppercase", letterSpacing: "2px" }}
                 onClick={() => handleSetRecipeModalVerify(selectedRecipe.recipe)}
               >
-                Remove
+                Delete
               </button>
               <button
                 className="btn btn-secondary ms-4"
@@ -257,14 +257,14 @@ const RecipeTab = () => {
                 style={{ textTransform: "uppercase", letterSpacing: "2px" }}
                 onClick={(event) => handleSubmitRemoveRecipe(event)}
               >
-                <span style={{ fontWeight: "bold" }}>DELETE</span>
+                DELETE
               </button>
               <button
                 className="btn btn-secondary"
                 style={{ textTransform: "uppercase", letterSpacing: "2px" }}
                 onClick={() => setRecipeModalVerify(false)}
               >
-                <span style={{ fontWeight: "bold" }}>Cancel</span>
+                Cancel
               </button>
             </div>
           </div>
