@@ -1,116 +1,121 @@
-import React, {createContext, ReactNode, useEffect, useState} from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 
-import {auth} from "../firebase/firebaseconfig.ts";
+import { auth } from "../firebase/firebaseconfig.ts";
 import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged,
-    UserCredential,
-    User,
-    sendPasswordResetEmail
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  UserCredential,
+  User,
+  sendPasswordResetEmail,
+  sendEmailVerification,
 } from "firebase/auth";
 import LoadingSpinner from "../components/spinner/LoadingSpinner.tsx";
 
-
 export interface AuthProviderProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 export type Recipe = {
-    title: string,
-    description: string,
-    ingredients: string[],
-    steps: string[],
-    tags: string[]
-}
-
+  title: string;
+  description: string;
+  ingredients: string[];
+  steps: string[];
+  tags: string[];
+};
 
 export interface AuthContextType {
-    user: User | null
+  user: User | null;
 
-    login(email: string, password: string): Promise<UserCredential>
+  login(email: string, password: string): Promise<UserCredential>;
 
-    createUser(email: string, password: string): Promise<UserCredential>
+  createUser(email: string, password: string): Promise<UserCredential>;
 
-    logout(): Promise<void>
+  logout(): Promise<void>;
 
-    resetPassword(email: string): Promise<void>
+  resetPassword(email: string): Promise<void>;
 
-    recipe: Recipe | null | undefined
+  recipe: Recipe | null | undefined;
 
-    setRecipe: React.Dispatch<React.SetStateAction<Recipe | null | undefined>>
+  setRecipe: React.Dispatch<React.SetStateAction<Recipe | null | undefined>>;
 
-    workInProgressOpen: boolean
+  workInProgressOpen: boolean;
 
-    setWorkInProgressOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setWorkInProgressOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
-    fromInspiration: boolean
+  fromInspiration: boolean;
 
-    setFromInspiration: React.Dispatch<React.SetStateAction<boolean>>
+  setFromInspiration: React.Dispatch<React.SetStateAction<boolean>>;
 
+  resendEmailVerification(user: User): Promise<void>;
 }
 
 // Create context
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
-    // STATES
-    const [user, setUser] = useState<User | null>(null)
-    const [loading, setLoading] = useState(true);
-    const [recipe, setRecipe] = useState<Recipe | null | undefined>()
-    const [workInProgressOpen, setWorkInProgressOpen] = useState<boolean>(true);
-    const [fromInspiration, setFromInspiration] = useState<boolean>(false);
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  // STATES
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [recipe, setRecipe] = useState<Recipe | null | undefined>();
+  const [workInProgressOpen, setWorkInProgressOpen] = useState<boolean>(true);
+  const [fromInspiration, setFromInspiration] = useState<boolean>(false);
 
+  // Login
+  const login = (email: string, password: string) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-    // Login
-    const login = (email: string, password: string) => {
-        return signInWithEmailAndPassword(auth, email, password);
-    }
+  // Create User
+  const createUser = (email: string, password: string) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
 
-    // Create User
-    const createUser = (email: string, password: string) => {
-        return createUserWithEmailAndPassword(auth, email, password);
-    }
+  // Logout
+  const logout = () => {
+    return signOut(auth);
+  };
 
-    // Logout
-    const logout = () => {
-        return signOut(auth);
-    }
+  // Reset password
+  const resetPassword = (email: string) => {
+    return sendPasswordResetEmail(auth, email);
+  };
 
-    // Reset password
-    const resetPassword = (email: string) => {
-        return sendPasswordResetEmail(auth, email);
-    }
+  // Resend email verification
+  const resendEmailVerification = (user: User) => {
+    return sendEmailVerification(user);
+  };
 
-    useEffect(() => {
-        // Set up a listener for changes in the authentication state
-        const unsub = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-            setLoading(false)
-            // console.log(currentUser)
-        })
+  useEffect(() => {
+    // Set up a listener for changes in the authentication state
+    const unsub = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+      // console.log(currentUser)
+    });
 
-        return () => {
-            unsub();
-        }
-    }, []);
+    return () => {
+      unsub();
+    };
+  }, []);
 
-    const contextValues: AuthContextType = {
-        login,
-        createUser,
-        logout,
-        user,
-        resetPassword,
-        recipe,
-        setRecipe,
-        workInProgressOpen,
-        setWorkInProgressOpen,
-        fromInspiration,
-        setFromInspiration
-    }
+  const contextValues: AuthContextType = {
+    login,
+    createUser,
+    logout,
+    user,
+    resetPassword,
+    recipe,
+    setRecipe,
+    workInProgressOpen,
+    setWorkInProgressOpen,
+    fromInspiration,
+    setFromInspiration,
+    resendEmailVerification,
+  };
 
-    /*
+  /*
         Timing Issue Without this approach
 
         - The onAuthStateChanged listener might not have updated the user state before the useAuth hook is called within the ProtectedRoute component.
@@ -121,12 +126,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         - Shows loading screen while fetching Observable Information (Listener from Firebase) with the below If Statement
 
      */
-    if (loading) {
-        // Return a loading indicator or null
-        return <LoadingSpinner />;
-    }
+  if (loading) {
+    // Return a loading indicator or null
+    return <LoadingSpinner />;
+  }
 
-    return (
-        <AuthContext.Provider value={contextValues}>{children}</AuthContext.Provider>
-    );
+  return <AuthContext.Provider value={contextValues}>{children}</AuthContext.Provider>;
 };
