@@ -22,9 +22,9 @@ function LoggedInNav() {
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom" data-bs-theme="dark">
         <div className="container-fluid">
-          <div>
+          <NavLink to="/">
             <img src={logo} alt="logo" className="me-2 img-fluid nav-icon" />
-          </div>
+          </NavLink>
           <button
             className="navbar-toggler"
             type="button"
