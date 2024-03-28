@@ -1,0 +1,20 @@
+.profile-container {
+  padding: 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.verification-text {
+  background-color: #f9d5c2;
+  border-radius: 5px;
+}
+
+.verification-text div {
+  padding: 8px;
+  color: black !important;
+}
+
+#email-span {
+  font-weight: bold;
+}
