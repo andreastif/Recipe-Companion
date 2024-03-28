@@ -1,28 +1,43 @@
 .no-recipe-styling {
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .recipe-remove-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .overlay-text {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    box-sizing: border-box;
-    text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .recipe-container {
-    margin: 10px;
-    display: flex;
-    padding: 0 !important;
-    justify-content: center;
+  margin: 10px;
+  display: flex;
+  padding: 10px !important;
+  justify-content: center;
+}
+
+.no-recipe-grouping {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.recipetab-grouping {
+  display: flex;
+  margin: 10px;
+  justify-content: center;
 }

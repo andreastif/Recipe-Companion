@@ -32,7 +32,7 @@ function Profile() {
 
   return (
     <>
-      <div className="error-container mt-5">
+      <div className="profile-grouping-container mt-5">
         <div className="format-input-screens">
           <div className="border border-white error-box-shadow rounded profile-container">
             <div className="my-2">
