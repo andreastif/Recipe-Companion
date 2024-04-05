@@ -65,7 +65,7 @@ function Login() {
     return (
 
         <div className="d-flex justify-content-center align-content-center my-5">
-            <div className="format-input-screens border border-dark-subtle p-5 rounded">
+            <div className="format-input-screens border border-white p-5 rounded">
                 <div>
                     <h1 className="text-2xl font-semibold py-2 text-center">Login</h1>
                     <p className="fs-6">
