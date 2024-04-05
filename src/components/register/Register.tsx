@@ -109,7 +109,7 @@ function Register() {
                 <div className="format-input-screens border border-dark-subtle p-5 rounded bg-gradient">
                     <div className="text-center mb-4">Enter details below</div>
                     <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
+                        <div className="mb-4">
                             <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                             <input type="email"
                                    className="form-control"
@@ -121,7 +121,7 @@ function Register() {
                                    onChange={handleFormControlChange}
                             />
                         </div>
-                        <div className="mb-3">
+                        <div className="mb-4">
                             <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                             <input type="password"
                                    className="form-control" id="exampleInputPassword1"

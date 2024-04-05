@@ -65,7 +65,7 @@ function Login() {
 
     return (
 
-        <div>
+        <div className="mb-5">
             <div className="text-center mt-5">
                 <div className="mb-4">
                     <img
@@ -106,7 +106,7 @@ function Login() {
                             <div id="emailHelp" className="form-text text-sm-center mt-3">We'll never share your email with anyone else.
                             </div>
                         </div>
-                        <div className="mb-3">
+                        <div className="my-4">
                             <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                             <input type="password"
                                    className="form-control" id="exampleInputPassword1"
