@@ -20,7 +20,7 @@ function LoggedInNav() {
   // https://reactrouter.com/en/main/components/nav-link
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom" data-bs-theme="dark">
+      <nav className="navbar navbar-expand-lg border-bottom border-light-subtle nav-colors" data-bs-theme="dark">
         <div className="container-fluid">
           <NavLink to="/">
             <img src={logo} alt="logo" className="me-2 img-fluid nav-icon" />
