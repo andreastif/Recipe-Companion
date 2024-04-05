@@ -85,7 +85,6 @@
 .recipe-form-input-group {
     display: flex;
     flex-direction: column; /* Stack children vertically */
-    margin-top: 40px;
     width: 100%; /* Set the width to fit the content area */
 }
 

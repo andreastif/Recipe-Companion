@@ -35,9 +35,9 @@ function Dashboard() {
             </div>
             <div className="page-container dashboard mb-5">
                 <div className="content-wrap d-flex justify-content-center align-content-center">
-                    <div className="border rounded border-secondary-subtle shadow" style={{"width": "95%"}}>
+                    <div className="border rounded border-dark-subtle shadow" style={{"width": "95%"}}>
                         <div className="border-bottom border-secondary-subtle shadow">
-                            <Box sx={{width: '100%'}}>
+                            <Box sx={{width: '100%'}} className="bg-gradient">
                                 <Tabs
                                     value={currentTab}
                                     onChange={handleChange}

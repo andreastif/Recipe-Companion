@@ -5,6 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useRedirectIfSignedIn} from "../../hooks/useRedirectIfSignedIn.tsx";
 import {auth} from "../../firebase/firebaseconfig.ts";
 import { sendEmailVerification } from "firebase/auth";
+import logo from "../../img/test-icon.png";
 
 
 
@@ -82,25 +83,39 @@ function Register() {
 
     return (
         <>
+            <div className="text-center mt-5">
+                <div className="mb-4">
+                    <img
+                        className="me-3 img-fluid"
+                        width={100}
+                        height={100}
+                        src={logo}
+                        alt="logo"
+                    />
+                </div>
+                <h1 className="text-2xl font-semibold">Register</h1>
+                <div>
+                    <p className="fs-6">
+                        Already have an account? {" "}
+                        <Link
+                            className="link-info link-opacity-75-hover"
+                            to="/login">
+                            Login
+                        </Link>
+                    </p>
+                </div>
+            </div>
             <div className="d-flex justify-content-center align-content-center my-5">
-                <div className="format-input-screens border border-white p-5 rounded">
-                    <div>
-                        <h1 className="text-2xl font-semibold py-2 text-center">Register</h1>
-                        <p className="fs-6">
-                            Already have an account? {" "}
-                            <Link
-                                className="link-info link-opacity-75-hover"
-                                to="/login">
-                                Login
-                            </Link>
-                        </p>
-                    </div>
+                <div className="format-input-screens border border-dark-subtle p-5 rounded bg-gradient">
+                    <div className="text-center mb-4">Enter details below</div>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                             <input type="email"
                                    className="form-control"
                                    id="exampleInputEmail1"
+                                   placeholder="Email.."
+                                   required
                                    name="email"
                                    value={form.email}
                                    onChange={handleFormControlChange}
@@ -111,6 +126,8 @@ function Register() {
                             <input type="password"
                                    className="form-control" id="exampleInputPassword1"
                                    name="password"
+                                   required
+                                   placeholder="Password.."
                                    value={form.password}
                                    onChange={handleFormControlChange}
                             />

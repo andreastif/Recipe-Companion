@@ -85,7 +85,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
                 });
                 setRecipe(response?.data)
             } else {
-                const response = await createRecipeGpt3_5( {
+                const response = await createRecipeGpt3_5({
                     ingredients: recipeForm.ingredients,
                     language: recipeForm.language.value,
                     servings: recipeForm.servings.value,
@@ -133,103 +133,113 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
     return (
         <>
             {isPageLoading ? <LoadingSpinner/> :
-                <div className="recipe-container">
-                    <div className="format-recipe-screen">
-                        <div>
-                            <form className="recipe-form-input-group" onSubmit={handleOnSubmitToRcApi}>
-
-                                <div className="select-group">
-                                    <Select
-                                        className="select-input"
-                                        options={numberOfServings}
-                                        onChange={(option) => handleSetRecipeForm(option, "servings")}
-                                        styles={ReactSelectFormStyles}
-                                        placeholder={"No of servings"}
-                                        value={recipeForm.servings}
-                                        defaultValue={{value: "4", label: "4 servings"}}
-                                    />
-                                    <Select
-                                        className="select-input"
-                                        options={languageOptions}
-                                        onChange={(option) => handleSetRecipeForm(option, "language")}
-                                        styles={ReactSelectFormStyles}
-                                        placeholder={"Language"}
-                                        value={recipeForm.language}
-                                        defaultValue={{value: "ENGLISH", label: "English"}}
-                                    />
-                                </div>
-                                <input
-                                    className="ingredients-input"
-                                    value={recipeForm.ingredients}
-                                    onChange={(input) => handleSetRecipeForm(input, "ingredients")}
-                                    placeholder="Enter a recipe and/or some ingredients!">
-                                </input>
-                                <button
-                                    // disabled={true}
-                                    className="btn btn-secondary"
-                                    style={{textTransform: "uppercase", letterSpacing: "2px"}}
-                                >Create Recipe
-                                </button>
-                            </form>
-                        </div>
-                        {recipe &&
-                            <>
-                                <div className="my-4 recipe-box-shadow recipe-grouping">
-                                    <div className="title-container">
-                                        <h2 id="title-header">{recipe?.title}</h2>
+                <div>
+                    <div className="text-center my-4">
+                        <h1 className="fs-2">Lets get started!</h1>
+                        <p>Enter recipe idea or products.</p>
+                    </div>
+                    <div className="recipe-container">
+                        <div className="format-recipe-screen">
+                            <div className="border border-dark-subtle bg-gradient p-4 rounded">
+                                <form className="recipe-form-input-group gap-3" onSubmit={handleOnSubmitToRcApi}>
+                                    <div className="select-group">
+                                        <Select
+                                            className="select-input"
+                                            options={numberOfServings}
+                                            onChange={(option) => handleSetRecipeForm(option, "servings")}
+                                            styles={ReactSelectFormStyles}
+                                            placeholder={"No of servings"}
+                                            value={recipeForm.servings}
+                                            defaultValue={{value: "4", label: "4 servings"}}
+                                        />
+                                        <Select
+                                            className="select-input"
+                                            options={languageOptions}
+                                            onChange={(option) => handleSetRecipeForm(option, "language")}
+                                            styles={ReactSelectFormStyles}
+                                            placeholder={"Language"}
+                                            value={recipeForm.language}
+                                            defaultValue={{value: "ENGLISH", label: "English"}}
+                                        />
                                     </div>
-                                    <div className="mb-4 mt-3">
-                                        <h4 className="py-1">Description</h4>
-                                        <div className="font-formatting" id="description-container">
-                                            {recipe?.description}
+                                    <input
+                                        className="ingredients-input"
+                                        value={recipeForm.ingredients}
+                                        onChange={(input) => handleSetRecipeForm(input, "ingredients")}
+                                        required
+                                        placeholder="Name or products..">
+                                    </input>
+                                    <button
+                                        // disabled={true}
+                                        className="btn btn-secondary"
+                                        style={{textTransform: "uppercase", letterSpacing: "2px"}}
+                                    >Create Recipe
+                                    </button>
+                                </form>
+                            </div>
+                            {recipe &&
+                                <>
+                                    <div className="my-4 recipe-box-shadow recipe-grouping">
+                                        <div className="title-container">
+                                            <h2 id="title-header">{recipe?.title}</h2>
                                         </div>
-                                    </div>
-                                    <div className="my-4">
-                                        <h4 className="py-1">Ingredients</h4>
-                                        <div className="font-formatting">
-                                            <ul>
-                                                {recipe?.ingredients.map((ingredient, index) => {
-                                                    return <li key={index} className="py-1">{ingredient}</li>
-                                                })}</ul>
+                                        <div className="mb-4 mt-3">
+                                            <h4 className="py-1">Description</h4>
+                                            <div className="font-formatting" id="description-container">
+                                                {recipe?.description}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="my-4">
-                                        <div className="font-formatting">
-                                            <h4 className="py-1">Steps</h4>
-                                            <ol>
-                                                {recipe?.steps.map((step, index) => {
-                                                    return <li key={index} className="py-1">{step}</li>
-                                                })}</ol>
+                                        <div className="my-4">
+                                            <h4 className="py-1">Ingredients</h4>
+                                            <div className="font-formatting">
+                                                <ul>
+                                                    {recipe?.ingredients.map((ingredient, index) => {
+                                                        return <li key={index} className="py-1">{ingredient}</li>
+                                                    })}</ul>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div className="my-4">
+                                            <div className="font-formatting">
+                                                <h4 className="py-1">Steps</h4>
+                                                <ol>
+                                                    {recipe?.steps.map((step, index) => {
+                                                        return <li key={index} className="py-1">{step}</li>
+                                                    })}</ol>
+                                            </div>
+                                        </div>
 
 
-                                    {isRecipeSavedLoading ?
-                                        <button className="btn btn-secondary"
+                                        {isRecipeSavedLoading ?
+                                            <button className="btn btn-secondary"
+                                                    style={{
+                                                        width: "100%",
+                                                        textTransform: "uppercase",
+                                                        letterSpacing: "2px"
+                                                    }}
+                                                    type="button" disabled>
+                                            <span className="spinner-grow spinner-grow-sm me-2" role="status"
+                                                  aria-hidden="true"></span>
+                                                <span className="sr-only">Loading...</span>
+                                            </button> :
+
+                                            <button
+                                                className="btn btn-secondary"
                                                 style={{
                                                     width: "100%",
                                                     textTransform: "uppercase",
                                                     letterSpacing: "2px"
                                                 }}
-                                                type="button" disabled>
-                                            <span className="spinner-grow spinner-grow-sm me-2" role="status"
-                                                  aria-hidden="true"></span>
-                                            <span className="sr-only">Loading...</span>
-                                        </button> :
+                                                onClick={handleOnClickSaveRecipe}
+                                                hidden={saveIsDisabled}
+                                            >Save Recipe
+                                            </button>
+                                        }
 
-                                        <button
-                                            className="btn btn-secondary"
-                                            style={{width: "100%", textTransform: "uppercase", letterSpacing: "2px"}}
-                                            onClick={handleOnClickSaveRecipe}
-                                            hidden={saveIsDisabled}
-                                        >Save Recipe
-                                        </button>
-                                    }
+                                    </div>
 
-                                </div>
-
-                            </>
-                        }
+                                </>
+                            }
+                        </div>
                     </div>
                 </div>
             }

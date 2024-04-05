@@ -3,6 +3,7 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {useAuth} from "../../hooks/useAuth.tsx";
 import {Link, useNavigate} from "react-router-dom";
 import {useRedirectIfSignedIn} from "../../hooks/useRedirectIfSignedIn.tsx";
+import logo from "../../img/test-icon.png";
 
 export type LoginForm = {
     email: string,
@@ -64,10 +65,19 @@ function Login() {
 
     return (
 
-        <div className="d-flex justify-content-center align-content-center my-5">
-            <div className="format-input-screens border border-white p-5 rounded">
+        <div>
+            <div className="text-center mt-5">
+                <div className="mb-4">
+                    <img
+                        className="me-3 img-fluid"
+                        width={100}
+                        height={100}
+                        src={logo}
+                        alt="logo"
+                    />
+                </div>
+                <h1 className="text-2xl font-semibold">Welcome</h1>
                 <div>
-                    <h1 className="text-2xl font-semibold py-2 text-center">Login</h1>
                     <p className="fs-6">
                         Don't have an account?{" "}
                         <Link
@@ -77,47 +87,56 @@ function Login() {
                         </Link>
                     </p>
                 </div>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                        <input type="email"
-                               className="form-control"
-                               id="exampleInputEmail1"
-                               aria-describedby="emailHelp"
-                               name="email"
-                               value={form.email}
-                               onChange={handleFormControlChange}
-                        />
-                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                        <input type="password"
-                               className="form-control" id="exampleInputPassword1"
-                               name="password"
-                               value={form.password}
-                               onChange={handleFormControlChange}
-                        />
-                    </div>
-                    <div className="mt-4 d-flex gap-4">
-                        <div>
-                            <p id="forgotPassword">
-                                Forgot your {" "}
-                                <Link
-                                    className="link-info link-opacity-75-hover"
-                                    to="/lostpw">
-                                    password?
-                                </Link>
-                            </p>
-                            <button type="submit" className="btn btn-secondary">Login</button>
+            </div>
+            <div className="d-flex justify-content-center align-content-center mt-5">
+                <div className="format-input-screens border border-dark-subtle p-5 rounded bg-gradient">
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                            <input type="email"
+                                   className="form-control"
+                                   id="exampleInputEmail1"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Email.."
+                                   required
+                                   name="email"
+                                   value={form.email}
+                                   onChange={handleFormControlChange}
+                            />
+                            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.
+                            </div>
                         </div>
-                    </div>
-                </form>
-                {hasError && (
-                    <div className="text-danger fw-semibold my-4">
-                        Wrong credentials 😒
-                    </div>
-                )}
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                            <input type="password"
+                                   className="form-control" id="exampleInputPassword1"
+                                   name="password"
+                                   placeholder="Password.."
+                                   required
+                                   value={form.password}
+                                   onChange={handleFormControlChange}
+                            />
+                        </div>
+                        <div className="mt-4 d-flex gap-4">
+                            <div>
+                                <p id="forgotPassword">
+                                    Forgot your {" "}
+                                    <Link
+                                        className="link-info link-opacity-75-hover"
+                                        to="/lostpw">
+                                        password?
+                                    </Link>
+                                </p>
+                                <button type="submit" className="btn btn-secondary">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                    {hasError && (
+                        <div className="text-danger fw-semibold my-4">
+                            Wrong credentials 😒
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
 
