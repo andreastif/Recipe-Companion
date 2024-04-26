@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { RecipeItemMongoWithHeight } from "../../utils/Types.ts";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Button from "@mui/material/Button";
+import EditIcon from '@mui/icons-material/Edit';
 
 const RecipeTab = () => {
   const [recipes, setRecipes] = useState<RecipeItemMongoWithHeight[]>([]);
@@ -163,9 +164,16 @@ const RecipeTab = () => {
           <Box sx={modalRecipeStyle(isMobile)}>
             {selectedRecipe && (
                 <div>
-                  {!selectedRecipe.recipe.photo_url && <div><AddPhotoAlternateIcon /> <Button variant="text" className="text-light" onClick={() => handleAddPhotoToRecipe(selectedRecipe?.recipe)}>Add Photo</Button></div>}
+                  {/*TODO Upload Recipe Photo Component*/}
+                  {!selectedRecipe.recipe.photo_url && <div><AddPhotoAlternateIcon /> <Button variant="text" className="text-info" onClick={() => handleAddPhotoToRecipe(selectedRecipe?.recipe)}>Add Photo</Button></div>}
                   <div className="text-center mt-5 recipe-title-container">
-                    <span className="fs-5">{selectedRecipe.recipe.title}</span>
+                    <div>
+                      <p className="fs-5">{selectedRecipe.recipe.title}</p>
+                    </div>
+                    <div>
+                      {/*TODO Edit Recipe Component*/}
+                      <Button variant="text" className="text-info">Edit Recipe<EditIcon className="ms-2"/></Button>
+                    </div>
                     <hr/>
                   </div>
 

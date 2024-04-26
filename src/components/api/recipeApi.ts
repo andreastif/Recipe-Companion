@@ -100,6 +100,21 @@ export const removeRecipeFromMongoDb = async (user: User, recipe: RecipeItemMong
     }
 }
 
+export const updateRecipeByUser = async (user: User, recipe: RecipeItemsMongoDto) => {
+    try {
+        const token = await handleRefreshTokenForUser(user);
+        const stringId = getStringMongoObjectId(recipe._id)
+        return await mongoAPIClient.put(`recipes/${stringId}`, recipe, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } catch (err) {
+        const axiosError = err as AxiosError;
+        throw new Error(axiosError.message);
+    }
+}
+
 export const createRecipeGpt4 = async (user: User, recipe: RecipeData) => {
     try {
         const token = await handleRefreshTokenForUser(user);
@@ -125,6 +140,3 @@ export const createRecipeGpt3_5 = async (recipe: RecipeData) => {
         throw new Error(axiosError.message);
     }
 }
-
-
-// TODO able to update title on recipe (Backend has this feature already)
