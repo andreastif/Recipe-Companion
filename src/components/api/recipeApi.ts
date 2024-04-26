@@ -8,7 +8,7 @@ import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
 export type RecipeItemMongo = {
     _id?: ObjectId; // Made optional with '?' since it's not needed when creating
     title: string,
-    photoUrl: string
+    photo_url: string
     description: string,
     ingredients: string[],
     steps: string[],
@@ -21,6 +21,7 @@ export type RecipeItemMongo = {
 export type RecipeItemsMongoDto = {
     _id?: ObjectId; // Made optional with '?' since it's not needed when creating
     title: string,
+    photo_url: string,
     description: string,
     ingredients: string[],
     steps: string[],

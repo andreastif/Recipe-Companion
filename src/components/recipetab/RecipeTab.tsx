@@ -163,7 +163,7 @@ const RecipeTab = () => {
           <Box sx={modalRecipeStyle(isMobile)}>
             {selectedRecipe && (
                 <div>
-                  {!selectedRecipe.recipe.photoUrl && <div><AddPhotoAlternateIcon /> <Button variant="text" className="text-light" onClick={() => handleAddPhotoToRecipe(selectedRecipe?.recipe)}>Add Photo</Button></div>}
+                  {!selectedRecipe.recipe.photo_url && <div><AddPhotoAlternateIcon /> <Button variant="text" className="text-light" onClick={() => handleAddPhotoToRecipe(selectedRecipe?.recipe)}>Add Photo</Button></div>}
                   <div className="text-center mt-5 recipe-title-container">
                     <span className="fs-5">{selectedRecipe.recipe.title}</span>
                     <hr/>

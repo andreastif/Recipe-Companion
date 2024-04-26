@@ -48,6 +48,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
     const handleOnClickSaveRecipe = async () => {
         if (recipe && user && user.email) {
             const toBeSavedRecipe: RecipeItemMongo = {
+                photo_url: "",
                 title: recipe.title,
                 description: recipe.description,
                 ingredients: recipe.ingredients,
