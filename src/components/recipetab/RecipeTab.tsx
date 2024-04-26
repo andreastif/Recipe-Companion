@@ -15,6 +15,8 @@ import { getRandomHeight } from "../recipecreation/utils/util.ts";
 import { inspoContainer } from "../inspirationtab/muiStyles.ts";
 import { useQuery } from "@tanstack/react-query";
 import { RecipeItemMongoWithHeight } from "../../utils/Types.ts";
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import Button from "@mui/material/Button";
 
 const RecipeTab = () => {
   const [recipes, setRecipes] = useState<RecipeItemMongoWithHeight[]>([]);
@@ -27,12 +29,6 @@ const RecipeTab = () => {
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState<number | null>(null);
   const { user } = useAuth();
   const selectedRecipe = selectedRecipeIndex !== null ? recipes[selectedRecipeIndex] : null;
-
-  //todo: endpoints :
-  // #[put("/recipes/{id}")]
-  // token, hela objektet förutom ID (som tas av path Variable)
-  // ObjectId
-  // #[get("/recipes/{id}")]
 
   const handleRecipeModalOpen = (index: number) => {
     setSelectedRecipeIndex(index);
@@ -55,6 +51,11 @@ const RecipeTab = () => {
     enabled: isMounted,
     refetchOnWindowFocus: false,
   });
+
+  const handleAddPhotoToRecipe = (recipe: RecipeItemMongo) => {
+    console.log(recipe);
+  }
+
 
   useEffect(() => {
     if (status === "success" && data) {
@@ -161,70 +162,68 @@ const RecipeTab = () => {
         >
           <Box sx={modalRecipeStyle(isMobile)}>
             {selectedRecipe && (
-              <div>
-                <div className="text-center mt-5 recipe-title-container">
-                  {/* Display the name of the selected recipe */}
-                  <span className="fs-5">{selectedRecipe.recipe.title}</span>
-                  <hr />
-                </div>
+                <div>
+                  {!selectedRecipe.recipe.photoUrl && <div><AddPhotoAlternateIcon /> <Button variant="text" className="text-light" onClick={() => handleAddPhotoToRecipe(selectedRecipe?.recipe)}>Add Photo</Button></div>}
+                  <div className="text-center mt-5 recipe-title-container">
+                    <span className="fs-5">{selectedRecipe.recipe.title}</span>
+                    <hr/>
+                  </div>
 
-                <div className="d-flex my-4">
-                  {/* Place any other recipe details you want to display here. */}
-                  {/* For example, showing the recipe's description or ingredients */}
-                  <Typography className="typo-left-aligned-text" component="div" variant="inherit" color="white">
-                    <div className="">
-                      <div className="mb-4 mt-3">
-                        <h4 className="py-1">Description</h4>
-                        <div className="font-formatting" id="description-container">
-                          {selectedRecipe.recipe.description}
+                  <div className="d-flex my-4">
+                    <Typography className="typo-left-aligned-text" component="div" variant="inherit" color="white">
+                      <div className="">
+                        <div className="mb-4 mt-3">
+                          <h4 className="py-1">Description</h4>
+                          <div className="font-formatting" id="description-container">
+                            {selectedRecipe.recipe.description}
+                          </div>
+                        </div>
+                        <div className="my-4">
+                          <h4 className="py-1">Ingredients</h4>
+                          <div className="font-formatting">
+                            <ul>
+                              {selectedRecipe.recipe.ingredients.map((ingredient, index) => {
+                                return (
+                                    <li key={index} className="py-1">
+                                      {ingredient}
+                                    </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
+                        </div>
+                        <div className="my-4">
+                          <div className="font-formatting">
+                            <h4 className="py-1">Steps</h4>
+                            <ol>
+                              {selectedRecipe.recipe.steps.map((step, index) => {
+                                return (
+                                    <li key={index} className="py-1">
+                                      {step}
+                                    </li>
+                                );
+                              })}
+                            </ol>
+                          </div>
                         </div>
                       </div>
-                      <div className="my-4">
-                        <h4 className="py-1">Ingredients</h4>
-                        <div className="font-formatting">
-                          <ul>
-                            {selectedRecipe.recipe.ingredients.map((ingredient, index) => {
-                              return (
-                                <li key={index} className="py-1">
-                                  {ingredient}
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="my-4">
-                        <div className="font-formatting">
-                          <h4 className="py-1">Steps</h4>
-                          <ol>
-                            {selectedRecipe.recipe.steps.map((step, index) => {
-                              return (
-                                <li key={index} className="py-1">
-                                  {step}
-                                </li>
-                              );
-                            })}
-                          </ol>
-                        </div>
-                      </div>
-                    </div>
-                  </Typography>
+                    </Typography>
+                  </div>
+                  <button
+                      className="btn btn-secondary"
+                      style={{textTransform: "uppercase", letterSpacing: "2px"}}
+                      onClick={() => handleSetRecipeModalVerify(selectedRecipe.recipe)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                      className="btn btn-secondary ms-4"
+                      style={{textTransform: "uppercase", letterSpacing: "2px"}}
+                      onClick={() => setRecipeModalOpen(false)}
+                  >
+                    Close
+                  </button>
                 </div>
-                <button
-                  className="btn btn-secondary"
-                  style={{ textTransform: "uppercase", letterSpacing: "2px" }}
-                  onClick={() => handleSetRecipeModalVerify(selectedRecipe.recipe)}
-                >
-                  Delete
-                </button>
-                <button
-                  className="btn btn-secondary ms-4"
-                  style={{ textTransform: "uppercase", letterSpacing: "2px" }}
-                  onClick={() => setRecipeModalOpen(false)}
-                >
-                  Close
-                </button>
-              </div>
             )}
           </Box>
         </Modal>
