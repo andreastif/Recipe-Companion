@@ -6,13 +6,7 @@ import {languageOptions, numberOfServings, RecipeForm} from "./utils/RecipeGener
 import {ReactSelectFormStyles} from "./utils/ReactSelectFormStyles.ts";
 import LoadingSpinner from "../spinner/LoadingSpinner.tsx";
 import {useLocation} from 'react-router-dom';
-import {
-    createRecipeGpt3_5,
-    createRecipeGpt4,
-    postRecipeToMongoDb,
-    RecipeItemMongo,
-    RecipeItemsMongoDto
-} from "../api/recipeApi.ts";
+import {createRecipeGpt3_5, createRecipeGpt4, postRecipeToMongoDb, RecipeItemsMongoDto} from "../api/recipeApi.ts";
 import {User} from "firebase/auth";
 import {sweetAlertError, sweetAlertSuccess} from "../../utils/alerts.ts";
 import {ChatGptModel} from "../../utils/modelEnum.ts";
@@ -47,7 +41,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
 
     const handleOnClickSaveRecipe = async () => {
         if (recipe && user && user.email) {
-            const toBeSavedRecipe: RecipeItemMongo = {
+            const toBeSavedRecipe: RecipeItemsMongoDto = {
                 photo_url: "",
                 title: recipe.title,
                 description: recipe.description,
