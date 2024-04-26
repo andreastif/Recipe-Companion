@@ -125,3 +125,6 @@ export const createRecipeGpt3_5 = async (recipe: RecipeData) => {
         throw new Error(axiosError.message);
     }
 }
+
+
+// TODO able to update title on recipe (Backend has this feature already)
