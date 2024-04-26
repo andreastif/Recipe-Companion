@@ -58,6 +58,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
     const handleSaveRecipeToDb = async (user: User, toBeSavedRecipe: RecipeItemsMongoDto) => {
         setIsRecipeSavedLoading(true)
         try {
+            console.log(toBeSavedRecipe);
             await postRecipeToMongoDb(user, toBeSavedRecipe)
             sweetAlertSuccess("New Recipe Saved!", "Enjoy your meal")
         } catch (e) {
