@@ -1,5 +1,5 @@
 pipeline {
-    // agent { label 'docker-node-agent' }
+    agent { label 'docker-java-node-agent' }
     environment {
         REGISTRY_CREDENTIALS_ID = 'andtif-registry-credentials'
         REGISTRY_URL = 'registry.andtif.codes'
