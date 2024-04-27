@@ -35,7 +35,7 @@ export const mongoAPIClient = axios.create({
 });
 
 const handleRefreshTokenForUser = async (user: User) => {
-    return await user.getIdToken(); // ForceRefresh Token;
+    return await user.getIdToken(true); // ForceRefresh Token;
 }
 
 export const fetchUserRecipes = async (user: User) => {
