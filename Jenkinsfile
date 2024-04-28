@@ -1,10 +1,9 @@
 pipeline {
     agent { label 'docker-java-node-agent' }
     environment {
-        REGISTRY_CREDENTIALS_ID = 'andtif-registry-credentials'
-        REGISTRY_URL = 'registry.andtif.codes'
-        IMAGE = 'recipe-react'
-        TAG = 'latest'
+
+        SSH_ADDRESS = credentials('SSH-HOST-ADDRESS')
+        HOST_IP = credentials('HOST_IP')
         
         VITE_API_KEY = credentials('ENV_VITE_API_KEY')
         VITE_AUTH_DOMAIN = credentials('ENV_VITE_AUTH_DOMAIN')
@@ -15,15 +14,17 @@ pipeline {
     }
     stages {
         stage('Setup') {
+            echo 'Setting upp SSH for known_hosts'
             steps {
                 sh 'mkdir -p ~/.ssh'
                 sh 'chmod 700 ~/.ssh'
-                sh 'ssh-keyscan -H 192.168.68.134 >> ~/.ssh/known_hosts'
+                sh 'ssh-keyscan -H ${HOST_IP} >> ~/.ssh/known_hosts'
                 sh 'chmod 644 ~/.ssh/known_hosts'
             }
         }
         stage('Checkout') {
             steps {
+                echo 'Checking out source code'
                 checkout scm // Checks out source code to workspace
             }
         }
@@ -35,16 +36,19 @@ pipeline {
         }
         stage('Install') {
             steps {
+                echo 'Installing dependencies'
                 sh 'npm install' // Install 
             }
         }
         stage('Build') {
             steps {
+                echo 'Building project'
                 sh """
                 export VITE_API_USER='REDACTED' 
                 export VITE_API_PW='REDACTED' 
                 npm run build
                 """ 
+                echo 'Build done'
             }
         }
         stage('Deploy') {
@@ -57,13 +61,13 @@ pipeline {
                     sh """
                     ### We cannot SCP directly into a docker container, thus we must make these intermediary steps:
                     # 1. Create a temporary directory on the host
-                    ssh andtif@192.168.68.134 'mkdir -p /tmp/deploy'
+                    ssh ${SSH_ADDRESS} 'mkdir -p /tmp/deploy'
                     
                     # 2. Secure copy the built files to the temporary directory
-                    scp -r dist/* andtif@192.168.68.134:/tmp/deploy
+                    scp -r dist/* ${SSH_ADDRESS}:/tmp/deploy
                     
                     # 3. Use docker cp to move the files from the host to the Docker container
-                    ssh andtif@192.168.68.134 '
+                    ssh ${SSH_ADDRESS} '
                         docker cp /tmp/deploy/. nginx-nginx-1:/usr/share/nginx/html
                         docker exec nginx-nginx-1 nginx -s reload
                         rm -rf /tmp/deploy  # Clean up the temporary directory
