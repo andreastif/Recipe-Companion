@@ -25,6 +25,11 @@ pipeline {
                 echo 'No tests yet, skipping to Build.'
             }
         }
+        stage('Install') {
+            steps {
+                sh 'npm install' // Install 
+            }
+        }
         stage('Build') {
             steps {
                 sh 'npm run build' // Build 
