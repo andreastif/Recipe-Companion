@@ -54,10 +54,18 @@ pipeline {
             steps {
                     sshagent(credentials: ['SSH-agent-to-ubuntu']) {
                     sh """
-                    ssh-keyscan -H 192.168.68.134 >> ~/.ssh/known_hosts
-                    scp -r dist/* andtif@192.168.68.134:/path/to/nginx/html/
-                    ssh -o StrictHostKeyChecking=no andtif@192.168.68.134 '
+                    ### We cannot SCP directly into a docker container, thus we must make these intermediary steps:
+                    # 1. Create a temporary directory on the host
+                    ssh andtif@192.168.68.134 'mkdir -p /tmp/deploy'
+                    
+                    # 2. Secure copy the built files to the temporary directory
+                    scp -r dist/* andtif@192.168.68.134:/tmp/deploy
+                    
+                    # 3. Use docker cp to move the files from the host to the Docker container
+                    ssh andtif@192.168.68.134 '
+                        docker cp /tmp/deploy/. nginx-nginx-1:/usr/share/nginx/html
                         docker exec nginx-nginx-1 nginx -s reload
+                        rm -rf /tmp/deploy  # Clean up the temporary directory
                     '
                     """
                     }
