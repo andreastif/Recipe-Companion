@@ -103,3 +103,4 @@ pipeline {
 //             // Do we need to add 'unstable', 'aborted' conditions ?
 //         }
  }
+}
