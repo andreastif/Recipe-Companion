@@ -22,7 +22,7 @@ pipeline {
         stage('Test') {
             steps {
                 //no tests yet
-                echo 'No tests yet, skipping to Build.'
+                echo 'No tests yet, skipping to next step.'
             }
         }
         stage('Install') {
@@ -33,12 +33,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh """
-                VITE_API_KEY='${env.VITE_API_KEY}' \
-                VITE_AUTH_DOMAIN='${env.VITE_AUTH_DOMAIN}' \
-                VITE_PROJECT_ID='${env.VITE_PROJECT_ID}' \
-                VITE_STORAGE_BUCKET='${env.VITE_STORAGE_BUCKET}' \
-                VITE_MESSAGING_SENDER_ID='${env.VITE_MESSAGING_SENDER_ID}' \
-                VITE_APP_ID='${env.VITE_APP_ID}' \
+                export VITE_API_USER='REDACTED' 
+                export VITE_API_PW='REDACTED' 
                 npm run build
                 """ 
             }
