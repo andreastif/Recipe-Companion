@@ -32,7 +32,15 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'npm run build' // Build 
+                sh """
+                VITE_API_KEY='${env.VITE_API_KEY}' \
+                VITE_AUTH_DOMAIN='${env.VITE_AUTH_DOMAIN}' \
+                VITE_PROJECT_ID='${env.VITE_PROJECT_ID}' \
+                VITE_STORAGE_BUCKET='${env.VITE_STORAGE_BUCKET}' \
+                VITE_MESSAGING_SENDER_ID='${env.VITE_MESSAGING_SENDER_ID}' \
+                VITE_APP_ID='${env.VITE_APP_ID}' \
+                npm run build
+                """ 
             }
         }
 //         stage('Create Docker Image') {
