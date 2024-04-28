@@ -14,6 +14,14 @@ pipeline {
         VITE_APP_ID = credentials('ENV_VITE_APP_ID')
     }
     stages {
+        stage('Setup') {
+            steps {
+                sh 'mkdir -p ~/.ssh'
+                sh 'chmod 700 ~/.ssh'
+                sh 'ssh-keyscan -H 192.168.68.134 >> ~/.ssh/known_hosts'
+                sh 'chmod 644 ~/.ssh/known_hosts'
+            }
+        }
         stage('Checkout') {
             steps {
                 checkout scm // Checks out source code to workspace
