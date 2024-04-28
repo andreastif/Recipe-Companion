@@ -58,11 +58,22 @@ pipeline {
     
     post {
             failure {
-                echo 'The build failed.'
+                script {
+                    if (env.BRANCH_NAME == 'master') {
+                        echo 'The build and deployment on master failed.'
+                    } else {
+                        echo 'The build on branch ${env.BRANCH_NAME} failed.'
+                    }
+                }
             }
             success {
-                echo 'Build and deployment were successful.'
-                
+                script {
+                    if (env.BRANCH_NAME == 'master') {
+                        echo 'Build and deployment on master were successful.'
+                    } else {
+                        echo 'Build on branch ${env.BRANCH_NAME} was successful.'
+                    }
+                }
             }
         }
      }
