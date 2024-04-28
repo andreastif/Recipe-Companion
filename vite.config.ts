@@ -3,9 +3,8 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default ({mode}) => {
-    //THIS IS HOW YOU LOAD IN ENVIRONMENT VARIABLES OUTSIDE THE CLIENT (import.meta.env does NOT work here)
+    //import.meta.env does NOT work here, use process.env
     process.env = Object.assign(process.env, loadEnv(mode, process.cwd()));
-
 
     // Load environment variables
     const username = process.env.VITE_API_USER;
