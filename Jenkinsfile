@@ -59,7 +59,7 @@ pipeline {
                 echo 'Initiating deploy'
                     sshagent(credentials: ['SSH-agent-to-ubuntu']) {
                     
-                    sh """
+                    sh '''
                     ### We cannot SCP directly into a docker container, thus we must make these intermediary steps:
                     # 1. Create a temporary directory on the host
                     ssh ${SSH_ADDRESS} 'mkdir -p /tmp/deploy'
@@ -73,7 +73,7 @@ pipeline {
                         docker exec nginx-nginx-1 nginx -s reload
                         rm -rf /tmp/deploy  # Clean up the temporary directory
                     '
-                    """
+                    '''
                     
                     }
                 echo 'Deploy done'
