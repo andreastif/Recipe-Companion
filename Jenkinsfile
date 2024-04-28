@@ -45,11 +45,12 @@ pipeline {
             }
             steps {
                     sshagent(credentials: ['SSH-agent-to-ubuntu']) {
-                    sh "scp -r dist/* andtif@192.168.68.134:/path/to/nginx/html/"
                     sh """
-                        ssh -o StrictHostKeyChecking=no andtif@192.168.68.134 '
-                            docker exec nginx-nginx-1 nginx -s reload
-                        '
+                    ssh-keyscan -H 192.168.68.134 >> ~/.ssh/known_hosts
+                    scp -r dist/* andtif@192.168.68.134:/path/to/nginx/html/
+                    ssh -o StrictHostKeyChecking=no andtif@192.168.68.134 '
+                        docker exec nginx-nginx-1 nginx -s reload
+                    '
                     """
                     }
                 }
