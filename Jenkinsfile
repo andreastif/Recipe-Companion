@@ -14,8 +14,8 @@ pipeline {
     }
     stages {
         stage('Setup') {
-            echo 'Setting upp SSH for known_hosts'
             steps {
+                echo 'Setting upp SSH for known_hosts'
                 sh 'mkdir -p ~/.ssh'
                 sh 'chmod 700 ~/.ssh'
                 sh 'ssh-keyscan -H ${HOST_IP} >> ~/.ssh/known_hosts'
@@ -56,8 +56,9 @@ pipeline {
                 branch 'master' 
             }
             steps {
+                echo 'Initiating deploy'
                     sshagent(credentials: ['SSH-agent-to-ubuntu']) {
-                    echo 'Initiating deploy'
+                    
                     sh """
                     ### We cannot SCP directly into a docker container, thus we must make these intermediary steps:
                     # 1. Create a temporary directory on the host
@@ -73,8 +74,9 @@ pipeline {
                         rm -rf /tmp/deploy  # Clean up the temporary directory
                     '
                     """
-                    echo 'Deploy done'
+                    
                     }
+                echo 'Deploy done'
                 }
             }
         }
