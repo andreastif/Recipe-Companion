@@ -3,7 +3,7 @@ pipeline {
     environment {
         REGISTRY_CREDENTIALS_ID = 'andtif-registry-credentials'
         REGISTRY_URL = 'registry.andtif.codes'
-        // IMAGE = 'recipe-react'
+        IMAGE = 'recipe-react'
         TAG = 'latest'
         
         VITE_API_KEY = credentials('ENV_VITE_API_KEY')
@@ -19,16 +19,17 @@ pipeline {
                 checkout scm // Checks out source code to workspace
             }
         }
-//         stage('Test') {
-//             steps {
-//                 sh './gradlew test' // Run tests
-//             }
-//         }
-//         stage('Build') {
-//             steps {
-//                 sh './gradlew build' // Build .JAR
-//             }
-//         }
+        stage('Test') {
+            steps {
+                //no tests yet
+                echo 'No tests yet, skipping to Build.'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm run build' // Build 
+            }
+        }
 //         stage('Create Docker Image') {
 //             when {
 //                 branch 'master' 
