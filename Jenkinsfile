@@ -53,6 +53,7 @@ pipeline {
             }
             steps {
                     sshagent(credentials: ['SSH-agent-to-ubuntu']) {
+                    echo 'Initiating deploy'
                     sh """
                     ### We cannot SCP directly into a docker container, thus we must make these intermediary steps:
                     # 1. Create a temporary directory on the host
@@ -68,6 +69,7 @@ pipeline {
                         rm -rf /tmp/deploy  # Clean up the temporary directory
                     '
                     """
+                    echo 'Deploy done'
                     }
                 }
             }
