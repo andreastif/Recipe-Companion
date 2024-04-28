@@ -62,7 +62,7 @@ pipeline {
                     if (env.BRANCH_NAME == 'master') {
                         echo 'The build and deployment on master failed.'
                     } else {
-                        echo 'The build on branch ${env.BRANCH_NAME} failed.'
+                        echo 'The build failed.'
                     }
                 }
             }
@@ -71,7 +71,7 @@ pipeline {
                     if (env.BRANCH_NAME == 'master') {
                         echo 'Build and deployment on master were successful.'
                     } else {
-                        echo 'Build on branch ${env.BRANCH_NAME} was successful.'
+                        echo 'Build was successful.'
                     }
                 }
             }
