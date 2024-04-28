@@ -57,9 +57,6 @@ pipeline {
         }
     
     post {
-            always {
-               // TODO: Save logs
-            }
             failure {
                 echo 'The build failed.'
             }
