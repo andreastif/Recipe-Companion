@@ -1,14 +1,44 @@
 import { useParams } from 'react-router-dom';
-
+import { fetchUserRecipeById, RecipeItemMongo } from "../api/recipeApi.ts";
+import { useAuth } from "../../hooks/useAuth.tsx";
+import { useEffect, useState } from "react";
 
 const EditPhoto = () => {
-    const {id} = useParams();
+    const [currRecipe, setCurrRecipe] = useState<RecipeItemMongo | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const { id } = useParams();
+    const { user } = useAuth();
+
+    const handleFetchCurrentRecipeDetails = async () => {
+        if (user && id) {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await fetchUserRecipeById(user, id);
+                const recipe = response.data as RecipeItemMongo;
+                setCurrRecipe(recipe);
+            } catch (error: any) {
+                setError('Failed to fetch recipe details');
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+    };
+
+    useEffect(() => {
+        handleFetchCurrentRecipeDetails();
+    }, [id, user]);
+
+    if (loading) return <div className="text-center fw-semibold mt-5">Fetching Recipe..</div>;
+    if (error) return <div className="text-center fw-semibold mt-5 text-warning">{error}</div>;
 
     return (
         <div>
-            Edit Photo with ID: {id}
+        Title: {currRecipe ? currRecipe.title : 'Recipe not found'}
         </div>
-    )
+    );
 }
 
 export default EditPhoto;
