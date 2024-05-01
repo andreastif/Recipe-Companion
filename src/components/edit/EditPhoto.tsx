@@ -31,7 +31,14 @@ const EditPhoto = () => {
         handleFetchCurrentRecipeDetails();
     }, [id, user]);
 
-    if (loading) return <div className="text-center fw-semibold mt-5">Fetching Recipe..</div>;
+    if (loading) return (
+        <div className="text-center fw-semibold mt-5">
+            Loading Recipe..
+            <div className="ms-4 spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    );
     if (error) return <div className="text-center fw-semibold mt-5 text-warning">{error}</div>;
 
     return (
