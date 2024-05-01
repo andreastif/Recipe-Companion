@@ -11,23 +11,6 @@ const EditPhoto = () => {
     const {user} = useAuth();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleFetchCurrentRecipeDetails = async () => {
-        if (user && id) {
-            setLoading(true);
-            setError(null);
-            try {
-                const response = await fetchUserRecipeById(user, id);
-                const recipe = response.data as RecipeItemMongo;
-                setCurrRecipe(recipe);
-            } catch (error: any) {
-                setError('Failed to fetch recipe details');
-                console.error(error);
-            } finally {
-                setLoading(false);
-            }
-        }
-    };
-
     const handleChoosePhoto = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // Access the file(s) from the input
@@ -41,6 +24,23 @@ const EditPhoto = () => {
     };
 
     useEffect(() => {
+        const handleFetchCurrentRecipeDetails = async () => {
+            if (user && id) {
+                setLoading(true);
+                setError(null);
+                try {
+                    const response = await fetchUserRecipeById(user, id);
+                    const recipe = response.data as RecipeItemMongo;
+                    setCurrRecipe(recipe);
+                } catch (error: any) {
+                    setError('Failed to fetch recipe details');
+                    console.error(error);
+                } finally {
+                    setLoading(false);
+                }
+            }
+        };
+
         handleFetchCurrentRecipeDetails();
     }, [id, user]);
 
