@@ -17,9 +17,10 @@ const EditPhoto = () => {
         event.preventDefault();
         if (fileInputRef.current && fileInputRef.current.files && fileInputRef.current.files[0]) {
             const file = fileInputRef.current.files[0];
+            console.log(file);
+            // TODO validate its a picture before trying to render it
             const fileUrl = URL.createObjectURL(file);
             setImagePreviewUrl(fileUrl);
-            console.log(file);
         }
     };
 
