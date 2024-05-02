@@ -61,7 +61,7 @@ const EditPhoto = () => {
                 <p>Editing photo for recipe: <strong>{currRecipe?.title}</strong></p>
                 {imagePreviewUrl && (
                     <div>
-                        <img src={imagePreviewUrl} className="image-preview" alt="Preview" />
+                        <img src={imagePreviewUrl} className="image-preview rounded" alt="Preview" />
                     </div>
                 )}
             </div>
