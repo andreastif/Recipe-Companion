@@ -1,25 +1,25 @@
-import {useParams} from 'react-router-dom';
-import {fetchUserRecipeById, RecipeItemMongo} from "../api/recipeApi.ts";
-import {useAuth} from "../../hooks/useAuth.tsx";
-import {FormEvent, useEffect, useState, useRef} from "react";
+import { useParams } from 'react-router-dom';
+import { fetchUserRecipeById, RecipeItemMongo } from "../api/recipeApi";
+import { useAuth } from "../../hooks/useAuth";
+import { FormEvent, useEffect, useState, useRef } from "react";
+import "./EditPhoto.css"
 
 const EditPhoto = () => {
     const [currRecipe, setCurrRecipe] = useState<RecipeItemMongo | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const {id} = useParams();
-    const {user} = useAuth();
+    const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+    const { id } = useParams();
+    const { user } = useAuth();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleChoosePhoto = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Access the file(s) from the input
-        if (fileInputRef.current) {
-            const files = fileInputRef.current.files;
-            if (files && files.length > 0) {
-                const currentFile = files[0];
-                console.log(currentFile);
-            }
+        if (fileInputRef.current && fileInputRef.current.files && fileInputRef.current.files[0]) {
+            const file = fileInputRef.current.files[0];
+            const fileUrl = URL.createObjectURL(file);
+            setImagePreviewUrl(fileUrl);
+            console.log(file);
         }
     };
 
@@ -46,20 +46,26 @@ const EditPhoto = () => {
 
     if (loading) return (
         <div className="text-center fw-semibold mt-5">
-            Loading Recipe..
+            Loading Recipe...
             <div className="ms-4 spinner-border" role="status">
                 <span className="visually-hidden">Loading...</span>
             </div>
         </div>
     );
+
     if (error) return <div className="text-center fw-semibold mt-5 text-warning">{error}</div>;
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center">
             <div className="p-5 text-center">
                 <p>Editing photo for recipe: <strong>{currRecipe?.title}</strong></p>
+                {imagePreviewUrl && (
+                    <div>
+                        <img src={imagePreviewUrl} className="image-preview" alt="Preview" />
+                    </div>
+                )}
             </div>
-            <div className="format-input-screens border border-dark-subtle p-5 rounded bg-gradient">
+            <div className="format-input-screens">
                 <form onSubmit={handleChoosePhoto}>
                     <div className="input-group mb-3">
                         <input type="file" name="file" className="form-control" id="inputGroupFile02" ref={fileInputRef}/>
