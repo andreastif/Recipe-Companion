@@ -18,6 +18,7 @@ import { RecipeItemMongoWithHeight } from "../../utils/Types.ts";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Button from "@mui/material/Button";
 import EditIcon from '@mui/icons-material/Edit';
+import {useNavigate} from "react-router-dom";
 
 const RecipeTab = () => {
   const [recipes, setRecipes] = useState<RecipeItemMongoWithHeight[]>([]);
@@ -30,6 +31,7 @@ const RecipeTab = () => {
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState<number | null>(null);
   const { user } = useAuth();
   const selectedRecipe = selectedRecipeIndex !== null ? recipes[selectedRecipeIndex] : null;
+  const navigate = useNavigate();
 
   const handleRecipeModalOpen = (index: number) => {
     setSelectedRecipeIndex(index);
@@ -53,8 +55,8 @@ const RecipeTab = () => {
     refetchOnWindowFocus: false,
   });
 
-  const handleAddPhotoToRecipe = (recipe: RecipeItemMongo) => {
-    console.log(recipe);
+  const handleRedirectToEditPhoto = (id: string) => {
+    navigate(`/edit/photo/${id}`);
   }
 
 
@@ -164,8 +166,7 @@ const RecipeTab = () => {
           <Box sx={modalRecipeStyle(isMobile)}>
             {selectedRecipe && (
                 <div>
-                  {/*TODO Upload Recipe Photo Component*/}
-                  {!selectedRecipe.recipe.photo_url && <div><AddPhotoAlternateIcon /> <Button variant="text" className="text-info" onClick={() => handleAddPhotoToRecipe(selectedRecipe?.recipe)}>Add Photo</Button></div>}
+                  {!selectedRecipe.recipe.photo_url && <div><AddPhotoAlternateIcon /> <Button variant="text" className="text-info" onClick={() => handleRedirectToEditPhoto(getStringMongoObjectId(selectedRecipe?.recipe._id))}>Add Photo</Button></div>}
                   <div className="text-center mt-5 recipe-title-container">
                     <div>
                       <p className="fs-5">{selectedRecipe.recipe.title}</p>
