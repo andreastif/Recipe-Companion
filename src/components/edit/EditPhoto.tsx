@@ -3,7 +3,7 @@ import { fetchUserRecipeById, RecipeItemMongo } from "../api/recipeApi";
 import { useAuth } from "../../hooks/useAuth";
 import { FormEvent, useEffect, useState, useRef } from "react";
 import "./EditPhoto.css"
-import {isValidFileExtension} from "../../utils/editPhotoUtils.ts";
+import {isValidFileExtension, isValidSize} from "../../utils/editPhotoUtils.ts";
 
 const EditPhoto = () => {
     const [currRecipe, setCurrRecipe] = useState<RecipeItemMongo | null>(null);
@@ -19,13 +19,14 @@ const EditPhoto = () => {
         // Checks variables current & files are not null / undefined and contains at least 1 file.
         const file = fileInputRef.current?.files?.[0];
         if (file) {
-            const isValidExt = isValidFileExtension(file.type);
             console.log(file);
+            const isValidExt = isValidFileExtension(file.type);
+            const sizeValid = isValidSize(file.size);
 
-            if (isValidExt) {
+            if (isValidExt && sizeValid) {
                 handleSetPreviewImageURL(file);
             } else {
-                console.log("Not Valid File Extension")
+                console.log("Not Valid File Extension / Size")
             }
         }
     };
@@ -80,7 +81,7 @@ const EditPhoto = () => {
             <div className="format-input-screens">
                 <form onSubmit={handleProcessImage}>
                     <div className="input-group mb-3">
-                        <input type="file" name="file" className="form-control" id="inputGroupFile02" ref={fileInputRef}/>
+                        <input type="file" name="file" className="form-control" id="inputGroupFile02" ref={fileInputRef} />
                     </div>
                     <div className="d-flex justify-content-center align-items-center mt-4">
                         <button type="submit" className="btn btn-secondary">Upload</button>

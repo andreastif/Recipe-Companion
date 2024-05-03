@@ -15,7 +15,11 @@ export function convertImageToBase64(file: File): Promise<string> {
 
 
 export function isValidFileExtension(fileTypeString: string): boolean {
-    const lastDot = fileTypeString.toLowerCase().lastIndexOf("/");
-    const ext = fileTypeString.substring(lastDot + 1)
+    const lastSlash = fileTypeString.toLowerCase().lastIndexOf("/");
+    const ext = fileTypeString.substring(lastSlash + 1)
     return ext.startsWith("jpg") || ext.startsWith("png") || ext.startsWith("jpeg");
+}
+
+export function isValidSize(size: number): boolean {
+    return size < 10_000_000;
 }
