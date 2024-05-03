@@ -14,9 +14,9 @@ const EditPhoto = () => {
     const { user } = useAuth();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleChoosePhoto = (event: FormEvent<HTMLFormElement>) => {
+    const handleProcessImage = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Checks variables: current & files array exists and contains at least 1 file and not null / undefined
+        // Checks variables current & files are not null / undefined and contains at least 1 file.
         const file = fileInputRef.current?.files?.[0];
         if (file) {
             const isValidExt = isValidFileExtension(file.type);
@@ -78,7 +78,7 @@ const EditPhoto = () => {
                 )}
             </div>
             <div className="format-input-screens">
-                <form onSubmit={handleChoosePhoto}>
+                <form onSubmit={handleProcessImage}>
                     <div className="input-group mb-3">
                         <input type="file" name="file" className="form-control" id="inputGroupFile02" ref={fileInputRef}/>
                     </div>
