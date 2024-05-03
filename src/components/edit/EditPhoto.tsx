@@ -3,6 +3,7 @@ import { fetchUserRecipeById, RecipeItemMongo } from "../api/recipeApi";
 import { useAuth } from "../../hooks/useAuth";
 import { FormEvent, useEffect, useState, useRef } from "react";
 import "./EditPhoto.css"
+import {isValidFileExtension} from "../../utils/editPhotoUtils.ts";
 
 const EditPhoto = () => {
     const [currRecipe, setCurrRecipe] = useState<RecipeItemMongo | null>(null);
@@ -15,14 +16,24 @@ const EditPhoto = () => {
 
     const handleChoosePhoto = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (fileInputRef.current && fileInputRef.current.files && fileInputRef.current.files[0]) {
-            const file = fileInputRef.current.files[0];
+        // Checks variables: current & files array exists and contains at least 1 file and not null / undefined
+        const file = fileInputRef.current?.files?.[0];
+        if (file) {
+            const isValidExt = isValidFileExtension(file.type);
             console.log(file);
-            // TODO validate its a picture before trying to render it
-            const fileUrl = URL.createObjectURL(file);
-            setImagePreviewUrl(fileUrl);
+
+            if (isValidExt) {
+                handleSetPreviewImageURL(file);
+            } else {
+                console.log("Not Valid File Extension")
+            }
         }
     };
+
+    const handleSetPreviewImageURL = (file: File) => {
+        const fileUrl = URL.createObjectURL(file);
+        setImagePreviewUrl(fileUrl);
+    }
 
     useEffect(() => {
         const handleFetchCurrentRecipeDetails = async () => {
