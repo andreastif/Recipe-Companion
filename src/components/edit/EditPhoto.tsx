@@ -3,20 +3,26 @@ import {fetchUserRecipeById, RecipeItemMongo} from "../api/recipeApi";
 import {useAuth} from "../../hooks/useAuth";
 import {FormEvent, useEffect, useState, useRef} from "react";
 import "./EditPhoto.css"
-import {isValidFileExtension, isValidSize} from "../../utils/editPhotoUtils.ts";
+import {convertImageToBase64, isValidFileExtension, isValidSize} from "../../utils/editPhotoUtils.ts";
+import {uploadImage} from "../api/imageApi.ts";
+
+export type UploadFileRequest = {
+    data: string,
+    name: string
+}
 
 const EditPhoto = () => {
     const [currRecipe, setCurrRecipe] = useState<RecipeItemMongo | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [validIDError, setValidIDError] = useState<string | null>(null);
-    const [validFileError, setValidFileError] = useState<string | null>(null);
+    const [fileError, setFileError] = useState<string | null>(null);
     const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
     const {id} = useParams();
     const {user} = useAuth();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleProcessImage = (event: FormEvent<HTMLFormElement>) => {
-        setValidFileError(null)
+    const handleProcessImage = async (event: FormEvent<HTMLFormElement>) => {
+        setFileError(null)
         event.preventDefault();
         // Checks variables current & files are not null / undefined and contains at least 1 file.
         const file = fileInputRef.current?.files?.[0];
@@ -28,12 +34,43 @@ const EditPhoto = () => {
             if (isValidExt && sizeValid) {
                 handleSetPreviewImageURL(file);
                 // Todo Axios Request Metod POST Img till Java Backend
+                await handleUploadImage(file);
+
                 // Todo Sätta IMG URL i Rust Backend om vi får tbx en URL från java backend
             } else {
-                setValidFileError("Not Valid File Extension / Size")
+                setFileError("Not Valid File Extension / Size")
             }
         }
     };
+
+    const handleConvertToBase64 = async (file: File) => {
+        try {
+            const unformattedBase64 = await convertImageToBase64(file);
+            return unformattedBase64.split("base64,")[1];
+        } catch (e) {
+            setFileError("File Transform Err");
+            console.error(e);
+        }
+    }
+
+    const handleUploadImage = async (file: File) => {
+        setLoading(true)
+        try {
+            const base64 = await handleConvertToBase64(file);
+
+            const uploadReq: UploadFileRequest = {
+                data: base64!,
+                name: file.name
+            }
+
+            const responseUploadImage = await uploadImage(user!, uploadReq);
+            console.log(responseUploadImage.data);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const handleSetPreviewImageURL = (file: File) => {
         const fileUrl = URL.createObjectURL(file);
@@ -63,7 +100,7 @@ const EditPhoto = () => {
 
     if (loading) return (
         <div className="text-center fw-semibold mt-5">
-            Loading Recipe...
+            Loading...
             <div className="ms-4 spinner-border" role="status">
                 <span className="visually-hidden">Loading...</span>
             </div>
@@ -74,7 +111,7 @@ const EditPhoto = () => {
 
     return (
         <>
-            {validFileError && <div className="text-center fw-semibold mt-5 text-warning">{validFileError}</div>}
+            {fileError && <div className="text-center fw-semibold mt-5 text-warning">{fileError}</div>}
             <div className="d-flex flex-column justify-content-center align-items-center">
                 <div className="p-5 text-center">
                     <p>Editing photo for recipe: <strong>{currRecipe?.title}</strong></p>
