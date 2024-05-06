@@ -37,6 +37,7 @@ const EditPhoto = () => {
                 await handleUploadImage(file);
 
                 // Todo Sätta IMG URL i Rust Backend om vi får tbx en URL från java backend
+                // Alternativt Kontakta Rust backend i java
             } else {
                 setFileError("Not Valid File Extension / Size")
             }
