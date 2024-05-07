@@ -33,11 +33,9 @@ const EditPhoto = () => {
 
             if (isValidExt && sizeValid) {
                 handleSetPreviewImageURL(file);
-                // Todo Axios Request Metod POST Img till Java Backend
+                // Todo Axios Request Metod POST Img till Java Backend, FELHANTERING om API ger error
                 await handleUploadImage(file);
 
-                // Todo Sätta IMG URL i Rust Backend om vi får tbx en URL från java backend
-                // Alternativt Kontakta Rust backend i java
             } else {
                 setFileError("Not Valid File Extension / Size")
             }

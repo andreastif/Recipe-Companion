@@ -5,7 +5,7 @@ import Select from "react-select";
 import {languageOptions, numberOfServings, RecipeForm} from "./utils/RecipeGeneratorSelectUtils.ts";
 import {ReactSelectFormStyles} from "./utils/ReactSelectFormStyles.ts";
 import LoadingSpinner from "../spinner/LoadingSpinner.tsx";
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {createRecipeGpt3_5, createRecipeGpt4, postRecipeToMongoDb, RecipeItemsMongoDto} from "../api/recipeApi.ts";
 import {User} from "firebase/auth";
 import {sweetAlertError, sweetAlertSuccess} from "../../utils/alerts.ts";
@@ -23,6 +23,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
     const [isRecipeSavedLoading, setIsRecipeSavedLoading] = useState(false);
     const location = useLocation();
     const {user} = useAuth();
+    const navigate = useNavigate();
 
 
     const handleSetRecipeForm = (input: any, identifier: string) => {
@@ -61,6 +62,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
             console.log(toBeSavedRecipe);
             await postRecipeToMongoDb(user, toBeSavedRecipe)
             sweetAlertSuccess("New Recipe Saved!", "Enjoy your meal")
+            navigate("/dashboard");
         } catch (e) {
             sweetAlertError("Could not save recipe", "Try again later")
             console.warn(e)
