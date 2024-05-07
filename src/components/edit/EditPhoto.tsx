@@ -57,6 +57,7 @@ const EditPhoto = () => {
         try {
             const base64 = await handleConvertToBase64(file);
 
+            // TODO Vi Skickar inte base64 längre utan skickar FormData med fil direkt
             const uploadReq: UploadFileRequest = {
                 data: base64!,
                 name: file.name
