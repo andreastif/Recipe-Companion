@@ -23,3 +23,12 @@ export function isValidFileExtension(fileTypeString: string): boolean {
 export function isValidSize(size: number): boolean {
     return size < 10_000_000;
 }
+
+export const handleConvertToBase64 = async (file: File) => {
+    try {
+        const unformattedBase64 = await convertImageToBase64(file);
+        return unformattedBase64.split("base64,")[1];
+    } catch (e) {
+        console.error(e);
+    }
+}

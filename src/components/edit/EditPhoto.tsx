@@ -1,15 +1,11 @@
 import {useParams} from 'react-router-dom';
 import {fetchUserRecipeById, RecipeItemMongo} from "../api/recipeApi";
 import {useAuth} from "../../hooks/useAuth";
-import {FormEvent, useEffect, useState, useRef} from "react";
+import {FormEvent, useEffect, useRef, useState} from "react";
 import "./EditPhoto.css"
-import {convertImageToBase64, isValidFileExtension, isValidSize} from "../../utils/editPhotoUtils.ts";
+import {isValidFileExtension, isValidSize} from "../../utils/editPhotoUtils.ts";
 import {uploadImage} from "../api/imageApi.ts";
-
-export type UploadFileRequest = {
-    data: string,
-    name: string
-}
+import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
 
 const EditPhoto = () => {
     const [currRecipe, setCurrRecipe] = useState<RecipeItemMongo | null>(null);
@@ -33,7 +29,7 @@ const EditPhoto = () => {
 
             if (isValidExt && sizeValid) {
                 handleSetPreviewImageURL(file);
-                // Todo Axios Request Metod POST Img till Java Backend, FELHANTERING om API ger error
+                // Todo FELHANTERING om API ger error osv
                 await handleUploadImage(file);
 
             } else {
@@ -42,29 +38,18 @@ const EditPhoto = () => {
         }
     };
 
-    const handleConvertToBase64 = async (file: File) => {
-        try {
-            const unformattedBase64 = await convertImageToBase64(file);
-            return unformattedBase64.split("base64,")[1];
-        } catch (e) {
-            setFileError("File Transform Err");
-            console.error(e);
-        }
-    }
-
     const handleUploadImage = async (file: File) => {
         setLoading(true)
         try {
-            const base64 = await handleConvertToBase64(file);
-
-            // TODO Vi Skickar inte base64 längre utan skickar FormData med fil direkt
-            const uploadReq: UploadFileRequest = {
-                data: base64!,
-                name: file.name
+            if (user && currRecipe?._id) {
+                const recipeId = getStringMongoObjectId(currRecipe._id);
+                const formData = new FormData();
+                formData.append("image", file);
+                const responseUploadImage = await uploadImage(user, recipeId, formData);
+                console.log(responseUploadImage.data);
+            } else {
+                setFileError("Could not fetch recipe details")
             }
-
-            const responseUploadImage = await uploadImage(user!, uploadReq);
-            console.log(responseUploadImage.data);
         } catch (e) {
             console.error(e);
         } finally {
