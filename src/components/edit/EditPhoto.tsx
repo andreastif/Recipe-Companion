@@ -6,6 +6,7 @@ import "./EditPhoto.css"
 import {isValidFileExtension, isValidSize} from "../../utils/editPhotoUtils.ts";
 import {uploadImage} from "../api/imageApi.ts";
 import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
+import {sweetAlertSuccess} from "../../utils/alerts.ts";
 
 const EditPhoto = () => {
     const [currRecipe, setCurrRecipe] = useState<RecipeItemMongo | null>(null);
@@ -23,13 +24,11 @@ const EditPhoto = () => {
         // Checks variables current & files are not null / undefined and contains at least 1 file.
         const file = fileInputRef.current?.files?.[0];
         if (file) {
-            console.log(file);
             const isValidExt = isValidFileExtension(file.type);
             const sizeValid = isValidSize(file.size);
 
             if (isValidExt && sizeValid) {
                 handleSetPreviewImageURL(file);
-                // Todo FELHANTERING om API ger error osv
                 await handleUploadImage(file);
 
             } else {
@@ -45,13 +44,13 @@ const EditPhoto = () => {
                 const recipeId = getStringMongoObjectId(currRecipe._id);
                 const formData = new FormData();
                 formData.append("image", file);
-                const responseUploadImage = await uploadImage(user, recipeId, formData);
-                console.log(responseUploadImage.data);
+                await uploadImage(user, recipeId, formData);
+                sweetAlertSuccess("Image Uploaded", "All set, you can head back to dashboard")
             } else {
                 setFileError("Could not fetch recipe details")
             }
         } catch (e) {
-            console.error(e);
+            setFileError("Could not upload image")
         } finally {
             setLoading(false)
         }

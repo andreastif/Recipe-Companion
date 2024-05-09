@@ -1,20 +1,20 @@
 import "./RecipeTab.css";
-import { fetchUserRecipes, RecipeItemMongo, removeRecipeFromMongoDb } from "../api/recipeApi.ts";
-import { FormEvent, useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth.tsx";
+import {fetchUserRecipes, RecipeItemMongo, removeRecipeFromMongoDb} from "../api/recipeApi.ts";
+import {FormEvent, useEffect, useState} from "react";
+import {useAuth} from "../../hooks/useAuth.tsx";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Typography } from "@mui/material";
-import { modalRecipeRemoveStyle, modalRecipeStyle } from "./additionalModalStyling.ts";
+import {Typography} from "@mui/material";
+import {modalRecipeRemoveStyle, modalRecipeStyle} from "./additionalModalStyling.ts";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
 import recipePlaceholder from "../../assets/recipe-placeholder.png";
-import { getRandomHeight } from "../recipecreation/utils/util.ts";
-import { inspoContainer } from "../inspirationtab/muiStyles.ts";
-import { useQuery } from "@tanstack/react-query";
-import { RecipeItemMongoWithHeight } from "../../utils/Types.ts";
+import {getRandomHeight} from "../recipecreation/utils/util.ts";
+import {inspoContainer} from "../inspirationtab/muiStyles.ts";
+import {useQuery} from "@tanstack/react-query";
+import {RecipeItemMongoWithHeight} from "../../utils/Types.ts";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Button from "@mui/material/Button";
 import EditIcon from '@mui/icons-material/Edit';
@@ -102,6 +102,10 @@ const RecipeTab = () => {
       console.log("finally");
     }
   };
+
+  const handleFetchImage = async (recipeId: string) => {
+    // Todo, hur hämtar vi en image när vi kräver JSON token för den ?
+  }
 
   return (
     <div>
