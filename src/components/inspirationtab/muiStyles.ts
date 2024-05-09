@@ -22,4 +22,11 @@ export const inspoContainer = (isMobile: boolean) => {
     }
 };
 
-
+export const recipeButtonStyle = () => {
+    return {
+        bgcolor: '#895c09',
+        '&:hover': {
+            bgcolor: 'rgba(137,92,9,0.65)'
+        }
+    }
+}

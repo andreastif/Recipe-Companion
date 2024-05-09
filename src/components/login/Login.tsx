@@ -4,6 +4,8 @@ import {useAuth} from "../../hooks/useAuth.tsx";
 import {Link, useNavigate} from "react-router-dom";
 import {useRedirectIfSignedIn} from "../../hooks/useRedirectIfSignedIn.tsx";
 import logo from "../../img/test-icon.png";
+import Button from "@mui/material/Button";
+import {recipeButtonStyle} from "../inspirationtab/muiStyles.ts";
 
 export type LoginForm = {
     email: string,
@@ -34,7 +36,6 @@ function Login() {
             await login(credentials.email, credentials.password);
             navigate("/dashboard");
         } catch (error) {
-            console.log(error);
             setHasError(true);
         }
     };
@@ -81,7 +82,7 @@ function Login() {
                     <p className="fs-6">
                         Don't have an account?{" "}
                         <Link
-                            className="link-info link-opacity-75-hover"
+                            className="link-warning link-opacity-75-hover"
                             to="/register">
                             Register
                         </Link>
@@ -122,12 +123,15 @@ function Login() {
                                 <p id="forgotPassword">
                                     Forgot your {" "}
                                     <Link
-                                        className="link-info link-opacity-75-hover"
+                                        className="link-warning link-opacity-75-hover"
                                         to="/lostpw">
                                         password?
                                     </Link>
                                 </p>
-                                <button type="submit" className="btn btn-secondary">Login</button>
+                                <div className="mt-4 d-flex align-items-center justify-content-center gap-3">
+                                    <Button type="submit" variant="contained" sx={recipeButtonStyle()}>Login</Button>
+                                    <Button type="button" variant="contained" sx={recipeButtonStyle()} onClick={() => navigate("/")}>Back to index</Button>
+                                </div>
                             </div>
                         </div>
                     </form>
