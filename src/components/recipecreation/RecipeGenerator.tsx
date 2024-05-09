@@ -10,6 +10,8 @@ import {createRecipeGpt3_5, createRecipeGpt4, postRecipeToMongoDb, RecipeItemsMo
 import {User} from "firebase/auth";
 import {sweetAlertError, sweetAlertSuccess} from "../../utils/alerts.ts";
 import {ChatGptModel} from "../../utils/modelEnum.ts";
+import {recipeButtonStyle} from "../inspirationtab/muiStyles.ts";
+import Button from "@mui/material/Button";
 
 
 const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsDisabled: boolean }) => {
@@ -166,12 +168,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
                                         required
                                         placeholder="Name or products..">
                                     </input>
-                                    <button
-                                        // disabled={true}
-                                        className="btn btn-secondary"
-                                        style={{textTransform: "uppercase", letterSpacing: "2px"}}
-                                    >Create Recipe
-                                    </button>
+                                    <Button type="submit" variant="contained" sx={recipeButtonStyle()}>Create Recipe</Button>
                                 </form>
                             </div>
                             {recipe &&
