@@ -29,7 +29,11 @@ export const getImageBlobById = async (user: User, id: string) => {
             headers: {
                 Authorization: `Bearer ${token}`
             },
-            responseType: 'blob'  // Set responseType here, outside the headers object
+
+            // då api returnerar Content-Disposition: attachment; filename="example.png" måste vi efterfråga en blob
+            // vi kan forma hur vi skall få tillbaka responsen med 'responseType'
+            // blob använder vi när vi får ett fil objekt med rå data tillbaka, kolla hur vi renderar detta i <RecipeImage /> komponent
+            responseType: 'blob'
         });
         return response.data;
     } catch (err) {
