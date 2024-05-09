@@ -89,8 +89,7 @@ const InspirationTab = () => {
                                     style={{height: `${item.height}px`, width: "100%", objectFit: "cover"}}
                                 />
                                 {/*
-                Overlay Text position: 'absolute' removes the div from the normal document flow and positions it
-                relative to its nearest positioned ancestor (the ImageListItem with position: 'relative').
+                                TODO fixa som i Recipe Tab med bilderna
                                 */}
                                 <div className="overlay-text">
                   <span

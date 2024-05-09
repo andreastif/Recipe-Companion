@@ -7,22 +7,6 @@ export const imageAPIClient = axios.create({
     baseURL: "https://alsome.codes/fileserver/",
 });
 
-/*
-export const uploadImage = async (user: User, payload: UploadFileRequest) => {
-    try {
-        const token = await handleRefreshTokenForUser(user);
-        return await imageAPIClient.post(`api/files`, payload, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-    } catch (err) {
-        const axiosError = err as AxiosError;
-        throw new Error(axiosError.message);
-    }
-}
- */
-
 export const uploadImage = async (user: User, recipeId: string, formData: FormData) => {
     try {
         const token = await handleRefreshTokenForUser(user);
@@ -32,6 +16,22 @@ export const uploadImage = async (user: User, recipeId: string, formData: FormDa
                 "Content-Type": "multipart/form-data"
             }
         });
+    } catch (err) {
+        const axiosError = err as AxiosError;
+        throw new Error(axiosError.message);
+    }
+}
+
+export const getImageBlobById = async (user: User, id: string) => {
+    try {
+        const token = await handleRefreshTokenForUser(user);
+        const response = await imageAPIClient.get(`api/files/${id}/photo`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            responseType: 'blob'  // Set responseType here, outside the headers object
+        });
+        return response.data;
     } catch (err) {
         const axiosError = err as AxiosError;
         throw new Error(axiosError.message);
