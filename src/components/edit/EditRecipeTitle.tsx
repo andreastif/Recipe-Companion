@@ -122,7 +122,7 @@ const EditRecipeTitle = () => {
                                        onChange={handleFormControlChange}
                                 />
                                 <div id="titleHelp" className="form-text text-center fs-6 mt-3">
-                                    First letter in each word must be Capitalized
+                                    First letter should be capitalized but doesnt have to be.
                                 </div>
                             </div>
                             <div className="mt-4 d-flex justify-content-center gap-4">
