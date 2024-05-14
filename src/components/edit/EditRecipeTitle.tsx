@@ -76,6 +76,7 @@ const EditRecipeTitle = () => {
         try {
             await updateRecipeTitleById(user!, getStringMongoObjectId(currRecipe?._id), updatedForm.title)
             sweetAlertSuccess("Successful update", "Recipe title has been updated")
+            navigate("/dashboard")
         } catch (e) {
             setHasError(true)
         } finally {
