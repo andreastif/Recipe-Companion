@@ -130,6 +130,20 @@ export const updateRecipeByUser = async (user: User, recipe: RecipeItemsMongoDto
     }
 }
 
+export const updateRecipeTitleById = async (user: User, id: string, newTitle: string) => {
+    try {
+        const token = await handleRefreshTokenForUser(user);
+        return await mongoAPIClient.patch(`recipes/${id}/title`, {title: newTitle}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } catch (err) {
+        const axiosError = err as AxiosError;
+        throw new Error(axiosError.message);
+    }
+}
+
 export const createRecipeGpt4 = async (user: User, recipe: RecipeData) => {
     try {
         const token = await handleRefreshTokenForUser(user);
