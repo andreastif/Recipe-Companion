@@ -1,5 +1,3 @@
-// noinspection DuplicatedCode
-
 import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {fetchUserRecipeById, RecipeItemMongo, updateRecipeTitleById} from "../api/recipeApi.ts";
