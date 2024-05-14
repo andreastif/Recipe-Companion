@@ -72,7 +72,6 @@ const EditPhoto = () => {
                     setCurrRecipe(recipe);
                 } catch (error: any) {
                     setValidIDError('Failed to fetch recipe details');
-                    console.error(error);
                 } finally {
                     setLoading(false);
                 }

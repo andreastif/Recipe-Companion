@@ -61,6 +61,9 @@ const RecipeTab = () => {
         navigate(`/edit/photo/${id}`);
     }
 
+    const handleRedirectToEditTitle = (id: string) => {
+        navigate(`/edit/title/${id}`);
+    }
 
     useEffect(() => {
         if (status === "success" && data) {
@@ -182,8 +185,7 @@ const RecipeTab = () => {
                                         <p className="fs-5">{selectedRecipe.recipe.title}</p>
                                     </div>
                                     <div>
-                                        {/*TODO Edit Recipe Component*/}
-                                        <Button variant="text" className="text-warning">Edit Recipe<EditIcon
+                                        <Button variant="text" className="text-warning" onClick={() => handleRedirectToEditTitle(getStringMongoObjectId(selectedRecipe?.recipe._id))}>Edit Recipe Title<EditIcon
                                             className="ms-2"/></Button>
                                     </div>
                                     <hr/>
