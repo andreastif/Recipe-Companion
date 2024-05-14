@@ -34,7 +34,7 @@ export const mongoAPIClient = axios.create({
     baseURL: "https://alsome.codes/",
 });
 
-const handleRefreshTokenForUser = async (user: User) => {
+export const handleRefreshTokenForUser = async (user: User) => {
     return await user.getIdToken(true); // ForceRefresh Token;
 }
 
@@ -42,6 +42,21 @@ export const fetchUserRecipes = async (user: User) => {
     try {
         const token = await handleRefreshTokenForUser(user);
         return await mongoAPIClient.get("recipes/user", {
+            headers: {
+                // Use the token in the Authorization header
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } catch (err) {
+        const axiosError = err as AxiosError;
+        throw new Error(axiosError.message);
+    }
+}
+
+export const fetchUserRecipeById = async (user: User, id: string) => {
+    try {
+        const token = await handleRefreshTokenForUser(user);
+        return await mongoAPIClient.get(`recipes/${id}`, {
             headers: {
                 // Use the token in the Authorization header
                 Authorization: `Bearer ${token}`

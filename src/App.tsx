@@ -14,6 +14,7 @@ import Register from "./components/register/Register.tsx";
 import {ChatGptModel} from "./utils/modelEnum.ts";
 import LoggedInPageLayout from "./pages/LoggedInPage.tsx";
 import {EmailVerifiedRoute} from "./contexts/EmailVerifiedRoute.tsx";
+import EditPhoto from "./components/edit/EditPhoto.tsx";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ function App() {
                         <Route element={<LoggedInRoute/>}>
                             <Route element={<LoggedInPageLayout/>}>
                                 <Route path="/dashboard" element={<Dashboard/>}/>
+                                <Route path="/edit/photo/:id" element={<EditPhoto/>}/>
                                 <Route path="/profile" element={<Profile/>}/>
                                 <Route element={<EmailVerifiedRoute/>}>
                                     <Route path="/create" element={<RecipeGenerator model={ChatGptModel.GPT4} saveIsDisabled={false}/>}/>

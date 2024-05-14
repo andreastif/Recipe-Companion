@@ -5,11 +5,13 @@ import Select from "react-select";
 import {languageOptions, numberOfServings, RecipeForm} from "./utils/RecipeGeneratorSelectUtils.ts";
 import {ReactSelectFormStyles} from "./utils/ReactSelectFormStyles.ts";
 import LoadingSpinner from "../spinner/LoadingSpinner.tsx";
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {createRecipeGpt3_5, createRecipeGpt4, postRecipeToMongoDb, RecipeItemsMongoDto} from "../api/recipeApi.ts";
 import {User} from "firebase/auth";
 import {sweetAlertError, sweetAlertSuccess} from "../../utils/alerts.ts";
 import {ChatGptModel} from "../../utils/modelEnum.ts";
+import {recipeButtonStyle} from "../inspirationtab/muiStyles.ts";
+import Button from "@mui/material/Button";
 
 
 const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsDisabled: boolean }) => {
@@ -23,6 +25,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
     const [isRecipeSavedLoading, setIsRecipeSavedLoading] = useState(false);
     const location = useLocation();
     const {user} = useAuth();
+    const navigate = useNavigate();
 
 
     const handleSetRecipeForm = (input: any, identifier: string) => {
@@ -52,13 +55,13 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
             }
 
             await handleSaveRecipeToDb(user, toBeSavedRecipe)
+            navigate("/dashboard");
         }
     }
 
     const handleSaveRecipeToDb = async (user: User, toBeSavedRecipe: RecipeItemsMongoDto) => {
         setIsRecipeSavedLoading(true)
         try {
-            console.log(toBeSavedRecipe);
             await postRecipeToMongoDb(user, toBeSavedRecipe)
             sweetAlertSuccess("New Recipe Saved!", "Enjoy your meal")
         } catch (e) {
@@ -90,7 +93,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
             }
 
         } catch (e) {
-            console.warn(e);
+            sweetAlertError("Error", "Error creating recipe try again in a minute")
 
         } finally {
             setIsPageLoading(false)
@@ -165,12 +168,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
                                         required
                                         placeholder="Name or products..">
                                     </input>
-                                    <button
-                                        // disabled={true}
-                                        className="btn btn-secondary"
-                                        style={{textTransform: "uppercase", letterSpacing: "2px"}}
-                                    >Create Recipe
-                                    </button>
+                                    <Button type="submit" variant="contained" sx={recipeButtonStyle()}>Create Recipe</Button>
                                 </form>
                             </div>
                             {recipe &&
