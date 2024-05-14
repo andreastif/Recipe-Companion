@@ -175,7 +175,7 @@ const RecipeTab = () => {
                     <Box sx={modalRecipeStyle(isMobile)}>
                         {selectedRecipe && (
                             <div>
-                                    <div><AddPhotoAlternateIcon/> <Button variant="text" className="text-info" onClick={() => handleRedirectToEditPhoto(getStringMongoObjectId(selectedRecipe?.recipe._id))}>Edit
+                                    <div><AddPhotoAlternateIcon/> <Button variant="text" className="text-warning" onClick={() => handleRedirectToEditPhoto(getStringMongoObjectId(selectedRecipe?.recipe._id))}>Edit
                                         Photo</Button></div>
                                 <div className="text-center mt-5 recipe-title-container">
                                     <div>
@@ -183,7 +183,7 @@ const RecipeTab = () => {
                                     </div>
                                     <div>
                                         {/*TODO Edit Recipe Component*/}
-                                        <Button variant="text" className="text-info">Edit Recipe<EditIcon
+                                        <Button variant="text" className="text-warning">Edit Recipe<EditIcon
                                             className="ms-2"/></Button>
                                     </div>
                                     <hr/>
