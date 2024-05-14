@@ -6,6 +6,8 @@ import {useRedirectIfSignedIn} from "../../hooks/useRedirectIfSignedIn.tsx";
 import {auth} from "../../firebase/firebaseconfig.ts";
 import { sendEmailVerification } from "firebase/auth";
 import logo from "../../img/test-icon.png";
+import Button from "@mui/material/Button";
+import {recipeButtonStyle} from "../inspirationtab/muiStyles.ts";
 
 
 
@@ -98,7 +100,7 @@ function Register() {
                     <p className="fs-6">
                         Already have an account? {" "}
                         <Link
-                            className="link-info link-opacity-75-hover"
+                            className="link-warning link-opacity-75-hover"
                             to="/login">
                             Login
                         </Link>
@@ -132,7 +134,7 @@ function Register() {
                                    onChange={handleFormControlChange}
                             />
                         </div>
-                        <button type="submit" className="mt-4  btn btn-secondary">Register</button>
+                        <Button type="submit" variant="contained" sx={recipeButtonStyle()}>Register</Button>
                     </form>
                     {errorMsg && (
                         <div className="text-danger fw-semibold my-4">
