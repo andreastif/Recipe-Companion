@@ -1,5 +1,5 @@
 import "./RecipeTab.css";
-import {fetchUserRecipes, RecipeItemMongo, removeRecipeFromMongoDb} from "../api/recipeApi.ts";
+import {fetchUserRecipes, removeRecipeFromMongoDb} from "../api/recipeApi.ts";
 import {FormEvent, useEffect, useState} from "react";
 import {useAuth} from "../../hooks/useAuth.tsx";
 import Box from "@mui/material/Box";
@@ -14,7 +14,7 @@ import recipePlaceholder from "../../assets/recipe-placeholder.png";
 import {getRandomHeight} from "../recipecreation/utils/util.ts";
 import {inspoContainer} from "../inspirationtab/muiStyles.ts";
 import {useQuery} from "@tanstack/react-query";
-import {RecipeItemMongoWithHeight} from "../../utils/Types.ts";
+import {RecipeItemMongo, RecipeItemMongoWithHeight} from "../../utils/RecipeTypes.ts";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Button from "@mui/material/Button";
 import EditIcon from '@mui/icons-material/Edit';

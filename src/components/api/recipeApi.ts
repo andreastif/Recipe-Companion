@@ -1,33 +1,9 @@
 import axios, {AxiosError} from "axios";
 import {User} from "firebase/auth";
-import {ObjectId} from "mongodb";
 import {RecipeData} from "../recipecreation/utils/RecipeGeneratorUtils.ts";
 import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
+import {RecipeItemMongo, RecipeItemsMongoDto} from "../../utils/RecipeTypes.ts";
 
-
-export type RecipeItemMongo = {
-    _id?: ObjectId; // Made optional with '?' since it's not needed when creating
-    title: string,
-    photo_url: string
-    description: string,
-    ingredients: string[],
-    steps: string[],
-    tags: string[],
-    email: string,
-    created?: string,
-    updated?: string
-}
-
-export type RecipeItemsMongoDto = {
-    _id?: ObjectId; // Made optional with '?' since it's not needed when creating
-    title: string,
-    photo_url: string,
-    description: string,
-    ingredients: string[],
-    steps: string[],
-    tags: string[],
-    email: string,
-}
 
 // Create a common instance of axios for all meal db requests
 export const mongoAPIClient = axios.create({

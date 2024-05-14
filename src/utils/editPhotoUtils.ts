@@ -2,8 +2,8 @@
     In the frontend, you can use JavaScript's FileReader API to convert the image file to a Base64 encoded string.
     This is useful as Base64 is a common format for encoding binary data into a string, which can easily be transmitted over HTTP
  */
-import { RecipeItemMongo } from "../components/api/recipeApi.ts";
-import { RecipeItemMongoWithHeight } from "./Types.ts";
+
+import {RecipeItemMongo, RecipeItemMongoWithHeight} from "./RecipeTypes.ts";
 
 export function convertImageToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {

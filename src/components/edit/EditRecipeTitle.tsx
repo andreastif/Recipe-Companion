@@ -1,12 +1,13 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
-import {fetchUserRecipeById, RecipeItemMongo, updateRecipeTitleById} from "../api/recipeApi.ts";
+import {fetchUserRecipeById, updateRecipeTitleById} from "../api/recipeApi.ts";
 import {useAuth} from "../../hooks/useAuth.tsx";
 import Button from "@mui/material/Button";
 import {recipeButtonStyle} from "../inspirationtab/muiStyles.ts";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {sweetAlertSuccess} from "../../utils/alerts.ts";
 import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
+import {RecipeItemMongo} from "../../utils/RecipeTypes.ts";
 
 export type EditForm = {
     title: string
