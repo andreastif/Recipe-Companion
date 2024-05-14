@@ -115,21 +115,6 @@ export const removeRecipeFromMongoDb = async (user: User, recipe: RecipeItemMong
     }
 }
 
-export const updateRecipeByUser = async (user: User, recipe: RecipeItemsMongoDto) => {
-    try {
-        const token = await handleRefreshTokenForUser(user);
-        const stringId = getStringMongoObjectId(recipe._id)
-        return await mongoAPIClient.put(`recipes/${stringId}`, recipe, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-    } catch (err) {
-        const axiosError = err as AxiosError;
-        throw new Error(axiosError.message);
-    }
-}
-
 export const updateRecipeTitleById = async (user: User, id: string, newTitle: string) => {
     try {
         const token = await handleRefreshTokenForUser(user);

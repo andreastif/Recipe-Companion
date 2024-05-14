@@ -2,12 +2,13 @@
 
 import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
-import {fetchUserRecipeById, RecipeItemMongo} from "../api/recipeApi.ts";
+import {fetchUserRecipeById, RecipeItemMongo, updateRecipeTitleById} from "../api/recipeApi.ts";
 import {useAuth} from "../../hooks/useAuth.tsx";
 import Button from "@mui/material/Button";
 import {recipeButtonStyle} from "../inspirationtab/muiStyles.ts";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {sweetAlertSuccess} from "../../utils/alerts.ts";
+import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
 
 export type EditForm = {
     title: string
@@ -73,18 +74,14 @@ const EditRecipeTitle = () => {
 
     const handleEditSubmit = async (updatedForm: EditForm) => {
         try {
-            currRecipe!.title = updatedForm.title // Todo ej denna
-            console.log(currRecipe);
-            //await updateRecipeByUser(user!, currRecipe!) TODO fixa en endpoint som bara ändrar titel
-            sweetAlertSuccess("Update", "Recipe title has been updated")
-
+            await updateRecipeTitleById(user!, getStringMongoObjectId(currRecipe?._id), updatedForm.title)
+            sweetAlertSuccess("Successful update", "Recipe title has been updated")
         } catch (e) {
             setHasError(true)
         } finally {
             setLoading(false);
         }
     }
-
 
 
     if (loading) return (
@@ -127,7 +124,7 @@ const EditRecipeTitle = () => {
                             </div>
                             <div className="mt-4 d-flex justify-content-center gap-4">
                                 <div className="mt-4 d-flex gap-3">
-                                <Button type="submit" variant="contained" sx={recipeButtonStyle()}>Edit</Button>
+                                    <Button type="submit" variant="contained" sx={recipeButtonStyle()}>Edit</Button>
                                     <Button type="button" variant="contained" sx={recipeButtonStyle()}
                                             onClick={() => navigate("/dashboard")}>Back</Button>
                                 </div>
