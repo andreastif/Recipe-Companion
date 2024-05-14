@@ -55,7 +55,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
             }
 
             await handleSaveRecipeToDb(user, toBeSavedRecipe)
-            navigate("/dashboard"); // TODO Funkar ?
+            navigate("/dashboard");
         }
     }
 
