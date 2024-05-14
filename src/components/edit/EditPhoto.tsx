@@ -50,7 +50,7 @@ const EditPhoto = () => {
                 setFileError("Could not fetch recipe details")
             }
         } catch (e) {
-            setFileError("Could not upload image")
+            setFileError("Could not upload image: ")
         } finally {
             setLoading(false)
         }

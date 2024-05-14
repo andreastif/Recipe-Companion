@@ -17,6 +17,8 @@ import {getRandomHeight} from "../recipecreation/utils/util.ts";
 import {RecipeItemMongoWithHeight} from "../../utils/Types.ts";
 import Button from "@mui/material/Button";
 import {inspoModalButton} from "./InspoModalStyles.ts";
+import RecipeImage from "../recipetab/RecipeImage.tsx";
+import {handleGetPhotoId} from "../../utils/editPhotoUtils.ts";
 
 const InspirationTab = () => {
     //media queries for mobile
@@ -80,17 +82,16 @@ const InspirationTab = () => {
                         {recipeList.map((item) => (
                             <ImageListItem
                                 key={getStringMongoObjectId(item.recipe._id)}
-                                onClick={() => handleOpenModal(getStringMongoObjectId(item.recipe._id))}
-                            >
-                                <img
-                                    src={recipePlaceholder}
-                                    alt={item.recipe.title}
-                                    loading="lazy"
-                                    style={{height: `${item.height}px`, width: "100%", objectFit: "cover"}}
-                                />
-                                {/*
-                                TODO fixa som i Recipe Tab med bilderna
-                                */}
+                                onClick={() => handleOpenModal(getStringMongoObjectId(item.recipe._id))}>
+                                {item.recipe.photo_url.length > 0 ? <RecipeImage imageId={handleGetPhotoId(item)}
+                                                                                 height={item.height}/>
+                                    :
+                                    <img
+                                        src={recipePlaceholder}
+                                        alt={item.recipe.title}
+                                        loading="lazy"
+                                        style={{height: `${item.height}px`, width: "100%", objectFit: "cover"}}
+                                    />}
                                 <div className="overlay-text">
                   <span
                       style={{

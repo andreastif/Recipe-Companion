@@ -20,6 +20,7 @@ import Button from "@mui/material/Button";
 import EditIcon from '@mui/icons-material/Edit';
 import {useNavigate} from "react-router-dom";
 import RecipeImage from "./RecipeImage.tsx";
+import {handleGetPhotoId} from "../../utils/editPhotoUtils.ts";
 
 const RecipeTab = () => {
     const [recipes, setRecipes] = useState<RecipeItemMongoWithHeight[]>([]);
@@ -104,12 +105,6 @@ const RecipeTab = () => {
         }
     };
 
-    const handleGetPhotoId = (recipe: RecipeItemMongoWithHeight) => {
-        const url = recipe.recipe.photo_url;
-        const lastDashIndex = url.lastIndexOf("/");
-        return url.substring(lastDashIndex + 1)
-    }
-
     return (
         <div>
             {isLoading ? (
@@ -180,10 +175,8 @@ const RecipeTab = () => {
                     <Box sx={modalRecipeStyle(isMobile)}>
                         {selectedRecipe && (
                             <div>
-                                {!selectedRecipe.recipe.photo_url &&
-                                    <div><AddPhotoAlternateIcon/> <Button variant="text" className="text-info"
-                                                                          onClick={() => handleRedirectToEditPhoto(getStringMongoObjectId(selectedRecipe?.recipe._id))}>Add
-                                        Photo</Button></div>}
+                                    <div><AddPhotoAlternateIcon/> <Button variant="text" className="text-info" onClick={() => handleRedirectToEditPhoto(getStringMongoObjectId(selectedRecipe?.recipe._id))}>Edit
+                                        Photo</Button></div>
                                 <div className="text-center mt-5 recipe-title-container">
                                     <div>
                                         <p className="fs-5">{selectedRecipe.recipe.title}</p>

@@ -93,7 +93,7 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
             }
 
         } catch (e) {
-            console.warn(e);
+            sweetAlertError("Error", "Error creating recipe try again in a minute")
 
         } finally {
             setIsPageLoading(false)
