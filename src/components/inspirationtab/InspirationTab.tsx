@@ -66,7 +66,6 @@ const InspirationTab = () => {
     const currentRecipe = recipeList.find((recipe) => getStringMongoObjectId(recipe.recipe._id) === mealId);
     setCurrentRecipe(currentRecipe?.recipe);
     setModalOpen(true);
-    console.log(currentRecipe);
   }
 
   return (
