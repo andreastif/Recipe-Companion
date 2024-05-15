@@ -1,5 +1,5 @@
 import {useParams} from 'react-router-dom';
-import {fetchUserRecipeById, RecipeItemMongo} from "../api/recipeApi";
+import {fetchUserRecipeById} from "../api/recipeApi";
 import {useAuth} from "../../hooks/useAuth";
 import {FormEvent, useEffect, useRef, useState} from "react";
 import "./EditPhoto.css"
@@ -7,6 +7,7 @@ import {isValidFileExtension, isValidSize} from "../../utils/editPhotoUtils.ts";
 import {uploadImage} from "../api/imageApi.ts";
 import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
 import {sweetAlertSuccess} from "../../utils/alerts.ts";
+import {RecipeItemMongo} from "../../utils/RecipeTypes.ts";
 
 const EditPhoto = () => {
     const [currRecipe, setCurrRecipe] = useState<RecipeItemMongo | null>(null);
@@ -72,7 +73,6 @@ const EditPhoto = () => {
                     setCurrRecipe(recipe);
                 } catch (error: any) {
                     setValidIDError('Failed to fetch recipe details');
-                    console.error(error);
                 } finally {
                     setLoading(false);
                 }

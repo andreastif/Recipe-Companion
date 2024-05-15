@@ -1,6 +1,6 @@
 import './RecipeCard.css'
 import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
-import {RecipeItemMongo} from "../api/recipeApi.ts";
+import {RecipeItemMongo} from "../../utils/RecipeTypes.ts";
 
 
 export type RecipeTypeProps = {

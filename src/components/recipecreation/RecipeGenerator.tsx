@@ -6,12 +6,13 @@ import {languageOptions, numberOfServings, RecipeForm} from "./utils/RecipeGener
 import {ReactSelectFormStyles} from "./utils/ReactSelectFormStyles.ts";
 import LoadingSpinner from "../spinner/LoadingSpinner.tsx";
 import {useLocation, useNavigate} from 'react-router-dom';
-import {createRecipeGpt3_5, createRecipeGpt4, postRecipeToMongoDb, RecipeItemsMongoDto} from "../api/recipeApi.ts";
+import {createRecipeGpt3_5, createRecipeGpt4, postRecipeToMongoDb} from "../api/recipeApi.ts";
 import {User} from "firebase/auth";
 import {sweetAlertError, sweetAlertSuccess} from "../../utils/alerts.ts";
 import {ChatGptModel} from "../../utils/modelEnum.ts";
 import {recipeButtonStyle} from "../inspirationtab/muiStyles.ts";
 import Button from "@mui/material/Button";
+import {RecipeItemsMongoDto} from "../../utils/RecipeTypes.ts";
 
 
 const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsDisabled: boolean }) => {

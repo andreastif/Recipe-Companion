@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [recipe, setRecipe] = useState<Recipe | null | undefined>();
-  const [workInProgressOpen, setWorkInProgressOpen] = useState<boolean>(true);
+  const [workInProgressOpen, setWorkInProgressOpen] = useState<boolean>(false); // till true när vi har under construction hemsidan
   const [fromInspiration, setFromInspiration] = useState<boolean>(false);
 
   // Login
