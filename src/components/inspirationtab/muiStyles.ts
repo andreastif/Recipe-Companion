@@ -32,3 +32,13 @@ export const recipeButtonStyle = () => {
     },
   };
 };
+
+export const wideRecipeButtonStyle = () => {
+  return {
+    bgcolor: "#895c09",
+    "&:hover": {
+      bgcolor: "rgba(137,92,9,0.65)",
+    },
+    width: "100%",
+  };
+};
