@@ -12,7 +12,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import getStringMongoObjectId from "../../utils/getStringMongoObjectId.ts";
 import recipePlaceholder from "../../assets/recipe-placeholder.png";
 import {getRandomHeight} from "../recipecreation/utils/util.ts";
-import {inspoContainer} from "../inspirationtab/muiStyles.ts";
+import {inspoContainer, recipeButtonStyle} from "../inspirationtab/muiStyles.ts";
 import {useQuery} from "@tanstack/react-query";
 import {RecipeItemMongo, RecipeItemMongoWithHeight} from "../../utils/RecipeTypes.ts";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -178,15 +178,18 @@ const RecipeTab = () => {
                     <Box sx={modalRecipeStyle(isMobile)}>
                         {selectedRecipe && (
                             <div>
-                                    <div><AddPhotoAlternateIcon/> <Button variant="text" className="text-warning" onClick={() => handleRedirectToEditPhoto(getStringMongoObjectId(selectedRecipe?.recipe._id))}>Edit
-                                        Photo</Button></div>
+                                <div><AddPhotoAlternateIcon/> <Button variant="text" className="text-warning"
+                                                                      onClick={() => handleRedirectToEditPhoto(getStringMongoObjectId(selectedRecipe?.recipe._id))}>Edit
+                                    Photo</Button></div>
                                 <div className="text-center mt-5 recipe-title-container">
                                     <div>
                                         <p className="fs-5">{selectedRecipe.recipe.title}</p>
                                     </div>
                                     <div>
-                                        <Button variant="text" className="text-warning" onClick={() => handleRedirectToEditTitle(getStringMongoObjectId(selectedRecipe?.recipe._id))}>Edit Recipe Title<EditIcon
-                                            className="ms-2"/></Button>
+                                        <Button variant="text" className="text-warning"
+                                                onClick={() => handleRedirectToEditTitle(getStringMongoObjectId(selectedRecipe?.recipe._id))}>Edit
+                                            Recipe Title<EditIcon
+                                                className="ms-2"/></Button>
                                     </div>
                                     <hr/>
                                 </div>
@@ -232,20 +235,24 @@ const RecipeTab = () => {
                                         </div>
                                     </Typography>
                                 </div>
-                                <button
-                                    className="btn btn-secondary"
-                                    style={{textTransform: "uppercase", letterSpacing: "2px"}}
-                                    onClick={() => handleSetRecipeModalVerify(selectedRecipe.recipe)}
-                                >
-                                    Delete
-                                </button>
-                                <button
-                                    className="btn btn-secondary ms-4"
-                                    style={{textTransform: "uppercase", letterSpacing: "2px"}}
-                                    onClick={() => setRecipeModalOpen(false)}
-                                >
-                                    Close
-                                </button>
+                                <div className="d-flex gap-3">
+                                    <Button
+                                        type="button"
+                                        variant="contained"
+                                        sx={recipeButtonStyle()}
+                                        onClick={() => handleSetRecipeModalVerify(selectedRecipe.recipe)}
+                                    >
+                                        Delete
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        variant="contained"
+                                        sx={recipeButtonStyle()}
+                                        onClick={() => setRecipeModalOpen(false)}
+                                    >
+                                        Close
+                                    </Button>
+                                </div>
                             </div>
                         )}
                     </Box>
@@ -287,20 +294,12 @@ const RecipeTab = () => {
                                 This action <span style={{textDecoration: "underline"}}>cannot</span> be undone
                             </p>
                             <div className="recipe-remove-container">
-                                <button
-                                    className="btn btn-danger"
-                                    style={{textTransform: "uppercase", letterSpacing: "2px"}}
-                                    onClick={(event) => handleSubmitRemoveRecipe(event)}
-                                >
-                                    DELETE
-                                </button>
-                                <button
-                                    className="btn btn-secondary"
-                                    style={{textTransform: "uppercase", letterSpacing: "2px"}}
-                                    onClick={() => setRecipeModalVerify(false)}
-                                >
-                                    Cancel
-                                </button>
+                                <Button type="button" variant="contained"
+                                        onClick={(event) => handleSubmitRemoveRecipe(event)}
+                                        sx={recipeButtonStyle()}>Delete</Button>
+                                <Button type="button" variant="contained"
+                                        onClick={() => setRecipeModalVerify(false)}
+                                        sx={recipeButtonStyle()}>Cancel</Button>
                             </div>
                         </div>
                     </Box>

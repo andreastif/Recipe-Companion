@@ -169,7 +169,8 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
                                         required
                                         placeholder="Name or products..">
                                     </input>
-                                    <Button type="submit" variant="contained" sx={recipeButtonStyle()}>Create Recipe</Button>
+                                    <Button type="submit" variant="contained" sx={recipeButtonStyle()}>Create
+                                        Recipe</Button>
                                 </form>
                             </div>
                             {recipe &&
@@ -205,29 +206,14 @@ const RecipeGenerator = ({model, saveIsDisabled}: { model: ChatGptModel, saveIsD
 
 
                                         {isRecipeSavedLoading ?
-                                            <button className="btn btn-secondary"
-                                                    style={{
-                                                        width: "100%",
-                                                        textTransform: "uppercase",
-                                                        letterSpacing: "2px"
-                                                    }}
-                                                    type="button" disabled>
+                                            <Button type="button" variant="contained" sx={recipeButtonStyle()}>
                                             <span className="spinner-grow spinner-grow-sm me-2" role="status"
                                                   aria-hidden="true"></span>
                                                 <span className="sr-only">Loading...</span>
-                                            </button> :
-
-                                            <button
-                                                className="btn btn-secondary"
-                                                style={{
-                                                    width: "100%",
-                                                    textTransform: "uppercase",
-                                                    letterSpacing: "2px"
-                                                }}
-                                                onClick={handleOnClickSaveRecipe}
-                                                hidden={saveIsDisabled}
-                                            >Save Recipe
-                                            </button>
+                                            </Button> :
+                                            <Button type="button" onClick={handleOnClickSaveRecipe}
+                                                    hidden={saveIsDisabled} variant="contained"
+                                                    sx={recipeButtonStyle()}>Save Recipe</Button>
                                         }
 
                                     </div>
