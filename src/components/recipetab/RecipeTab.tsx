@@ -20,7 +20,9 @@ import Button from "@mui/material/Button";
 import EditIcon from '@mui/icons-material/Edit';
 import {useNavigate} from "react-router-dom";
 import RecipeImage from "./RecipeImage.tsx";
-import {handleGetPhotoId} from "../../utils/editPhotoUtils.ts";
+import {handleGetPhotoId, handleGetPhotoIdWithoutHeight} from "../../utils/editPhotoUtils.ts";
+import {deleteImageById} from "../api/imageApi.ts";
+import {sweetAlertError, sweetAlertSuccess} from "../../utils/alerts.ts";
 
 const RecipeTab = () => {
     const [recipes, setRecipes] = useState<RecipeItemMongoWithHeight[]>([]);
@@ -90,21 +92,24 @@ const RecipeTab = () => {
     const handleSubmitRemoveRecipe = async (event: FormEvent<HTMLButtonElement>) => {
         event.preventDefault();
         try {
-            const deleteResponse = await removeRecipeFromMongoDb(user!, recipeMarkedForRemoval!);
-            if (deleteResponse.status === 200) {
+            const photoId = handleGetPhotoIdWithoutHeight(recipeMarkedForRemoval!)
+            const deleteResponseMongo = await removeRecipeFromMongoDb(user!, recipeMarkedForRemoval!);
+            await deleteImageById(user!, photoId)
+            if (deleteResponseMongo.status === 200) {
                 const updatedRecipes = recipes.filter((recipe) => recipe.recipe._id !== recipeMarkedForRemoval?._id);
                 setRecipes(updatedRecipes);
                 setRecipeModalVerify(false);
                 setRecipeModalOpen(false);
                 setRecipeMarkedForRemoval(undefined);
                 setSelectedRecipeIndex(null);
+                sweetAlertSuccess("Success", "Recipe has been removed");
             } else {
-                console.log("Failed to delete the recipe. Please try again.");
+                sweetAlertError("Error", "Something went wrong deleting recipe");
             }
         } catch (e) {
-            console.log("catch");
+            sweetAlertError("Error", "Something went wrong deleting recipe");
         } finally {
-            console.log("finally");
+            setRecipeModalOpen(false);
         }
     };
 

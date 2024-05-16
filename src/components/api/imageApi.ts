@@ -41,3 +41,18 @@ export const getImageBlobById = async (user: User, id: string) => {
         throw new Error(axiosError.message);
     }
 }
+
+export const deleteImageById = async (user: User, id: string) => {
+    try {
+        const token = await handleRefreshTokenForUser(user);
+        const response = await imageAPIClient.delete(`api/files/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (err) {
+        const axiosError = err as AxiosError;
+        throw new Error(axiosError.message);
+    }
+}

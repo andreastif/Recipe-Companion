@@ -55,9 +55,6 @@ function LandingPageNavbar() {
                                     <span className="h4 landing-nav-span">Dashboard</span>
                                 </Link>
                             }
-
-                            <Link to={"/about"}><span className="h4 landing-nav-span">About</span></Link>
-
                     </div>
                 </div>
             </div>
