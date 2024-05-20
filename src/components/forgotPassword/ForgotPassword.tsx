@@ -67,6 +67,7 @@ const ForgotPassword = () => {
                   aria-describedby="emailHelp"
                   name="email"
                   required
+                  placeholder="Email.."
                   value={email}
                   onChange={handleEmailChange}
                 />
