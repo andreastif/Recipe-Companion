@@ -10,6 +10,7 @@ function LandingPage() {
       <div>
         <div className="landing">
           <div className="my-5">
+            <h1 className="mt-4 mb-">Välkommen Klassen</h1>
             <h1 className="mt-4 mb-">Meet Recipe Companion</h1>
             <p>
               Your AI-powered kitchen companion! Just enter your ingredients, and it crafts personalized recipes with
